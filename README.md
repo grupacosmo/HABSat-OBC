@@ -1,4 +1,4 @@
-# freertos-intro
+# Remote Camera Controlling System (rcc-sys)
 ## Description
 It's a project that aims to introduce our OBC team to microcontrollers and freeRTOS real-time operating system.
 
