@@ -1,4 +1,5 @@
 #${templateWarning}
+#YOU CAN FIND DEVELOPER DEFINED INSTRUCTIONS BELOW
 SET(CMAKE_SYSTEM_NAME Generic)
 SET(CMAKE_SYSTEM_VERSION 1)
 cmake_minimum_required(VERSION 3.7)
@@ -54,3 +55,12 @@ add_custom_command(TARGET $${PROJECT_NAME}.elf POST_BUILD
         COMMAND $${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:$${PROJECT_NAME}.elf> $${BIN_FILE}
         COMMENT "Building $${HEX_FILE}
 Building $${BIN_FILE}")
+
+# DEVELOPER DEFINED
+
+add_subdirectory(Core)
+add_subdirectory(Src)
+
+target_link_libraries(${projectName}.elf
+        mainpp
+        led)
