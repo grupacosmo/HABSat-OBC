@@ -32,7 +32,7 @@ SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++11")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")
 SET(CMAKE_EXE_LINKER_FLAGS_INIT "-Wl,-gc-sections,--print-memory-usage -T ${LINKER_SCRIPT}")
 
-PROJECT(freertos-intro C CXX ASM)
+PROJECT(rcc-sys C CXX ASM)
 set(CMAKE_CXX_STANDARD 11)
 
 #add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
@@ -61,6 +61,6 @@ Building ${BIN_FILE}")
 add_subdirectory(Core)
 add_subdirectory(Src)
 
-target_link_libraries(freertos-intro.elf
+target_link_libraries(rcc-sys.elf
         mainpp
         led)
