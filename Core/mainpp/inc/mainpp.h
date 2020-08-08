@@ -5,13 +5,6 @@
 #ifndef FREERTOS_INTRO_MAINPP_H
 #define FREERTOS_INTRO_MAINPP_H
 
-// include headers below
-#ifdef __cplusplus
-
-#include "stm32f4xx_hal.h"
-#include "led.h"
-
-#endif
 
 #ifdef __cplusplus
 extern "C"

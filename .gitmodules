@@ -1,0 +1,3 @@
+[submodule "Core/lib/STM32-LCD-HD44780-I2C"]
+	path = Core/lib/STM32-LCD-HD44780-I2C
+	url = https://github.com/firebull/STM32-LCD-HD44780-I2C

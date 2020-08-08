@@ -11,9 +11,9 @@ class Led{
     GPIO_TypeDef *type = GPIOA;
     uint16_t pin = GPIO_PIN_5;
 public:
-    void on();
-    void off();
-    void toggle();
+    void on() const;
+    void off() const;
+    void toggle() const;
 };
 
 

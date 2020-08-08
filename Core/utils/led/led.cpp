@@ -4,15 +4,15 @@
 
 #include "led.h"
 
-void Led::on()
+void Led::on() const
 {
     HAL_GPIO_WritePin(type, pin, GPIO_PIN_SET);
 }
-void Led::off()
+void Led::off() const
 {
     HAL_GPIO_WritePin(type, pin, GPIO_PIN_RESET);
 }
-void Led::toggle()
+void Led::toggle() const
 {
     HAL_GPIO_TogglePin(type, pin);
 }
