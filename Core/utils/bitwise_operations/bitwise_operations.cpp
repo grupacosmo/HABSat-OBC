@@ -8,7 +8,7 @@ namespace bitwise
 {
     std::byte nibble_low(std::byte b)
     {
-        return (b<<4) & std::byte{0xf0};
+        return b & std::byte{0x0f};
     }
 
 
