@@ -21,21 +21,20 @@ Lcd::Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *co
 {
     // TODO: DELAYS, FILES ALREADY MADE IN "Core/utils"
 
-    const std::byte interface_4bit{Command::FUNCTION_SET};
+    m_display_ctrl_config = std::byte{Command::DISPLAY_CRTL} | std::byte{DisplayCtrlFlag::DISPLAY_STATE};
+    m_entry_mode_config = std::byte{Command::ENTRY_MODE} | std::byte{EntryModeFlag::SHIFT_DIRECTION};
 
-    std::byte display_lines_flag{NOFLAG};
-
+    std::byte display_lines_flag{NO_FLAG};
     if(lines > 1)
         display_lines_flag = std::byte{FunctionSetFlag::DISPLAY_LINES};
 
-    HAL_Delay(20);  send_cmd(interface_4bit);
-    HAL_Delay(5);   send_cmd(interface_4bit);
-    HAL_Delay(1);   send_cmd(interface_4bit);
-    HAL_Delay(1);   send_cmd(interface_4bit | display_lines_flag);
-    HAL_Delay(1);   send_cmd(std::byte{Command::DISPLAY_CRTL} | std::byte{DisplayCtrlFlag::DISPLAY_STATE});
+    HAL_Delay(20);  send_cmd(Command::FUNCTION_SET);
+    HAL_Delay(5);   send_cmd(Command::FUNCTION_SET);
+    HAL_Delay(1);   send_cmd(Command::FUNCTION_SET);
+    HAL_Delay(1);   send_cmd(std::byte{Command::FUNCTION_SET} | display_lines_flag);
+    HAL_Delay(1);   send_cmd(m_display_ctrl_config);
     HAL_Delay(1);   send_cmd(Command::CLEAR_DISPLAY);
-    HAL_Delay(1);   send_cmd(std::byte{Command::ENTRY_MODE} | std::byte{EntryModeFlag::SHIFT_DIRECTION});
-
+    HAL_Delay(1);   send_cmd(m_entry_mode_config);
 }
 
 void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
@@ -54,6 +53,11 @@ void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
     }
 
     set_cursor_pos(line_index, str.size());
+}
+
+void Lcd::print_char(const char character)
+{
+    send_data(std::byte{character});
 }
 
 void Lcd::set_cursor_pos(uint16_t line, const uint16_t column) const
@@ -80,13 +84,72 @@ void Lcd::clear() const
     HAL_Delay(1);
 }
 
+void Lcd::display_on()
+{
+    set_flag(m_display_ctrl_config, std::byte{DisplayCtrlFlag::DISPLAY_STATE});
+}
 
+void Lcd::display_off()
+{
+    unset_flag(m_display_ctrl_config, std::byte{DisplayCtrlFlag::DISPLAY_STATE});
+}
 
+void Lcd::cursor_on()
+{
+    set_flag(m_display_ctrl_config, std::byte{DisplayCtrlFlag::CURSOR_STATE});
+}
+
+void Lcd::cursor_off()
+{
+    unset_flag(m_display_ctrl_config, std::byte{DisplayCtrlFlag::CURSOR_STATE});
+}
+
+void Lcd::cursor_blinking()
+{
+    set_flag(m_display_ctrl_config, std::byte{DisplayCtrlFlag::CURSOR_BLINK});
+}
+
+void Lcd::cursor_not_blinking()
+{
+    unset_flag(m_display_ctrl_config, std::byte{DisplayCtrlFlag::CURSOR_BLINK});
+}
+
+void Lcd::shift_mode_display()
+{
+    set_flag(m_entry_mode_config, std::byte{EntryModeFlag::SHIFT_TYPE});
+}
+
+void Lcd::shift_mode_cursor()
+{
+    unset_flag(m_entry_mode_config, std::byte{EntryModeFlag::SHIFT_TYPE});
+}
+
+void Lcd::shift_direction_left()
+{
+    set_flag(m_entry_mode_config, std::byte{EntryModeFlag::SHIFT_DIRECTION});
+}
+
+void Lcd::shift_direction_right()
+{
+    unset_flag(m_entry_mode_config, std::byte{EntryModeFlag::SHIFT_DIRECTION});
+}
 
 
 
 
 // private:
+
+void Lcd::set_flag(std::byte& config, const std::byte& flag)
+{
+    config |= flag;
+    send_cmd(config);
+}
+
+void Lcd::unset_flag(std::byte& config, const std::byte& flag)
+{
+    config &= ~flag;
+    send_cmd(config);
+}
 
 void Lcd::send_cmd(const std::byte& byte) const
 {
@@ -105,14 +168,18 @@ void Lcd::send_data(const std::byte &data) const
 
 void Lcd::send(const std::byte& byte, const std::byte& flags) const
 {
+    // since I2C requires 4 bit interface, bytes of data need to be split into nibbles
     transmit_nibble(bitwise::nibble_high(byte) | flags);
     transmit_nibble((bitwise::nibble_low(byte) << 4) | flags);
 }
 
 void Lcd::transmit_nibble(const std::byte &nibble) const
 {
+    // now the data needs to be transmitted twice
+    // first time with PULSE flag, second time without it
     i2c_transmit(nibble | std::byte{DataSendingFlag::PULSE}, 1);
     // TODO DELAY > 450 ns
+
     i2c_transmit(nibble & ~std::byte{DataSendingFlag::PULSE}, 1);
     // TODO DELAY > 37 us
 }

@@ -19,6 +19,7 @@ void mainpp()
     uint32_t delay = 500;
     HAL_Delay(2 * delay);
 
+
     auto lambda = [lcd, delay](const uint16_t line, const std::string& s){
 
         lcd.print_line(line, s);
