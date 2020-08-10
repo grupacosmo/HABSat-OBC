@@ -14,34 +14,27 @@ extern I2C_HandleTypeDef hi2c1;
 void mainpp()
 {
     Led led;
-    Lcd lcd(Lcd::Interface::_4_BIT, Lcd::FunctionSet::_2_LINE, 4, 20, &hi2c1, lcd_slave_address);
+    Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
 
-    HAL_Delay(1000);
-    lcd.print_line(0, "line1111111111111");
-    HAL_Delay(1000);
-    lcd.print_line(1, "line222222222222");
-    HAL_Delay(1000);
-    lcd.print_line(2, "line333333333333");
-    HAL_Delay(1000);
-    lcd.print_line(3, "line444444444444");
+    uint32_t delay = 500;
+    HAL_Delay(2 * delay);
 
-    HAL_Delay(1000);
-    lcd.print_line(0, "line1");
-    HAL_Delay(1000);
-    lcd.print_line(1, "line2");
-    HAL_Delay(1000);
-    lcd.print_line(2, "line3");
-    HAL_Delay(1000);
-    lcd.print_line(3, "line4");
+    auto lambda = [lcd, delay](const uint16_t line, const std::string& s){
 
-    int i = 0;
+        lcd.print_line(line, s);
+        HAL_Delay(delay);
+    };
     while(true)
     {
-        led.toggle();
-        HAL_Delay(500);
-        //i = ++i % 4;
-        //lcd.print_line(i, "dobra gitara");
-        //HAL_Delay(500);
-        //lcd.clear();
+        lambda(0, "stm32");
+        lambda(1, "liquid");
+        lambda(2, "crystal");
+        lambda(3, "display");
+        lcd.clear();
+        lambda(0, "i2c");
+        lambda(1, "c++17");
+        lambda(2, "print_line()");
+        lambda(3, "test");
+        lcd.clear();
     }
 }
