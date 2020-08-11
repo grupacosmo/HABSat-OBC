@@ -56,6 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern UART_HandleTypeDef huart1;
 extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN EV */
@@ -183,6 +184,20 @@ void PendSV_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles USART1 global interrupt.
+  */
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
+
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
 
 /**
   * @brief This function handles TIM6 global interrupt and DAC1, DAC2 underrun error interrupts.
