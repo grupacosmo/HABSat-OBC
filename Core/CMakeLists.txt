@@ -1,4 +1,4 @@
 
-add_subdirectory(mainpp)
-add_subdirectory(lcd)
-add_subdirectory(utils)
+add_subdirectory(Mainpp)
+add_subdirectory(Lcd)
+add_subdirectory(Utils)

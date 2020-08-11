@@ -1,2 +1,0 @@
-add_subdirectory(led)
-add_subdirectory(bitwise_operations)

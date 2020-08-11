@@ -19,7 +19,7 @@
 Lcd::Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *const hi2cx, uint8_t slave_address)
 : m_lines(lines), m_line_length(line_length), m_hi2cx(hi2cx), m_slave_address(slave_address)
 {
-    // TODO: DELAYS, FILES ALREADY MADE IN "Core/utils"
+    // TODO: DELAYS, FILES ALREADY MADE IN "Core/Utils"
 
     m_display_ctrl_config = std::byte{Command::DISPLAY_CRTL} | std::byte{DisplayCtrlFlag::DISPLAY_STATE};
     m_entry_mode_config = std::byte{Command::ENTRY_MODE} | std::byte{EntryModeFlag::SHIFT_DIRECTION};
