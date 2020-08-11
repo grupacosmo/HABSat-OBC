@@ -1,2 +1,2 @@
 add_subdirectory(Led)
-add_subdirectory(BitwiseOperations)
+add_subdirectory(Bitwise_Operations)

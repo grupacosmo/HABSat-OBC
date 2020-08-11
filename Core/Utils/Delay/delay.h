@@ -1,5 +1,5 @@
 //
-// Created by vixu on 8/10/20.
+// Created by Wiktor Wieclaw on 8/10/20.
 //
 
 #ifndef RCC_SYS_DELAY_H
