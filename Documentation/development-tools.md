@@ -1,9 +1,11 @@
 # Development tools
 
 ## Programming language
-### Why C++17 instead of C?
+### C++
+C++17 is our language of choice
+#### Pros and cons of C++ compared to C
 Pros:
-* Allows for greater level of abstraction.
+* Allows for greater level of abstraction, the code is much cleaner.
 * Easier to express ideas through code implementation.
 * More features that allow for writing safe code.
 * It is as fast as C or sometimes even faster.
@@ -11,6 +13,7 @@ Pros:
 Cons:
 * It may be harder for unexperienced programmers to write code without overhead compared to C.
 * It's complexity may be overwhelming for new programmers.
+* Harder to refactor code.
 
 ## CMake
 CMake is a cross-platform free and open-source software tool for managing the build process of software using a compiler-independent method.
