@@ -43,18 +43,18 @@ public:
 private:
 
     /**
-     * You can find explanations of all commands here:
+     * You can find detailed explanations of all commands here:
      * https://mil.ufl.edu/3744/docs/lcdmanual/commands.html
      */
     enum class Command : uint8_t {
-        CLEAR_DISPLAY   = 0x01,
-        CURSOR_HOME     = 0x02,
-        ENTRY_MODE      = 0x04,
-        DISPLAY_CRTL    = 0x08,
-        SHIFT           = 0x10,
-        FUNCTION_SET    = 0x20,
-        CGRAM_ADDRESS   = 0x40,
-        DDRAM_ADDRESS   = 0x80,
+        CLEAR_DISPLAY   = 0x01, // has no flags, clears display
+        CURSOR_HOME     = 0x02, // has no flags, sets cursor to line, 0 char 0
+        ENTRY_MODE      = 0x04, // has flags, changes the mode of entering new characters
+        DISPLAY_CRTL    = 0x08, // has flags, changes the mode of displaying
+        SHIFT           = 0x10, // has flags, shifts cursor or entire display
+        FUNCTION_SET    = 0x20, // has flags, changes the function set
+        CGRAM_ADDRESS   = 0x40, //
+        DDRAM_ADDRESS   = 0x80, //
     };
 
     // Below are the flags of all the commands that have them
@@ -77,8 +77,8 @@ private:
 
     enum class FunctionSetFlag : uint8_t {
         FONT                = 0x04,
-        DISPLAY_LINES       = 0x08,
-        INTERFACE_LENGTH    = 0x10,
+        DISPLAY_LINES       = 0x08, // flag not set - 1 line function set, flag set - 2 line function set
+        INTERFACE_LENGTH    = 0x10, // flag not set - 4 bit interface, flag set - 8 bit interface
     };
 
     const std::byte NO_FLAG{0x00};

@@ -1,5 +1,9 @@
 # Coding guidelines
 
+## Performance
+Whenever you want to use a C++ feature that you are not very familiar with, check whether it's appropriate for 
+embedded software e.g. it doesn't cost more compared to C alternative.
+
 ## Macros
 Avoid macros whenever there are alternatives available
 
