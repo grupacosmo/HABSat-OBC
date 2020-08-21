@@ -25,7 +25,7 @@ void mainpp()
 
     std::function button_led_task = [button, led]()
     {
-        while (true)
+        while(true)
         {
             vTaskDelay(pdMS_TO_TICKS(1));
             if (button.is_pressed())
@@ -35,11 +35,12 @@ void mainpp()
             while (button.is_pressed());
         }
     };
+
     os::create_task(button_led_task, "button_led", 128, configMAX_PRIORITIES - 1, NULL);
 
     std::function lcd_task_test = [lcd]()
     {
-        int delay_ms = 1111;
+        const int delay_ms = 1111;
         while(true)
         {
             lcd.print_line(0, "display");
