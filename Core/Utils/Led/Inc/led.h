@@ -8,12 +8,13 @@
 #include "stm32f4xx_hal.h"
 
 class Led{
-    GPIO_TypeDef *const type = GPIOA;
-    const uint16_t pin = GPIO_PIN_5;
+    GPIO_TypeDef *const TYPE = GPIOA;
+    const uint16_t PIN = GPIO_PIN_5;
 public:
     void on() const;
     void off() const;
     void toggle() const;
+    bool isOn() const;
 };
 
 
