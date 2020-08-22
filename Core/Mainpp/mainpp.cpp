@@ -10,7 +10,6 @@
 #include "led.h"
 #include "lcd.h"
 #include "FreeRTOS.h"
-#include "task.h"
 #include "button.h"
 #include "freertoswrapper.h"
 

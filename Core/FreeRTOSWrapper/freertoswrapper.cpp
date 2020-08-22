@@ -7,9 +7,9 @@
 namespace os
 {
     Task::Task(const char *const name, const uint16_t usStackDepth, UBaseType_t uxPriority, std::function<void()> task_code)
-               : m_task_handle(NULL), m_task_code(task_code)
+    : m_task_handle(NULL), m_task_code(task_code)
     {
-        xTaskCreate(details::call_task_function, name, usStackDepth, static_cast<void *>(&m_task_code),
+        xTaskCreate(call_task_function, name, usStackDepth, static_cast<void *>(&m_task_code),
                     uxPriority, &m_task_handle);
     }
 
@@ -38,12 +38,18 @@ namespace os
         vTaskResume(m_task_handle);
     }
 
-    namespace details
+    void Task::call_task_function(void *args)
     {
-        static void call_task_function(void *args)
-        {
-            auto &f = *static_cast<std::function<void()> *>(args);
-            f();
-        }
+        (*static_cast<std::function<void()> *>(args))();
+    }
+
+    void Task::suspend_itself()
+    {
+        vTaskSuspend(NULL);
+    }
+
+    void Task::resume_itself()
+    {
+        vTaskResume(NULL);
     }
 }
