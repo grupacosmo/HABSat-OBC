@@ -52,4 +52,9 @@ namespace os
     {
         vTaskResume(NULL);
     }
+
+    Task::State Task::get_state() const
+    {
+        return eTaskGetState(m_task_handle);
+    }
 }

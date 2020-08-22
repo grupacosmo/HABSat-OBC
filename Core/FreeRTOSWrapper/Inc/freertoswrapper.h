@@ -13,6 +13,13 @@ namespace os
 {
     class Task
     {
+
+    public:
+        /**
+         * Alias for eTaskState.
+         */
+        using State = eTaskState;
+
     public:
         /**
          * Task's constructor.
@@ -25,7 +32,7 @@ namespace os
              std::function<void()> task_code);
 
         /**
-         * Suspends the task
+         * Suspends the task.
          */
         void suspend() const;
 
@@ -33,6 +40,12 @@ namespace os
          * Resumes the task.
          */
         void resume() const;
+
+        /**
+         *
+         * @return State from os::Thread::State enum.
+         */
+        State get_state() const;
 
     public:
         /**

@@ -33,24 +33,19 @@ void mainpp()
 
     os::Task button_task("button_task", 128, configMAX_PRIORITIES - 1, [button, led_task, led]()
     {
-        bool running = true; // TODO WW: temporary solution
+        // TODO WW: temporary solution, should be done with interrupt
         while(true)
         {
-            os::Task::delay(1); // TODO WW: temporary solution
-            if (button.is_pressed())
+            while(!button.is_pressed());
+            if(led_task.get_state() != os::Task::State::eSuspended)
             {
-                if(running)
-                {
-                    led_task.suspend();
-                    running = false;
-                }
-                else
-                {
-                    led_task.resume();
-                    running = true;
-                }
+                led_task.suspend();
             }
-            while(button.is_pressed()); // TODO WW: temporary solution
+            else
+            {
+                led_task.resume();
+            }
+            while(button.is_pressed());
         }
     });
 
