@@ -22,15 +22,6 @@ void mainpp()
     Led led;
     Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
 
-    static os::Task button_interrupt_task("button_interrupt_task",128,configMAX_PRIORITIES-1,[button,led]()
-    {
-        while(true)
-        {
-            os::Task::suspend_itself();
-            led.toggle();
-        }
-    });
-
     os::Task led_task("lcd_task", 128, configMAX_PRIORITIES - 1, [led]()
     {
         while(true)
@@ -45,6 +36,7 @@ void mainpp()
         // TODO WW: temporary solution, should be done with interrupt
         while(true)
         {
+            while(!button.is_pressed());
             if(led_task.get_state() != os::Task::State::eSuspended)
             {
                 led_task.suspend();
@@ -56,7 +48,6 @@ void mainpp()
             while(button.is_pressed());
         }
     });
-
 
     os::Task lcd_task("lcd_task", 128, configMAX_PRIORITIES - 1, [lcd]()
     {
