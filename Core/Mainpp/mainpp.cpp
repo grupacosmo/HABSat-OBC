@@ -23,35 +23,50 @@ void mainpp()
     Led led;
     Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
 
-    std::function button_led_task = [button, led]()
+    os::Task led_task("lcd_task", 128, configMAX_PRIORITIES - 1, [led]()
     {
         while(true)
         {
-            vTaskDelay(pdMS_TO_TICKS(1));
+            led.toggle();
+            os::Task::delay(1000);
+        }
+    });
+
+    os::Task button_task("button_task", 128, configMAX_PRIORITIES - 1, [button, led_task, led]()
+    {
+        bool running = true; // TODO WW: temporary solution
+        while(true)
+        {
+            os::Task::delay(1); // TODO WW: temporary solution
             if (button.is_pressed())
             {
-                led.toggle();
+                if(running)
+                {
+                    led_task.suspend();
+                    running = false;
+                }
+                else
+                {
+                    led_task.resume();
+                    running = true;
+                }
             }
-            while (button.is_pressed());
+            while(button.is_pressed()); // TODO WW: temporary solution
         }
-    };
+    });
 
-    os::create_task(button_led_task, "button_led", 128, configMAX_PRIORITIES - 1, NULL);
-
-    std::function lcd_task_test = [lcd]()
+    os::Task lcd_task("lcd_task", 128, configMAX_PRIORITIES - 1, [lcd]()
     {
         const int delay_ms = 1111;
         while(true)
         {
             lcd.print_line(0, "display");
-            vTaskDelay(pdMS_TO_TICKS(delay_ms));
+            os::Task::delay(delay_ms);
             lcd.print_line(0, "test");
-            vTaskDelay(pdMS_TO_TICKS(delay_ms));
+            os::Task::delay(delay_ms);
         }
-    };
+    });
 
-    os::create_task(lcd_task_test, "lcd", 128, configMAX_PRIORITIES - 1, NULL);
-
-    vTaskStartScheduler();
+    os::Task::start_scheduler();
     while(true);
 }
