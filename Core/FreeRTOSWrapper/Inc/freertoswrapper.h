@@ -42,6 +42,11 @@ namespace os
         void resume() const;
 
         /**
+         * Getter for m_task_handle
+         */
+        TaskHandle_t get_task_handle() const;
+
+        /**
          *
          * @return State from os::Thread::State enum.
          */
@@ -79,6 +84,7 @@ namespace os
          * non-static methods, since the object is not yet created.
          */
         static void resume_itself();
+
 
     private:
         /**

@@ -57,4 +57,9 @@ namespace os
     {
         return eTaskGetState(m_task_handle);
     }
+
+    TaskHandle_t Task::get_task_handle() const
+    {
+        return m_task_handle;
+    }
 }
