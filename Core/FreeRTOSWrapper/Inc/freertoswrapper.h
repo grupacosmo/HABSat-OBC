@@ -16,7 +16,7 @@ namespace os
 
     public:
         /**
-         * Alias for eTaskState.
+         * Alias for eTaskState enum.
          */
         using State = eTaskState;
 

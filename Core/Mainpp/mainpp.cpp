@@ -17,7 +17,14 @@ extern I2C_HandleTypeDef hi2c1;
 const os::Task *button_interrupt_task_pointer;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-    button_interrupt_task_pointer->resume_from_ISR();
+    switch(GPIO_Pin)
+    {
+        case GPIO_PIN_13:
+            button_interrupt_task_pointer->resume_from_ISR();
+            break;
+        default:
+            break;
+    }
 }
 
 void mainpp()
