@@ -28,7 +28,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "mainpp.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

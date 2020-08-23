@@ -62,4 +62,9 @@ namespace os
     {
         return m_task_handle;
     }
+
+    void Task::resume_from_ISR()
+    {
+        portYIELD_FROM_ISR(xTaskResumeFromISR(m_task_handle));
+    }
 }

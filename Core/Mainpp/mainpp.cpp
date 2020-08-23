@@ -9,19 +9,17 @@
 #include "lcd.h"
 #include "FreeRTOS.h"
 #include "button.h"
+#include "task.h"
 #include "freertoswrapper.h"
 
 constexpr uint8_t lcd_slave_address = 0x4E;
 extern I2C_HandleTypeDef hi2c1;
 
-#define INTERRUPT_TEST 1
-#if INTERRUPT_TEST
-TaskHandle_t int_task_handle;
+os::Task *button_interrupt_task_pointer;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-
+    button_interrupt_task_pointer->resume_from_ISR();
 }
-#endif
 
 void mainpp()
 {
@@ -29,7 +27,7 @@ void mainpp()
     Led led;
     Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
 
-    os::Task led_task("lcd_task", 128, configMAX_PRIORITIES - 1, [led]()
+    os::Task led_task("lcd_task", 512, tskIDLE_PRIORITY, [led]()
     {
         while(true)
         {
@@ -37,28 +35,9 @@ void mainpp()
             os::Task::delay(1000);
         }
     });
-#if !INTERRUPT_TEST
-    os::Task button_task("button_task", 128, configMAX_PRIORITIES - 1, [button, led_task, led]()
-    {
-        // TODO WW: temporary solution, should be done with interrupt
-        while(true)
-        {
-            while(!button.is_pressed());
-            if(led_task.get_state() != os::Task::State::eSuspended)
-            {
-                led_task.suspend();
-            }
-            else
-            {
-                led_task.resume();
-            }
-            while(button.is_pressed());
-        }
-    });
 
-#else
 
-    static os::Task button_interrupt_task("button_interrupt_task", 128, configMAX_PRIORITIES - 1, [button, led_task]()
+    static os::Task button_interrupt_task("button_interrupt_task", 512, configMAX_SYSCALL_INTERRUPT_PRIORITY, [button, led_task]()
     {
         while(true)
         {
@@ -69,10 +48,9 @@ void mainpp()
                 led_task.resume();
         }
     });
-    int_task_handle = button_interrupt_task.get_task_handle();
-#endif
+    button_interrupt_task_pointer = &button_interrupt_task;
 
-    os::Task lcd_task("lcd_task", 128, configMAX_PRIORITIES - 1, [lcd]()
+    os::Task lcd_task("lcd_task", 512, tskIDLE_PRIORITY, [lcd]()
     {
         const int delay_ms = 1111;
         while(true)

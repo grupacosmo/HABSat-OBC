@@ -85,6 +85,7 @@ namespace os
          */
         static void resume_itself();
 
+        void resume_from_ISR();
 
     private:
         /**
