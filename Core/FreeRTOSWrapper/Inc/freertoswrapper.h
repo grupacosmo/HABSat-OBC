@@ -50,7 +50,13 @@ namespace os
          *
          * @return State from os::Thread::State enum.
          */
-        State get_state() const;
+        const State get_state() const;
+
+        /**
+         * Resumes the task form the interrupt handler. To use this you need to create a global pointer
+         * to the object and then invoke this function in a interrupt callback function implementation.
+         */
+        void resume_from_ISR() const;
 
     public:
         /**
@@ -84,8 +90,6 @@ namespace os
          * non-static methods, since the object is not yet created.
          */
         static void resume_itself();
-
-        void resume_from_ISR();
 
     private:
         /**

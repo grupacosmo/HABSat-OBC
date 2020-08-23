@@ -53,7 +53,7 @@ void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
     set_cursor_pos(line_index, str.size());
 }
 
-void Lcd::print_char(const char character)
+void Lcd::print_char(const char character) const
 {
     send_data(std::byte{character});
 }

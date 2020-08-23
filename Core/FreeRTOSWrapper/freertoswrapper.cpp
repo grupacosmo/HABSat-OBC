@@ -53,7 +53,7 @@ namespace os
         vTaskResume(NULL);
     }
 
-    Task::State Task::get_state() const
+    const Task::State Task::get_state() const
     {
         return eTaskGetState(m_task_handle);
     }
@@ -63,7 +63,7 @@ namespace os
         return m_task_handle;
     }
 
-    void Task::resume_from_ISR()
+    void Task::resume_from_ISR() const
     {
         portYIELD_FROM_ISR(xTaskResumeFromISR(m_task_handle));
     }

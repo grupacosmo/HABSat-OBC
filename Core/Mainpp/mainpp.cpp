@@ -8,14 +8,13 @@
 #include "led.h"
 #include "lcd.h"
 #include "FreeRTOS.h"
-#include "button.h"
 #include "task.h"
 #include "freertoswrapper.h"
 
 constexpr uint8_t lcd_slave_address = 0x4E;
 extern I2C_HandleTypeDef hi2c1;
 
-os::Task *button_interrupt_task_pointer;
+const os::Task *button_interrupt_task_pointer;
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
     button_interrupt_task_pointer->resume_from_ISR();
@@ -23,11 +22,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 void mainpp()
 {
-    Button button;
-    Led led;
-    Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
+    static const Led led;
+    static Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
 
-    os::Task led_task("lcd_task", 512, tskIDLE_PRIORITY, [led]()
+    static const os::Task led_task("lcd_task", 512, tskIDLE_PRIORITY, []()
     {
         while(true)
         {
@@ -36,21 +34,23 @@ void mainpp()
         }
     });
 
-
-    static os::Task button_interrupt_task("button_interrupt_task", 512, configMAX_SYSCALL_INTERRUPT_PRIORITY, [button, led_task]()
+    static const os::Task button_interrupt_task("button_interrupt_task", 512, configMAX_SYSCALL_INTERRUPT_PRIORITY, []()
     {
         while(true)
         {
             os::Task::suspend_itself();
+            lcd.print_line(3, "click");
             if(led_task.get_state() != os::Task::State::eSuspended)
                 led_task.suspend();
             else
                 led_task.resume();
+            os::Task::delay(1000);
+            lcd.print_line(3, "");
         }
     });
     button_interrupt_task_pointer = &button_interrupt_task;
 
-    os::Task lcd_task("lcd_task", 512, tskIDLE_PRIORITY, [lcd]()
+    static const os::Task lcd_task("lcd_task", 512, tskIDLE_PRIORITY, []()
     {
         const int delay_ms = 1111;
         while(true)

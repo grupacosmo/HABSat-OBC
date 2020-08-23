@@ -27,7 +27,7 @@ public:
 
     void set_cursor_pos(uint16_t line, const uint16_t column) const;
     void print_line(const uint16_t line_index, const std::string& str) const;
-    void print_char(const char character);
+    void print_char(const char character) const;
     void clear() const;
     void display_on();
     void display_off();
