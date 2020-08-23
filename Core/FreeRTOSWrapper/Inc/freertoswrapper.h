@@ -42,6 +42,11 @@ namespace os
         void resume() const;
 
         /**
+         * Deletes the task.
+         */
+        void delete_task() const;
+
+        /**
          * Getter for m_task_handle
          */
         TaskHandle_t get_task_handle() const;
@@ -80,16 +85,22 @@ namespace os
         static void start_scheduler();
 
         /**
-         * Allows the task to suspend itself as the task's function does not have access to
-         * non-static methods, since the object is not yet created.
+         * Allows the task to resume itself. This method has to be static as the task's function does not
+         * have access to non-static methods, since the object is not yet created.
          */
         static void suspend_itself();
 
         /**
-         * Allows the task to resume itself as the task's function does not have access to
-         * non-static methods, since the object is not yet created.
+         * Allows the task to suspend itself. This method has to be static as the task's function does not
+         * have access to non-static methods, since the object is not yet created.
          */
         static void resume_itself();
+
+        /**
+         * Allows the task to delete itself. This method has to be static as the task's function does not
+         * have access to non-static methods, since the object is not yet created.
+         */
+        static void delete_itself();
 
     private:
         /**

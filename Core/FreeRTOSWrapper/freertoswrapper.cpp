@@ -67,4 +67,14 @@ namespace os
     {
         portYIELD_FROM_ISR(xTaskResumeFromISR(m_task_handle));
     }
+
+    void Task::delete_itself()
+    {
+        vTaskDelete(NULL);
+    }
+
+    void Task::delete_task() const
+    {
+        vTaskDelete(m_task_handle);
+    }
 }
