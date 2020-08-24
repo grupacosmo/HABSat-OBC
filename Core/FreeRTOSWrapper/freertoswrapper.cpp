@@ -6,11 +6,12 @@
 
 namespace os
 {
-    Task::Task(const char *const name, const uint16_t usStackDepth, UBaseType_t uxPriority, std::function<void()> task_code)
+    Task::Task(const char *const name, const uint16_t usStackDepth, Priority priority,
+               const std::function<void()> task_code)
     : m_task_handle(NULL), m_task_code(task_code)
     {
-        xTaskCreate(call_task_function, name, usStackDepth, static_cast<void *>(&m_task_code),
-                    uxPriority, &m_task_handle);
+        xTaskCreate(call_task_function, name, usStackDepth, const_cast<void *>(static_cast<const void *>(&m_task_code)),
+                    static_cast<int>(priority), &m_task_handle);
     }
 
     void Task::delay(const uint32_t miliseconds)
@@ -40,7 +41,7 @@ namespace os
 
     void Task::call_task_function(void *args)
     {
-        (*static_cast<std::function<void()> *>(args))();
+        (* static_cast<const std::function<void()> *>(args))();
     }
 
     void Task::suspend_itself()

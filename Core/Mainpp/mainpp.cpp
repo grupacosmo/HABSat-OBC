@@ -27,12 +27,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     }
 }
 
+
 void mainpp()
 {
     static const Led led;
     static Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
 
-    static const os::Task led_task("lcd_task", 512, tskIDLE_PRIORITY, []()
+    static const os::Task led_task("lcd_task", 128, os::Task::Priority::IDLE, []()
     {
         while(true)
         {
@@ -41,7 +42,7 @@ void mainpp()
         }
     });
 
-    static const os::Task button_interrupt_task("button_interrupt_task", 512, configMAX_SYSCALL_INTERRUPT_PRIORITY, []()
+    static const os::Task button_interrupt_task("button_interrupt_task", 128, os::Task::Priority::INTERRUPT, []()
     {
         while(true)
         {
@@ -57,7 +58,7 @@ void mainpp()
     });
     button_interrupt_task_pointer = &button_interrupt_task;
 
-    static const os::Task lcd_task("lcd_task", 512, tskIDLE_PRIORITY, []()
+    static const os::Task lcd_task("lcd_task", 128, os::Task::Priority::IDLE, []()
     {
         const int delay_ms = 1111;
         while(true)

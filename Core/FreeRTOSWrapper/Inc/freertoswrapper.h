@@ -20,16 +20,22 @@ namespace os
          */
         using State = eTaskState;
 
+        enum class Priority
+        {
+            IDLE = tskIDLE_PRIORITY,
+            INTERRUPT = configMAX_SYSCALL_INTERRUPT_PRIORITY
+        };
+
     public:
         /**
          * Task's constructor.
          * @param name          Name of the task.
-         * @param usStackDepth  Approximate size of the stack needed for the task.
-         * @param uxPriority    Priority of the task.
+         * @param usStackDepth  Approximate size of the stack needed for the task's function.
+         * @param priority      Priority of the task.
          * @param task_code     Lambda that contains the code of the task.
          */
-        Task(const char * const name, const configSTACK_DEPTH_TYPE usStackDepth, UBaseType_t uxPriority,
-             std::function<void()> task_code);
+        Task(const char * const name, const configSTACK_DEPTH_TYPE usStackDepth, Priority priority,
+             const std::function<void()> task_code);
 
         /**
          * Suspends the task.
@@ -112,7 +118,7 @@ namespace os
     private:
 
         TaskHandle_t m_task_handle;
-        std::function<void()> m_task_code;
+        const std::function<void()> m_task_code;
     };
 };
 
