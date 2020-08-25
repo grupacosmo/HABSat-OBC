@@ -20,6 +20,9 @@ namespace os
          */
         using State = eTaskState;
 
+        /**
+         * Priority of a task.
+         */
         enum class Priority
         {
             IDLE = tskIDLE_PRIORITY,
@@ -30,12 +33,13 @@ namespace os
         /**
          * Task's constructor.
          * @param name          Name of the task.
-         * @param usStackDepth  Approximate size of the stack needed for the task's function.
+         * @param stack_depth  Approximate size of the stack needed for the task's function.
          * @param priority      Priority of the task.
-         * @param task_code     Lambda that contains the code of the task.
+         * @param task_code     Pointer to a function that contains the code of the task.
+         * @param args          void* used to pass arguments to the task
          */
-        Task(const char * const name, const configSTACK_DEPTH_TYPE usStackDepth, Priority priority,
-             const std::function<void()> task_code);
+        Task(const char * const name, const configSTACK_DEPTH_TYPE stack_depth, const Priority &priority,
+             void (*const task_code)(void*), void const* args = NULL);
 
         /**
          * Suspends the task.
@@ -48,7 +52,7 @@ namespace os
         void resume() const;
 
         /**
-         * Deletes the task.
+         * Deletes the task form scheduler.
          */
         void delete_task() const;
 
@@ -68,6 +72,11 @@ namespace os
          * to the object and then invoke this function in a interrupt callback function implementation.
          */
         void resume_from_ISR() const;
+
+        /**
+         * Allocated memory and adds the task to the scheduler.
+         */
+        void add_to_scheduler() const;
 
     public:
         /**
@@ -103,22 +112,19 @@ namespace os
         static void resume_itself();
 
         /**
-         * Allows the task to delete itself. This method has to be static as the task's function does not
+         * Allows the task to delete itself from scheduler. This method has to be static as the task's function does not
          * have access to non-static methods, since the object is not yet created.
          */
         static void delete_itself();
 
     private:
-        /**
-         * Calls the function that contains task's code.
-         * @param args std::function* casted to void*.
-         */
-        static void call_task_function(void *task_code);
-
-    private:
 
         TaskHandle_t m_task_handle;
-        const std::function<void()> m_task_code;
+        void (*const m_task_code)(void*);
+        const char *const m_name;
+        const configSTACK_DEPTH_TYPE m_stack_depth;
+        const Priority m_priority;
+        void const* m_args;
     };
 };
 

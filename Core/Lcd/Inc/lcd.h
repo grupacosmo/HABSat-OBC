@@ -24,7 +24,7 @@ public:
      * @param slave_address Slave address of an LCD.
      */
     Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *hi2cx, const uint8_t slave_address);
-
+    void initialize() const;
     void set_cursor_pos(uint16_t line, const uint16_t column) const;
     void print_line(const uint16_t line_index, const std::string& str) const;
     void print_char(const char character) const;

@@ -17,13 +17,19 @@
 // public:
 
 Lcd::Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *const hi2cx, uint8_t slave_address)
-: m_lines(lines), m_line_length(line_length), m_hi2cx(hi2cx), m_slave_address(slave_address)
-{
-    m_display_ctrl_config = std::byte{Command::DISPLAY_CRTL} | std::byte{DisplayCtrlFlag::DISPLAY_STATE};
-    m_entry_mode_config = std::byte{Command::ENTRY_MODE} | std::byte{EntryModeFlag::SHIFT_DIRECTION};
+: m_lines(lines),
+  m_line_length(line_length),
+  m_hi2cx(hi2cx),
+  m_slave_address(slave_address),
+  m_display_ctrl_config(std::byte{Command::DISPLAY_CRTL} | std::byte{DisplayCtrlFlag::DISPLAY_STATE}),
+  m_entry_mode_config(std::byte{Command::ENTRY_MODE} | std::byte{EntryModeFlag::SHIFT_DIRECTION})
+{}
 
+
+void Lcd::initialize() const
+{
     std::byte display_lines_flag{NO_FLAG};
-    if(lines > 1)
+    if(m_lines > 1)
         display_lines_flag = std::byte{FunctionSetFlag::DISPLAY_LINES};
 
     HAL_Delay(20);  send_cmd(Command::FUNCTION_SET);
@@ -186,3 +192,4 @@ void Lcd::i2c_transmit(std::byte data, const uint16_t data_length) const
 {
     HAL_I2C_Master_Transmit(m_hi2cx, m_slave_address, reinterpret_cast<uint8_t *>(&data), data_length, 100);
 }
+

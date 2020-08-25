@@ -8,67 +8,35 @@
 #include "led.h"
 #include "lcd.h"
 #include "FreeRTOS.h"
-#include "task.h"
 #include "freertoswrapper.h"
+#include "idle_tasks.h"
+#include "interrupt_tasks.h"
 
-constexpr uint8_t lcd_slave_address = 0x4E;
+/* global variables */
+const Led led;
+
 extern I2C_HandleTypeDef hi2c1;
+constexpr uint8_t LCD_SLAVE_ADDRESS = 0x4E;
+Lcd lcd(4, 20, &hi2c1, LCD_SLAVE_ADDRESS);
 
-const os::Task *button_interrupt_task_pointer;
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-    switch(GPIO_Pin)
-    {
-        case GPIO_PIN_13:
-            button_interrupt_task_pointer->resume_from_ISR();
-            break;
-        default:
-            break;
-    }
-}
+/* interrupt callbacks */
+extern void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 
+/* idle tasks */
+const os::Task led_task("lcd_task", 128, os::Task::Priority::IDLE, led_task_code);
+const os::Task lcd_task("lcd_task", 128, os::Task::Priority::IDLE, lcd_task_code);
+
+/* interrupt tasks */
+const os::Task button_interrupt_task("button_task", 128, os::Task::Priority::INTERRUPT, button_interrupt_task_code);
 
 void mainpp()
 {
-    static const Led led;
-    static Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
+    lcd.initialize();
 
-    static const os::Task led_task("lcd_task", 128, os::Task::Priority::IDLE, []()
-    {
-        while(true)
-        {
-            led.toggle();
-            os::Task::delay(1000);
-        }
-    });
+    led_task.add_to_scheduler();
+    lcd_task.add_to_scheduler();
 
-    static const os::Task button_interrupt_task("button_interrupt_task", 128, os::Task::Priority::INTERRUPT, []()
-    {
-        while(true)
-        {
-            os::Task::suspend_itself();
-            lcd.print_line(3, "click");
-            if(led_task.get_state() != os::Task::State::eSuspended)
-                led_task.suspend();
-            else
-                led_task.resume();
-            os::Task::delay(1000);
-            lcd.print_line(3, "");
-        }
-    });
-    button_interrupt_task_pointer = &button_interrupt_task;
-
-    static const os::Task lcd_task("lcd_task", 128, os::Task::Priority::IDLE, []()
-    {
-        const int delay_ms = 1111;
-        while(true)
-        {
-            lcd.print_line(0, "display");
-            os::Task::delay(delay_ms);
-            lcd.print_line(0, "test");
-            os::Task::delay(delay_ms);
-        }
-    });
+    button_interrupt_task.add_to_scheduler();
 
     os::Task::start_scheduler();
     while(true);

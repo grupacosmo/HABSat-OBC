@@ -6,12 +6,12 @@
 
 namespace os
 {
-    Task::Task(const char *const name, const uint16_t usStackDepth, Priority priority,
-               const std::function<void()> task_code)
-    : m_task_handle(NULL), m_task_code(task_code)
+    Task::Task(const char *const name, const uint16_t stack_depth, const Priority &priority,
+               void (*task_code)(void *), void const* args)
+    : m_task_handle(NULL), m_task_code(task_code), m_name(name), m_stack_depth(stack_depth), m_priority(priority),
+      m_args(args)
     {
-        xTaskCreate(call_task_function, name, usStackDepth, const_cast<void *>(static_cast<const void *>(&m_task_code)),
-                    static_cast<int>(priority), &m_task_handle);
+
     }
 
     void Task::delay(const uint32_t miliseconds)
@@ -37,11 +37,6 @@ namespace os
     void Task::resume() const
     {
         vTaskResume(m_task_handle);
-    }
-
-    void Task::call_task_function(void *args)
-    {
-        (* static_cast<const std::function<void()> *>(args))();
     }
 
     void Task::suspend_itself()
@@ -77,5 +72,11 @@ namespace os
     void Task::delete_task() const
     {
         vTaskDelete(m_task_handle);
+    }
+
+    void Task::add_to_scheduler() const
+    {
+        xTaskCreate(m_task_code, m_name, m_stack_depth, const_cast<void *>(m_args),
+                    static_cast<int>(m_priority), const_cast<TaskHandle_t *const>(&m_task_handle));
     }
 }
