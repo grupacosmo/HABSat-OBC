@@ -15,4 +15,4 @@ target_link_libraries(${NAME}
         button
         freertoswrapper
         tasks
-        wifi)
+        interrupt_callbacks)
