@@ -18,7 +18,7 @@ set(SIZE arm-none-eabi-size)
 SET(LINKER_SCRIPT $${CMAKE_SOURCE_DIR}/${linkerScript})
 
 #Uncomment for hardware floating point
-#SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
+SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
 #add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
 
 #Uncomment for software floating point
@@ -59,7 +59,6 @@ Building $${BIN_FILE}")
 # DEVELOPER DEFINED
 
 add_subdirectory(Core)
-add_subdirectory(Src)
 
 target_link_libraries(${projectName}.elf
         mainpp

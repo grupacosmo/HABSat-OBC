@@ -6,15 +6,20 @@
 
 void Led::on() const
 {
-    HAL_GPIO_WritePin(type, pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(TYPE, PIN, GPIO_PIN_SET);
 }
 void Led::off() const
 {
-    HAL_GPIO_WritePin(type, pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(TYPE, PIN, GPIO_PIN_RESET);
 }
 void Led::toggle() const
 {
-    HAL_GPIO_TogglePin(type, pin);
+    HAL_GPIO_TogglePin(TYPE, PIN);
+}
+
+bool Led::isOn() const
+{
+    return HAL_GPIO_ReadPin(TYPE, PIN) == GPIO_PIN_SET;
 }
 
 

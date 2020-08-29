@@ -1,4 +1,4 @@
-set(NAME mainpp)
+set(NAME freertoswrapper)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,9 +9,4 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        led
-        lcd
-        freertos
-        button
-        freertoswrapper
-        tasks)
+        freertos)

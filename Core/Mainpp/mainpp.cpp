@@ -7,35 +7,37 @@
 #include "stm32f4xx_hal.h"
 #include "led.h"
 #include "lcd.h"
+#include "FreeRTOS.h"
+#include "freertoswrapper.h"
+#include "idle_tasks.h"
+#include "interrupt_tasks.h"
 
-constexpr uint8_t lcd_slave_address = 0x4E;
+/* global variables */
+const Led led;
+
 extern I2C_HandleTypeDef hi2c1;
+constexpr uint8_t LCD_SLAVE_ADDRESS = 0x4E;
+Lcd lcd(4, 20, &hi2c1, LCD_SLAVE_ADDRESS);
+
+/* interrupt callbacks */
+extern void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+
+/* idle tasks */
+const os::Task led_task("lcd_task", 128, os::Task::Priority::IDLE, led_task_code);
+const os::Task lcd_task("lcd_task", 128, os::Task::Priority::IDLE, lcd_task_code);
+
+/* interrupt tasks */
+const os::Task button_interrupt_task("button_task", 128, os::Task::Priority::INTERRUPT, button_interrupt_task_code);
 
 void mainpp()
 {
-    Led led;
-    Lcd lcd(4, 20, &hi2c1, lcd_slave_address);
+    lcd.initialize();
 
-    uint32_t delay = 500;
-    HAL_Delay(2 * delay);
+    led_task.add_to_scheduler();
+    lcd_task.add_to_scheduler();
 
+    button_interrupt_task.add_to_scheduler();
 
-    auto lambda = [lcd, delay](const uint16_t line, const std::string& s){
-
-        lcd.print_line(line, s);
-        HAL_Delay(delay);
-    };
-    while(true)
-    {
-        lambda(0, "stm32");
-        lambda(1, "liquid");
-        lambda(2, "crystal");
-        lambda(3, "display");
-        lcd.clear();
-        lambda(0, "i2c");
-        lambda(1, "c++17");
-        lambda(2, "print_line()");
-        lambda(3, "test");
-        lcd.clear();
-    }
+    os::Task::start_scheduler();
+    while(true);
 }
