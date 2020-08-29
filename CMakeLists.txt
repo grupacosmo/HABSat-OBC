@@ -61,5 +61,5 @@ Building ${BIN_FILE}")
 add_subdirectory(Core)
 
 target_link_libraries(rcc-sys.elf
-        mainpp
-        led)
+        main_cpp
+        )

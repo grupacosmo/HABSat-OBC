@@ -1,5 +1,5 @@
 
-add_subdirectory(Mainpp)
+add_subdirectory(Main_Cpp)
 add_subdirectory(Lcd)
 add_subdirectory(Utils)
 add_subdirectory(FreeRTOS)

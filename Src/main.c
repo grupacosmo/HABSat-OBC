@@ -1,7 +1,7 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : mainpp.c
+  * @file           : main_cpp.c
   * @brief          : Main program body
   ******************************************************************************
   * @attention
@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "mainpp.h"
+#include "main_cpp.h"
 
 /* USER CODE END Includes */
 
@@ -101,7 +101,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-    mainpp();
+    main_cpp();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

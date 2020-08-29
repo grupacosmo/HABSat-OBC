@@ -1,8 +1,8 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : mainpp.h
-  * @brief          : Header for mainpp.c file.
+  * @file           : main_cpp.h
+  * @brief          : Header for main_cpp.c file.
   *                   This file contains the common defines of the application.
   ******************************************************************************
   * @attention

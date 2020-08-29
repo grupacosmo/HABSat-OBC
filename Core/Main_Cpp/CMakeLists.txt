@@ -1,4 +1,4 @@
-set(NAME mainpp)
+set(NAME main_cpp)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 

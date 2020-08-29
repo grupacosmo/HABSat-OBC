@@ -2,7 +2,7 @@
 // Created by Wiktor Wieclaw on 8/6/20.
 //
 
-#include "mainpp.h"
+#include "main_cpp.h"
 
 #include "stm32f4xx_hal.h"
 #include "led.h"
@@ -29,7 +29,7 @@ const os::Task lcd_task("lcd_task", 128, os::Task::Priority::IDLE, lcd_task_code
 /* interrupt tasks */
 const os::Task button_interrupt_task("button_task", 128, os::Task::Priority::INTERRUPT, button_interrupt_task_code);
 
-void mainpp()
+void main_cpp()
 {
     lcd.initialize();
 
