@@ -12,25 +12,8 @@
 extern const Led led;
 extern Lcd lcd;
 
-void led_task_code(void *args)
-{
-    while(true)
-    {
-        led.toggle();
-        os::Task::delay(1000);
-    }
-}
+void led_task_code(void *args);
 
-void lcd_task_code(void *args)
-{
-    const int delay_ms = 1111;
-    while(true)
-    {
-        lcd.print_line(0, "display");
-        os::Task::delay(delay_ms);
-        lcd.print_line(0, "test");
-        os::Task::delay(delay_ms);
-    }
-}
+void lcd_task_code(void *args);
 
 #endif //RCC_SYS_IDLE_TASKS_H

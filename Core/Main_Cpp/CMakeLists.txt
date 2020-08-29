@@ -14,4 +14,5 @@ target_link_libraries(${NAME}
         freertos
         button
         freertoswrapper
-        tasks)
+        tasks
+        interrupt_callbacks)
