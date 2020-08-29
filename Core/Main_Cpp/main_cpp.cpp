@@ -11,6 +11,7 @@
 #include "freertoswrapper.h"
 #include "idle_tasks.h"
 #include "interrupt_tasks.h"
+#include "wifi.h"
 
 /* global variables */
 const Led led;
