@@ -7,7 +7,6 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
-#include <functional>
 
 namespace os
 {

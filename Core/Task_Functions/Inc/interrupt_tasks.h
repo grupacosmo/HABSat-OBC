@@ -26,16 +26,5 @@ void button_interrupt_task_code(void *args)
     }
 }
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-    switch(GPIO_Pin)
-    {
-        case GPIO_PIN_13:
-            button_interrupt_task.resume_from_ISR();
-            break;
-        default:
-            break;
-    }
-}
 
 #endif //RCC_SYS_INTERRUPT_TASKS_H
