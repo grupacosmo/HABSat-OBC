@@ -40,5 +40,4 @@ void main_cpp()
     button_interrupt_task.add_to_scheduler();
 
     os::Task::start_scheduler();
-    while(true);
 }
