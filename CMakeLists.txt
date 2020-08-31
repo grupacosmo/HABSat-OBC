@@ -62,4 +62,4 @@ add_subdirectory(Core)
 
 target_link_libraries(rcc-sys.elf
         main_cpp
-        )
+        led)

@@ -17,6 +17,7 @@
 const Led led;
 
 extern I2C_HandleTypeDef hi2c1;
+extern UART_HandleTypeDef huart1;
 constexpr uint8_t LCD_SLAVE_ADDRESS = 0x4E;
 Lcd lcd(4, 20, &hi2c1, LCD_SLAVE_ADDRESS);
 
@@ -39,6 +40,19 @@ void main_cpp()
 
     button_interrupt_task.add_to_scheduler();
 
+#define TEST 1
+#if TEST
+    char recv_buffer[100];
+    HAL_UART_Receive_DMA(&huart1, (uint8_t*)recv_buffer,100);
+
+    HAL_Delay(100);
+    std::string cmd = "AT\r\n";
+    HAL_UART_Transmit(&huart1, (uint8_t*)&cmd[0], cmd.size(), 100);
+
+    HAL_Delay(100);
+    lcd.print_line(0, recv_buffer);
+    while(true);
+#endif
     os::Task::start_scheduler();
     while(true);
 }
