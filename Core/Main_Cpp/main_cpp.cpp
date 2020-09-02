@@ -54,5 +54,4 @@ void main_cpp()
     while(true);
 #endif
     os::Task::start_scheduler();
-    while(true);
 }
