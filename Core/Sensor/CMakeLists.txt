@@ -7,3 +7,4 @@ add_library(${NAME} STATIC ${SOURCE})
 target_include_directories(${NAME}
         PUBLIC ${CMAKE_CURRENT_LIST_DIR}/Inc
         )
+

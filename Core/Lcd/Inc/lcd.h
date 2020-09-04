@@ -6,7 +6,7 @@
 #ifndef RCC_SYS_LCD_H
 #define RCC_SYS_LCD_H
 
-#include "stm32f4xx.h"
+#include "stm32f4xx_hal.h"
 #include "bitwise_operations.h"
 #include <array>
 #include <string>
