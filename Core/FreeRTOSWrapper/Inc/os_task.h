@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/20/20.
 //
 
-#ifndef RCC_SYS_FREERTOSWRAPPER_H
-#define RCC_SYS_FREERTOSWRAPPER_H
+#ifndef RCC_SYS_OS_TASK_H
+#define RCC_SYS_OS_TASK_H
 
 #include "FreeRTOS.h"
 #include "task.h"
@@ -127,4 +127,4 @@ namespace os
     };
 };
 
-#endif //RCC_SYS_FREERTOSWRAPPER_H
+#endif//RCC_SYS_OS_TASK_H

@@ -5,9 +5,9 @@
 #ifndef RCC_SYS_IDLE_TASKS_H
 #define RCC_SYS_IDLE_TASKS_H
 
-#include "freertoswrapper.h"
-#include "led.h"
 #include "lcd.h"
+#include "led.h"
+#include "os_task.h"
 
 extern const Led led;
 extern Lcd lcd;

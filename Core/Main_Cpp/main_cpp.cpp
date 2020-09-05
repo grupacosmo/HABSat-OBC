@@ -4,14 +4,15 @@
 
 #include "main_cpp.h"
 
-#include "stm32f4xx_hal.h"
-#include "led.h"
-#include "lcd.h"
 #include "FreeRTOS.h"
-#include "freertoswrapper.h"
 #include "idle_tasks.h"
-#include "interrupt_tasks.h"
 #include "interrupt_callbacks.h"
+#include "interrupt_tasks.h"
+#include "lcd.h"
+#include "led.h"
+#include "os_task.h"
+#include "os_queue.h"
+#include "stm32f4xx_hal.h"
 
 /* global variables */
 const Led led;
