@@ -2,7 +2,7 @@
 // Created by Wiktor Wieclaw on 8/20/20.
 //
 
-#include "freertoswrapper.h"
+#include "os_task.h"
 
 namespace os
 {
