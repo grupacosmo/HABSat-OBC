@@ -34,7 +34,7 @@ const os::Task button_interrupt_task("button_task", 128, os::Task::Priority::INT
 void main_cpp()
 {
     lcd.initialize();
-    os::Queue<int> q;
+
     led_task.add_to_scheduler();
     lcd_task.add_to_scheduler();
 
