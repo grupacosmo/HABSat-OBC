@@ -18,6 +18,7 @@ const Led led;
 
 extern I2C_HandleTypeDef hi2c1;
 extern UART_HandleTypeDef huart1;
+extern DMA_HandleTypeDef hdma_usart1_rx;
 constexpr uint8_t LCD_SLAVE_ADDRESS = 0x4E;
 Lcd lcd(4, 20, &hi2c1, LCD_SLAVE_ADDRESS);
 
@@ -42,16 +43,23 @@ void main_cpp()
 
 #define TEST 1
 #if TEST
-    char recv_buffer[100];
-    HAL_UART_Receive_DMA(&huart1, (uint8_t*)recv_buffer,100);
 
-    HAL_Delay(100);
-    std::string cmd = "AT\r\n";
-    HAL_UART_Transmit(&huart1, (uint8_t*)&cmd[0], cmd.size(), 100);
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+    HAL_UART_Receive_DMA(&huart1, reinterpret_cast<uint8_t*>(&receive_buffer[0]), receive_buffer.size());
 
-    HAL_Delay(100);
-    lcd.print_line(0, recv_buffer);
-    while(true);
+    auto send_cmd = [](const std::string &s)
+    {
+      HAL_UART_Transmit(&huart1, reinterpret_cast<uint8_t *>(const_cast<char*>(&s[0])), s.size(), 100);
+      HAL_Delay(5000);
+    };
+
+    send_cmd("AT\r\n");
+    send_cmd("AT+CWMODE\r\n");
+
+    while(true)
+    {
+
+    }
 #endif
     os::Task::start_scheduler();
 }

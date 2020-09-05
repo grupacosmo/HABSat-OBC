@@ -8,7 +8,7 @@
 #include "interrupt_tasks.h"
 
 /*
- * Functions need to be implemented in the header
+ * Functions need to be implemented in the header file
  */
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
