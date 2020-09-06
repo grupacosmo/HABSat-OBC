@@ -18,3 +18,37 @@ void button_interrupt_task_code(void *args)
         lcd.print_line(3, "");
     }
 }
+
+void uart_receive_interrupt_task_code(void *args)
+{
+    size_t position_old = 0;
+    size_t position_current;
+
+    int notification;
+    while(true)
+    {
+        // TODO: this may wake up after 50 days without notifications
+        uart_notification_queue.receive(notification, portMAX_DELAY);
+
+        position_current = wifi.get_buffer_size() - __HAL_DMA_GET_COUNTER(&hdma_usart1_rx);
+
+        if(position_current != position_old)
+        {
+            if (position_current > position_old)
+            {
+                wifi.process(position_old, position_current - position_old);
+            }
+            else
+            {
+                wifi.process(position_old, wifi.get_buffer_size() - position_old);
+                if(position_current > 0)
+                {
+                    wifi.process(0, position_current);
+                }
+            }
+            position_old = position_current;
+        }
+        if(position_old == wifi.get_buffer_size())
+            position_old = 0;
+    }
+}

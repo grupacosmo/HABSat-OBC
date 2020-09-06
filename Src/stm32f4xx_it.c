@@ -23,6 +23,9 @@
 #include "stm32f4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+// TODO: decide what to do with this:
+extern void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
+extern void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx);
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -163,7 +166,6 @@ void DebugMon_Handler(void)
 /**
   * @brief This function handles USART1 global interrupt.
   */
-#include "main_cpp.h"
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
@@ -206,6 +208,7 @@ void TIM6_DAC_IRQHandler(void)
 /**
   * @brief This function handles DMA2 stream2 global interrupt.
   */
+
 void DMA2_Stream2_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
@@ -214,6 +217,7 @@ void DMA2_Stream2_IRQHandler(void)
   HAL_DMA_IRQHandler(&hdma_usart1_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
 
+  USER_UART_DMA_IRQHandler(&hdma_usart1_rx);
   /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
 

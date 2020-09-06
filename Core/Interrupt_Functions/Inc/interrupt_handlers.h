@@ -7,10 +7,17 @@
 
 #include "interrupt_tasks.h"
 
-extern DMA_HandleTypeDef hdma_usart1_rx;
-std::array<char, 255> receive_buffer;
+extern UART_HandleTypeDef huart1;
 
+#ifdef __cplusplus
+extern "C"
+#endif
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
+
+#ifdef __cplusplus
+extern "C"
+#endif
+void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx);
 
 
 #endif//RCC_SYS_INTERRUPT_HANDLERS_H

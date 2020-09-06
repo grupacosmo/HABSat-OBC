@@ -4,24 +4,29 @@
 
 #include "main_cpp.h"
 
+#include "wifi.h"
 #include "FreeRTOS.h"
 #include "idle_tasks.h"
 #include "interrupt_callbacks.h"
 #include "interrupt_tasks.h"
 #include "lcd.h"
 #include "led.h"
-#include "os_task.h"
 #include "os_queue.h"
+#include "os_task.h"
 #include "stm32f4xx_hal.h"
 
-/* global variables */
-const Led led;
-
+/* handles */
 extern I2C_HandleTypeDef hi2c1;
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_usart1_rx;
+
+/* constants */
 constexpr uint8_t LCD_SLAVE_ADDRESS = 0x4E;
+
+/* modules */
+const Led led;
 Lcd lcd(4, 20, &hi2c1, LCD_SLAVE_ADDRESS);
+WiFi wifi(huart1);
 
 /* interrupt callbacks */
 extern void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
@@ -36,17 +41,15 @@ const os::Task button_interrupt_task("button_task", 128, os::Task::Priority::INT
 void main_cpp()
 {
     lcd.initialize();
+    wifi.initialize();
 
     led_task.add_to_scheduler();
     lcd_task.add_to_scheduler();
 
     button_interrupt_task.add_to_scheduler();
 
-#define TEST 1
+#define TEST 0
 #if TEST
-
-    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-    HAL_UART_Receive_DMA(&huart1, reinterpret_cast<uint8_t*>(&receive_buffer[0]), receive_buffer.size());
 
     auto send_cmd = [](const std::string &s)
     {

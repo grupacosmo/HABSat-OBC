@@ -5,9 +5,19 @@
 #ifndef RCC_SYS_WIFI_H
 #define RCC_SYS_WIFI_H
 
+#include "os_queue.h"
+#include "stm32f4xx.h"
 
-class wifi{
+class WiFi{
 
+public:
+    WiFi(UART_HandleTypeDef uart_handle);
+    void initialize();
+    size_t get_buffer_size();
+    void process(int start, int end);
+private:
+    std::array<char, 255> m_receive_buffer;
+    UART_HandleTypeDef m_uart_handle;
 };
 
 
