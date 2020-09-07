@@ -8,5 +8,3 @@ add_library(${NAME} STATIC ${SOURCE})
 target_include_directories(${NAME}
         PUBLIC ${CMAKE_CURRENT_LIST_DIR}/Inc
         )
-
-set_target_properties(${NAME} PROPERTIES LINKER_LANGUAGE CXX)

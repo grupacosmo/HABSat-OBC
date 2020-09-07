@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 // TODO: decide what to do with this:
+extern void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
 extern void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
 extern void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx);
 /* USER CODE END Includes */
@@ -183,7 +184,8 @@ void USART1_IRQHandler(void)
 void EXTI15_10_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-
+  USER_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+  return;
   /* USER CODE END EXTI15_10_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */

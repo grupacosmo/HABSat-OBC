@@ -9,11 +9,9 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        led
-        lcd
         freertos
         button
-        freertoswrapper
-        tasks
-        interrupt_callbacks
-        wifi)
+        freertos_wrapper
+        task_objects
+        peripherals
+        interrupt_functions)

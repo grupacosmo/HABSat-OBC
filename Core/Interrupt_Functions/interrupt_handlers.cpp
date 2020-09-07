@@ -4,6 +4,26 @@
 
 #include "interrupt_handlers.h"
 
+extern os::Queue<int, 25> uart_notification_queue;
+extern global::Tasks g_tasks;
+
+void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
+{
+    if(__HAL_GPIO_EXTI_GET_IT(GPIO_Pin) != RESET)
+    {
+        __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
+        switch(GPIO_Pin)
+        {
+            case GPIO_PIN_13:
+                g_tasks.button_interrupt_task.resume_from_ISR();
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
     int notification = 1;

@@ -1,4 +1,4 @@
-set(NAME tasks)
+set(NAME peripherals)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,7 +9,7 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        freertoswrapper
-        led
+        wifi
         lcd
-        wifi)
+        led
+        includes)

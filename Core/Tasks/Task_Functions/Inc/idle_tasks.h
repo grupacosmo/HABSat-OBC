@@ -5,12 +5,10 @@
 #ifndef RCC_SYS_IDLE_TASKS_H
 #define RCC_SYS_IDLE_TASKS_H
 
-#include "lcd.h"
-#include "led.h"
+#include "peripherals.h"
 #include "os_task.h"
 
-extern const Led led;
-extern Lcd lcd;
+extern global::Peripherals g_peripherals;
 
 void led_task_code(void *args);
 

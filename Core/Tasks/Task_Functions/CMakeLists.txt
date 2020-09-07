@@ -1,4 +1,4 @@
-set(NAME freertoswrapper)
+set(NAME task_functions)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,4 +9,7 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        freertos)
+        freertos_wrapper
+        peripherals
+        task_objects
+        )
