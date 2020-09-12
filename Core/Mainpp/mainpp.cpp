@@ -21,6 +21,8 @@ void mainpp()
 {
 
     float temperature, huminidity;
+    char buf[10], buf1[10];
+    sprintf(buf1,"%lf",temperature);
     int32_t pressure;
 
     Sensor sensor;
@@ -39,17 +41,21 @@ void mainpp()
     sensor.init(&hspi1, 1, 1, 3, 3);
     sensor.sensor_set_config(6, 0);
 
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin low
+    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin low
+
     sensor.read_temperature_a(&temperature);
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin high
+    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin high
 
 
-    char buf[10];
-    sprintf(buf,"%lf",temperature);
+
+
     while(true)
     {
-        lcd.print_line(0,"Temperature: ");
-        lcd.print_line(1,buf);
+        lcd.print_line(0,"Temperature:");
+        lcd.print_line(1,buf1);
+        sprintf(buf,"%lf",temperature);
+        lcd.print_line(2,"Temperature: ");
+        lcd.print_line(3,buf);
 
     }
 }

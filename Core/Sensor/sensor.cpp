@@ -8,21 +8,25 @@ uint16_t t1, t2, t3;
 int32_t t_fine;
 SPI_HandleTypeDef *spi_h;
 
+
 void Sensor::init(SPI_HandleTypeDef *spi_handler, uint8_t temperature_resolution, uint8_t pressure_oversampling, uint8_t huminidity_oversampling, uint8_t mode){
     spi_h = spi_handler;
     HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin low
     HAL_Delay(5);
     HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin high
 
-    t1 = read_16(BME280_DIG_T1);
-    t2 = read_16(BME280_DIG_T2);
-    t3 = read_16(BME280_DIG_T3);
+    t1 = read_16_le(BME280_DIG_T1);
+    t2 = read_16_le(BME280_DIG_T2);
+    t3 = read_16_le(BME280_DIG_T3);
+
+    write_8(0xF4, ((temperature_resolution<<5) | (pressure_oversampling<<2) | mode));
+
 
 }
 
 void Sensor::sensor_set_config(uint8_t standby_time, uint8_t filter)
 {
-    write_8(BME280_CONFIG, (uint8_t) (((standby_time & 0x7) << 5) | ((filter & 0x7) << 2)) & 0xFC);
+    write_8(BME280_CONFIG , (uint8_t) (((standby_time & 0x7) << 5) | ((filter & 0x7) << 2)) & 0xFC);
 }
 
 uint8_t Sensor::read_temperature_a(float* temperature)
