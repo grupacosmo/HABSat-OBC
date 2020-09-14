@@ -20,10 +20,8 @@ extern SPI_HandleTypeDef hspi1;
 void mainpp()
 {
 
-    float temperature, huminidity;
+    float temperature, pressure;
     char buf[10], buf1[10];
-    sprintf(buf1,"%lf",temperature);
-    int32_t pressure;
 
     Sensor sensor;
     Led led;
@@ -41,21 +39,23 @@ void mainpp()
     sensor.init(&hspi1, 1, 1, 3, 3);
     sensor.sensor_set_config(6, 0);
 
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin low
-
-    sensor.read_temperature_a(&temperature);
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin high
-
-
-
 
     while(true)
     {
-        lcd.print_line(0,"Temperature:");
+
+        /*Temperature*/
+
+        sensor.read_temperature(&temperature);
+        sprintf(buf,"Temp: %.2lf C",temperature);
+        lcd.print_line(0,buf);
+
+        /*Pressure*/
+
+        sensor.read_pressure(&pressure);
+        sprintf(buf1,"Press: %.2lf hPa",pressure/100);
         lcd.print_line(1,buf1);
-        sprintf(buf,"%lf",temperature);
-        lcd.print_line(2,"Temperature: ");
-        lcd.print_line(3,buf);
+
+        lcd.clear();
 
     }
 }
