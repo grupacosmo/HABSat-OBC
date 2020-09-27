@@ -16,7 +16,7 @@ namespace global
     struct Peripherals {
         Led led;
         Lcd lcd{4, 20, &hi2c1, constants::LCD_SLAVE_ADDRESS};
-        WiFi wifi{huart1};
+        WiFi wifi{&huart1};
 
         void initialize();
     };

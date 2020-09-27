@@ -7,8 +7,8 @@ namespace global
 {
     void Tasks::initialize()
     {
-        led_task.add_to_scheduler();
-        lcd_task.add_to_scheduler();
-        button_interrupt_task.add_to_scheduler();
+        led.add_to_scheduler();
+        lcd.add_to_scheduler();
+        button_interrupt.add_to_scheduler();
     }
 }

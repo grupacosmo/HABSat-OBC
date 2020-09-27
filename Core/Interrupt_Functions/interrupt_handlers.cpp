@@ -15,7 +15,7 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
         switch(GPIO_Pin)
         {
             case GPIO_PIN_13:
-                g_tasks.button_interrupt_task.resume_from_ISR();
+                g_tasks.button_interrupt.resume_from_ISR();
                 break;
             default:
                 break;

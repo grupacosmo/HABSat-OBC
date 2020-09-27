@@ -9,11 +9,15 @@
 #include "stm32f4xx.h"
 #include "peripherals.h"
 
-/* modules */
 extern global::Peripherals g_peripherals;
 
-void button_interrupt_task_code(void *args);
-void uart_receive_interrupt_task_code(void *args);
-
+namespace task_code
+{
+    namespace interrupt
+    {
+        void button(void *args);
+        void uart_receive(void *args);
+    }
+}
 
 #endif //RCC_SYS_INTERRUPT_TASKS_H

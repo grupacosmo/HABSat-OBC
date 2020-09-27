@@ -11,13 +11,13 @@
 class WiFi{
 
 public:
-    WiFi(UART_HandleTypeDef uart_handle);
+    WiFi(UART_HandleTypeDef *uart_handle);
     void initialize();
     size_t get_buffer_size();
-    void process(int start, int end);
+    void process_data_from_uart(int start, int end);
 private:
     std::array<char, 255> m_receive_buffer;
-    UART_HandleTypeDef m_uart_handle;
+    UART_HandleTypeDef *m_uart_handle;
 };
 
 

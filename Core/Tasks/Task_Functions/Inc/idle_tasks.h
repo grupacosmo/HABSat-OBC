@@ -10,8 +10,14 @@
 
 extern global::Peripherals g_peripherals;
 
-void led_task_code(void *args);
+namespace task_code
+{
+    namespace idle
+    {
+        void led(void *args);
 
-void lcd_task_code(void *args);
+        void lcd(void *args);
+    }
+}
 
 #endif //RCC_SYS_IDLE_TASKS_H
