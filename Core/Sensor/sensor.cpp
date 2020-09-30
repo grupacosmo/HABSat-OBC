@@ -8,23 +8,23 @@
 
 void Sensor::init(SPI_HandleTypeDef *spi_handler, uint8_t temperature_resolution, uint8_t pressure_oversampling, uint8_t huminidity_oversampling, uint8_t mode){
     spi_h = spi_handler;
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin low
+    HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);  // pull the pin low
     HAL_Delay(5);
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin high
+    HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_SET);  // pull the pin high
 
-    ut1 = read_16_le(DIG_T1);
-    ut2 = read_16_le(DIG_T2);
-    ut3 = read_16_le(DIG_T3);
+    ut1 = read_16(DIG_T1);
+    ut2 = read_16(DIG_T2);
+    ut3 = read_16(DIG_T3);
 
-    p1 = read_16_le(DIG_P1);
-    p2 = read_16_le(DIG_P2);
-    p3 = read_16_le(DIG_P3);
-    p4 = read_16_le(DIG_P4);
-    p5 = read_16_le(DIG_P5);
-    p6 = read_16_le(DIG_P6);
-    p7 = read_16_le(DIG_P7);
-    p8 = read_16_le(DIG_P8);
-    p9 = read_16_le(DIG_P9);
+    p1 = read_16(DIG_P1);
+    p2 = read_16(DIG_P2);
+    p3 = read_16(DIG_P3);
+    p4 = read_16(DIG_P4);
+    p5 = read_16(DIG_P5);
+    p6 = read_16(DIG_P6);
+    p7 = read_16(DIG_P7);
+    p8 = read_16(DIG_P8);
+    p9 = read_16(DIG_P9);
 
     write_8(0xF4, ((temperature_resolution<<5) | (pressure_oversampling<<2) | mode));
 
@@ -41,9 +41,9 @@ float Sensor::read_temperature(float* temperature)
     int32_t var1, var2;
 
     //Reading
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin low
+    HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);  // pull the pin low
     int32_t adc_T = read24(BME280_TEMPDATA);
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin high to end reading
+    HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_SET);  // pull the pin high to end reading
 
     if (adc_T == 0x800000)
         return -1;
@@ -74,9 +74,10 @@ float Sensor::read_pressure(float* pressure){
     read_temperature(&T); //Have to be done to get t_fine
 
     //Reading
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);  // pull the pin low to start reading
+    HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);  // pull the pin low to start reading
     int32_t adc_P = read24(BME280_PRESSUREDATA);
-    HAL_GPIO_WritePin (GPIOA, GPIO_PIN_4, GPIO_PIN_SET);  // pull the pin high to end reading
+    HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_SET);  // pull the pin high to end reading
+
     adc_P >>= 4;
 
     var1 = ((int64_t)t_fine) - 128000;
@@ -106,9 +107,9 @@ void Sensor::write_8(uint8_t address, uint8_t data)
 	tmp[0] = address;
 	tmp[0] &= ~(1<<7);
 	tmp[1] = data;
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
     HAL_SPI_TransmitReceive(spi_h, tmp, tmp, 2, 10);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
 
 }
 uint16_t Sensor::read_16_le(uint8_t addr)
@@ -123,10 +124,14 @@ uint16_t Sensor::read_16(uint8_t addr) {
     uint8_t tmp[3];
     tmp[0] = addr;
     tmp[0] |= (1 << 7);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
     HAL_SPI_TransmitReceive(spi_h, tmp, tmp, 3, 10);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
-    return ((tmp[1] << 8) | tmp[2]);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+    //return ((tmp[1] << 8) | tmp[2]);
+    uint16_t temp;
+
+    temp =(tmp[1] << 8) | tmp[2];
+    return (temp >> 8) | (temp << 8);
 }
 
 uint32_t Sensor::read24(uint8_t addr)
@@ -134,8 +139,8 @@ uint32_t Sensor::read24(uint8_t addr)
     uint8_t tmp[4];
     tmp[0] = addr;
     tmp[0] |= (1<<7);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
     HAL_SPI_TransmitReceive(spi_h, tmp, tmp, 3, 10);
-    HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
     return ((tmp[1] << 16) | tmp[2] << 8 | tmp[3]);
 }

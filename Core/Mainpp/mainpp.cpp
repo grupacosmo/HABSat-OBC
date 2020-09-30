@@ -11,10 +11,9 @@
 #include "sensor.h"
 
 
-
 constexpr uint8_t lcd_slave_address = 0x4E;
 extern I2C_HandleTypeDef hi2c1;
-extern SPI_HandleTypeDef hspi1;
+extern SPI_HandleTypeDef hspi2;
 
 
 void mainpp()
@@ -36,9 +35,9 @@ void mainpp()
         lcd.print_line(line, s);
         HAL_Delay(delay);
     };
-    sensor.init(&hspi1, 1, 1, 3, 3);
+    sensor.init(&hspi2, 1, 1, 3, 3);
     sensor.sensor_set_config(6, 0);
-
+    HAL_Delay(3000);
 
     while(true)
     {
