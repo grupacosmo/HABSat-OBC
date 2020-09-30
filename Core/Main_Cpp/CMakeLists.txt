@@ -11,6 +11,7 @@ target_include_directories(${NAME}
 target_link_libraries(${NAME}
         led
         lcd
+        rtc
         freertos
         button
         freertoswrapper

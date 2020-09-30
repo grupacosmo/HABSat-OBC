@@ -8,12 +8,16 @@
 #include "freertoswrapper.h"
 #include "led.h"
 #include "lcd.h"
+#include "rtc.h"
 
 extern const Led led;
 extern Lcd lcd;
+extern Rtc rtc;
 
 void led_task_code(void *args);
 
 void lcd_task_code(void *args);
+
+void rtc_task_code(void *args);
 
 #endif //RCC_SYS_IDLE_TASKS_H

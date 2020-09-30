@@ -11,4 +11,5 @@ target_include_directories(${NAME}
 target_link_libraries(${NAME}
         freertoswrapper
         led
-        lcd)
+        lcd
+        rtc)
