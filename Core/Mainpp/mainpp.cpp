@@ -19,7 +19,7 @@ extern SPI_HandleTypeDef hspi2;
 void mainpp()
 {
 
-    float temperature, pressure;
+    float temperature, pressure, humidity;
     char buf[10], buf1[10];
 
     Sensor sensor;
@@ -35,8 +35,8 @@ void mainpp()
         lcd.print_line(line, s);
         HAL_Delay(delay);
     };
-    sensor.init(&hspi2, 1, 1, 3, 3);
-    sensor.sensor_set_config(6, 0);
+    sensor.init(&hspi2, BME280_TEMPERATURE_20BIT, 1, 3, 3);
+    sensor.sensor_set_config(6, FILTER_OFF);
     HAL_Delay(3000);
 
     while(true)
@@ -44,15 +44,20 @@ void mainpp()
 
         /*Temperature*/
 
-        sensor.read_temperature(&temperature);
+        sensor.read_all(temperature,pressure,humidity);
         sprintf(buf,"Temp: %.2lf C",temperature);
         lcd.print_line(0,buf);
 
         /*Pressure*/
 
-        sensor.read_pressure(&pressure);
+
         sprintf(buf1,"Press: %.2lf hPa",pressure/100);
         lcd.print_line(1,buf1);
+
+        /*Humidity*/
+        sprintf(buf1,"Hum: %.2lf %%RH",humidity);
+        lcd.print_line(2,buf1);
+        lcd.print_line(3,"Weather Conditions");
 
         lcd.clear();
 
