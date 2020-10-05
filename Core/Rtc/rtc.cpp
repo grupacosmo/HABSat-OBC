@@ -12,7 +12,7 @@ Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
     date_time.second = dec_to_bcd(0);
     date_time.minute = dec_to_bcd(26);
     date_time.hour = dec_to_bcd(19);
-    date_time.day_name = dec_to_bcd(7);
+    date_time.weekday_name = dec_to_bcd(7);
     date_time.day = dec_to_bcd(26);
     date_time.month = dec_to_bcd(9);
     date_time.year = dec_to_bcd(20);
@@ -20,9 +20,9 @@ Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
 
 void Rtc::initialize() const
 {
-    __HAL_I2C_ENABLE(m_hi2cx);
-    uint8_t data_buffer = 0x93;
-    HAL_I2C_Mem_Write(m_hi2cx, 0x68 << 1, 0x07, 1, &data_buffer, 1, HAL_MAX_DELAY);
+    if(__HAL_RCC_I2C3_IS_CLK_DISABLED()) {
+        __HAL_RCC_I2C3_CLK_ENABLE();
+    }
 }
 
 uint8_t Rtc::bcd_to_dec(uint8_t data_to_convert)
@@ -41,7 +41,7 @@ void Rtc::set_time_date() const
     date_to_set[0] = date_time.second;
     date_to_set[1] = date_time.minute;
     date_to_set[2] = date_time.hour;
-    date_to_set[3] = date_time.day_name;
+    date_to_set[3] = date_time.weekday_name;
     date_to_set[4] = date_time.day;
     date_to_set[5] = date_time.month;
     date_to_set[6] = date_time.year;
@@ -56,7 +56,7 @@ void Rtc::get_time_date()
         date_time.second = bcd_to_dec(date[0]);
         date_time.minute = bcd_to_dec(date[1]);
         date_time.hour = bcd_to_dec(date[2]);
-        date_time.day_name = bcd_to_dec(date[3]);
+        date_time.weekday_name = bcd_to_dec(date[3]);
         date_time.day = bcd_to_dec(date[4]);
         date_time.month = bcd_to_dec(date[5]);
         date_time.year = bcd_to_dec(date[6]);
@@ -64,7 +64,7 @@ void Rtc::get_time_date()
         date_time.second = 1;
         date_time.minute = 2;
         date_time.hour = 3;
-        date_time.day_name = 4;
+        date_time.weekday_name = 4;
         date_time.day = 5;
         date_time.month = 6;
         date_time.year = 7;
@@ -108,7 +108,7 @@ void Rtc::time_info(char *str) const
 void Rtc::date_info(char *str) const
 {
     char temp_str[32] = {};
-    uint8_t week_day_num = date_time.day_name;
+    uint8_t week_day_num = date_time.weekday_name;
     char *week_day_name = {};
 
     add_txt(str, (char *) "    ");

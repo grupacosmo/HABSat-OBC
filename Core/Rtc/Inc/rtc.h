@@ -10,6 +10,7 @@
 class Rtc
 {
 public:
+
     Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address);
     void initialize() const;
     void set_time_date() const;
@@ -31,7 +32,7 @@ private:
         uint8_t second;
         uint8_t minute;
         uint8_t hour;
-        uint8_t day_name;
+        uint8_t weekday_name;
         uint8_t day;
         uint8_t month;
         uint8_t year;
