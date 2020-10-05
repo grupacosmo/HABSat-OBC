@@ -9,6 +9,7 @@ Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
         : m_hi2cx(i2c_handle),
         m_address(address)
 {
+    // TODO: usunac to
     date_time.second = dec_to_bcd(0);
     date_time.minute = dec_to_bcd(26);
     date_time.hour = dec_to_bcd(19);
@@ -35,6 +36,7 @@ uint8_t Rtc::dec_to_bcd(uint8_t data_to_convert)
     return ((data_to_convert / 10) << 4) | (data_to_convert % 10);
 }
 
+// TODO: podawac wartosci jako argument
 void Rtc::set_time_date() const
 {
     uint8_t date_to_set[7];
@@ -71,11 +73,16 @@ void Rtc::get_time_date()
     }
 }
 
+// TODO: sprobowac zamienic unsigned na uint8_t
+// TODO: zmienic nazwe metody
+// TODO: ogarnac string copy
+// TODO: usunac komenty jesli dziala
+// TODO:
 char *Rtc::my_utoa(unsigned value_to_convert, char *converted_string) const
 {
     char *string_copy = converted_string;
     unsigned value_copy = value_to_convert;
-    char temp;
+    //char temp;
 
     do {
         value_copy /= 10;
@@ -83,16 +90,19 @@ char *Rtc::my_utoa(unsigned value_to_convert, char *converted_string) const
     } while (value_copy != 0);
     *string_copy-- = 0;
     do {
-        temp = value_to_convert % 10;
+
+        //temp = int_to_char(value_to_convert % 10);
+        //temp = value_to_convert % 10;
+        //temp += '0';
+        *string_copy-- = int_to_char(value_to_convert % 10);
         value_to_convert /= 10;
-        temp += '0';
-        *string_copy-- = temp;
     } while (value_to_convert != 0);
     return string_copy;
 }
 
 void Rtc::time_info(char *str) const
 {
+    //TODO: sprobowac pozbyc sie temp_str
     char temp_str[32] = {};
     add_txt(str, (char *) "      ");
     my_utoa(date_time.hour, temp_str);
@@ -103,10 +113,15 @@ void Rtc::time_info(char *str) const
     add_txt(str, (char *) ":");
     my_utoa(date_time.second, temp_str);
     add_txt(str, temp_str);
+
+    // TODO: sprobowac zorganizowac kod w tym stylu
+    // add_txt(str, my_utoa(date_time.hour, temp_str));
 }
 
+// TODO: tutaj podobnie zrobic jak wyzej
 void Rtc::date_info(char *str) const
 {
+    // TODO: sprobowac pozbyc sie temp_str
     char temp_str[32] = {};
     uint8_t week_day_num = date_time.weekday_name;
     char *week_day_name = {};
@@ -160,4 +175,7 @@ void Rtc::add_txt(char *base_str, char *adding_str) const
     *base_str = 0;
 }
 
-
+char Rtc::int_to_char(int integer) const
+{
+    return integer + '0';
+}

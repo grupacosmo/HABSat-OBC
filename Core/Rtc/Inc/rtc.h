@@ -23,6 +23,7 @@ private:
     void add_txt(char*, char*) const;
     static uint8_t bcd_to_dec(uint8_t);
     static uint8_t dec_to_bcd(uint8_t);
+    char int_to_char(int integer) const;
 
 private:
     I2C_HandleTypeDef* m_hi2cx;
