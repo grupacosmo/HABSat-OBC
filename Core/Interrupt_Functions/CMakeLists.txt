@@ -9,5 +9,5 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        task_objects
-        includes)
+        includes
+        button)

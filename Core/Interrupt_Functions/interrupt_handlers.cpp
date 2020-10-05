@@ -3,9 +3,9 @@
 //
 
 #include "interrupt_handlers.h"
+#include "utils.h"
 
-extern os::Queue<int, 25> uart_notification_queue;
-extern global::Tasks g_tasks;
+os::Queue<int, 25> uart_notification_queue;
 
 void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
 {
@@ -15,7 +15,7 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
         switch(GPIO_Pin)
         {
             case GPIO_PIN_13:
-                g_tasks.button_interrupt.resume_from_ISR();
+                utils.button.task.resume_from_ISR();
                 break;
             default:
                 break;

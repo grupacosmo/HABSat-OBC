@@ -7,7 +7,9 @@
 
 #include "stm32f4xx_hal.h"
 
-class Led{
+class Led
+{
+private:
     GPIO_TypeDef *const TYPE = GPIOA;
     const uint16_t PIN = GPIO_PIN_5;
 public:

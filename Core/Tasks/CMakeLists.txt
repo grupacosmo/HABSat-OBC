@@ -1,2 +1,0 @@
-add_subdirectory(Task_Functions)
-add_subdirectory(Task_Objects)

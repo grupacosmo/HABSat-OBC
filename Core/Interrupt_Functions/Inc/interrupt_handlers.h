@@ -5,8 +5,6 @@
 #ifndef RCC_SYS_INTERRUPT_HANDLERS_H
 #define RCC_SYS_INTERRUPT_HANDLERS_H
 
-#include "interrupt_tasks.h"
-#include "task_objects.h"
 #include "handles.h"
 
 extern "C" void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
