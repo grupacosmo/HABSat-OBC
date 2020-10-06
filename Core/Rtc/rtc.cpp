@@ -133,7 +133,7 @@ void Rtc::date_info(char *str) const
     add_uint_to_string(date_time.year, str);
 }
 
-void Rtc::add_txt(char *base_str, char *adding_str) const
+void Rtc::add_txt(char *base_str, const char *adding_str) const
 {
     while (*base_str != 0) base_str++;
     while (*adding_str != 0) {
@@ -144,5 +144,6 @@ void Rtc::add_txt(char *base_str, char *adding_str) const
 
 char Rtc::uint_to_char(uint8_t uint) const
 {
-    return uint + '0';
+    char offset = '0';
+    return uint + offset;
 }

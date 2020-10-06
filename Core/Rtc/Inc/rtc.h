@@ -21,7 +21,7 @@ public:
 
 private:
     void add_uint_to_string(uint8_t , char*) const;
-    void add_txt(char*, char*) const;
+    void add_txt(char*, const char*) const;
     static uint8_t bcd_to_dec(uint8_t);
     static uint8_t dec_to_bcd(uint8_t);
     char uint_to_char(uint8_t uint) const;
