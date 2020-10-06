@@ -8,16 +8,7 @@
 Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
         : m_hi2cx(i2c_handle),
         m_address(address)
-{
-    // TODO: usunac to
-    date_time.second = dec_to_bcd(0);
-    date_time.minute = dec_to_bcd(26);
-    date_time.hour = dec_to_bcd(19);
-    date_time.weekday_name = dec_to_bcd(7);
-    date_time.day = dec_to_bcd(26);
-    date_time.month = dec_to_bcd(9);
-    date_time.year = dec_to_bcd(20);
-}
+{}
 
 void Rtc::initialize() const
 {
@@ -36,17 +27,17 @@ uint8_t Rtc::dec_to_bcd(uint8_t data_to_convert)
     return ((data_to_convert / 10) << 4) | (data_to_convert % 10);
 }
 
-// TODO: podawac wartosci jako argument
-void Rtc::set_time_date() const
+void Rtc::set_time_date(uint8_t second, uint8_t minute, uint8_t hour, uint8_t weekday, uint8_t day, uint8_t month,
+                        uint8_t year) const
 {
     uint8_t date_to_set[7];
-    date_to_set[0] = date_time.second;
-    date_to_set[1] = date_time.minute;
-    date_to_set[2] = date_time.hour;
-    date_to_set[3] = date_time.weekday_name;
-    date_to_set[4] = date_time.day;
-    date_to_set[5] = date_time.month;
-    date_to_set[6] = date_time.year;
+    date_to_set[0] = dec_to_bcd(second);
+    date_to_set[1] = dec_to_bcd(minute);
+    date_to_set[2] = dec_to_bcd(hour);
+    date_to_set[3] = dec_to_bcd(weekday);
+    date_to_set[4] = dec_to_bcd(day);
+    date_to_set[5] = dec_to_bcd(month);
+    date_to_set[6] = dec_to_bcd(year);
 
     HAL_I2C_Mem_Write(m_hi2cx, m_address << 1, 0x00, 1, date_to_set, 7, HAL_MAX_DELAY);
 }
@@ -64,106 +55,82 @@ void Rtc::get_time_date()
         date_time.year = bcd_to_dec(date[6]);
     } else {
         date_time.second = 1;
-        date_time.minute = 2;
-        date_time.hour = 3;
-        date_time.weekday_name = 4;
-        date_time.day = 5;
-        date_time.month = 6;
-        date_time.year = 7;
+        date_time.minute = 1;
+        date_time.hour = 1;
+        date_time.weekday_name = 1;
+        date_time.day = 1;
+        date_time.month = 1;
+        date_time.year = 1;
     }
 }
 
-// TODO: sprobowac zamienic unsigned na uint8_t
-// TODO: zmienic nazwe metody
-// TODO: ogarnac string copy
-// TODO: usunac komenty jesli dziala
-// TODO:
-char *Rtc::my_utoa(unsigned value_to_convert, char *converted_string) const
+void Rtc::add_uint_to_string(uint8_t uint, char *str) const
 {
-    char *string_copy = converted_string;
-    unsigned value_copy = value_to_convert;
-    //char temp;
+    uint8_t uint_copy = uint;
+
+    while (*str != 0) str++;
 
     do {
-        value_copy /= 10;
-        string_copy++;
-    } while (value_copy != 0);
-    *string_copy-- = 0;
-    do {
+        uint_copy /= 10;
+        str++;
+    } while (uint_copy != 0);
 
-        //temp = int_to_char(value_to_convert % 10);
-        //temp = value_to_convert % 10;
-        //temp += '0';
-        *string_copy-- = int_to_char(value_to_convert % 10);
-        value_to_convert /= 10;
-    } while (value_to_convert != 0);
-    return string_copy;
+    *str-- = 0;
+    do {
+        *str-- = uint_to_char(uint % 10);
+        uint /= 10;
+    } while (uint != 0);
 }
 
 void Rtc::time_info(char *str) const
 {
-    //TODO: sprobowac pozbyc sie temp_str
-    char temp_str[32] = {};
     add_txt(str, (char *) "      ");
-    my_utoa(date_time.hour, temp_str);
-    add_txt(str, temp_str);
+    add_uint_to_string(date_time.hour, str);
     add_txt(str, (char *) ":");
-    my_utoa(date_time.minute, temp_str);
-    add_txt(str, temp_str);
+    add_uint_to_string(date_time.minute, str);
     add_txt(str, (char *) ":");
-    my_utoa(date_time.second, temp_str);
-    add_txt(str, temp_str);
-
-    // TODO: sprobowac zorganizowac kod w tym stylu
-    // add_txt(str, my_utoa(date_time.hour, temp_str));
+    add_uint_to_string(date_time.second, str);
 }
 
-// TODO: tutaj podobnie zrobic jak wyzej
 void Rtc::date_info(char *str) const
 {
-    // TODO: sprobowac pozbyc sie temp_str
-    char temp_str[32] = {};
     uint8_t week_day_num = date_time.weekday_name;
-    char *week_day_name = {};
 
     add_txt(str, (char *) "    ");
 
     switch (week_day_num) {
         case 1:
-            week_day_name = (char *) "Sun";
+            add_txt(str, (char *) "Sun");
             break;
         case 2:
-            week_day_name = (char *) "Mon";
+            add_txt(str, (char *) "Mon");
             break;
         case 3:
-            week_day_name = (char *) "Tue";
+            add_txt(str, (char *) "Tue");
             break;
         case 4:
-            week_day_name = (char *) "Wed";
+            add_txt(str, (char *) "Wed");
             break;
         case 5:
-            week_day_name = (char *) "Thu";
+            add_txt(str, (char *) "Thu");
             break;
         case 6:
-            week_day_name = (char *) "Fri";
+            add_txt(str, (char *) "Fri");
             break;
         case 7:
-            week_day_name = (char *) "Sat";
+            add_txt(str, (char *) "Sat");
             break;
         default:
-            week_day_name = (char *) "Err";
+            add_txt(str, (char *) "Err");
             break;
     }
-    add_txt(str, week_day_name);
+
     add_txt(str, (char *) " ");
-    my_utoa(date_time.day, temp_str);
-    add_txt(str, temp_str);
+    add_uint_to_string(date_time.day, str);
     add_txt(str, (char *) "/");
-    my_utoa(date_time.month, temp_str);
-    add_txt(str, temp_str);
+    add_uint_to_string(date_time.month, str);
     add_txt(str, (char *) "/");
-    my_utoa(date_time.year, temp_str);
-    add_txt(str, temp_str);
+    add_uint_to_string(date_time.year, str);
 }
 
 void Rtc::add_txt(char *base_str, char *adding_str) const
@@ -175,7 +142,7 @@ void Rtc::add_txt(char *base_str, char *adding_str) const
     *base_str = 0;
 }
 
-char Rtc::int_to_char(int integer) const
+char Rtc::uint_to_char(uint8_t uint) const
 {
-    return integer + '0';
+    return uint + '0';
 }
