@@ -17,27 +17,28 @@ void Rtc::initialize() const
     }
 }
 
-uint8_t Rtc::bcd_to_dec(uint8_t data_to_convert)
+uint8_t Rtc::bcd_to_dec(const uint8_t data_to_convert)
 {
     return ((data_to_convert >> 4) * 10) + (data_to_convert & 0x0F);
 }
 
-uint8_t Rtc::dec_to_bcd(uint8_t data_to_convert)
+uint8_t Rtc::dec_to_bcd(const uint8_t data_to_convert)
 {
     return ((data_to_convert / 10) << 4) | (data_to_convert % 10);
 }
 
-void Rtc::set_time_date(uint8_t second, uint8_t minute, uint8_t hour, uint8_t weekday, uint8_t day, uint8_t month,
-                        uint8_t year) const
+void Rtc::set_time_date(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
+        const uint8_t day, const uint8_t month,const uint8_t year) const
 {
-    uint8_t date_to_set[7];
-    date_to_set[0] = dec_to_bcd(second);
-    date_to_set[1] = dec_to_bcd(minute);
-    date_to_set[2] = dec_to_bcd(hour);
-    date_to_set[3] = dec_to_bcd(weekday);
-    date_to_set[4] = dec_to_bcd(day);
-    date_to_set[5] = dec_to_bcd(month);
-    date_to_set[6] = dec_to_bcd(year);
+    uint8_t date_to_set[7] = {
+            dec_to_bcd(second),
+            dec_to_bcd(minute),
+            dec_to_bcd(hour),
+            dec_to_bcd(weekday),
+            dec_to_bcd(day),
+            dec_to_bcd(month),
+            dec_to_bcd(year)
+    };
 
     HAL_I2C_Mem_Write(m_hi2cx, m_address << 1, 0x00, 1, date_to_set, 7, HAL_MAX_DELAY);
 }
@@ -95,36 +96,10 @@ void Rtc::time_info(char *str) const
 void Rtc::date_info(char *str) const
 {
     uint8_t week_day_num = date_time.weekday_name;
+    const char* day_names[] = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     add_txt(str, (char *) "    ");
-
-    switch (week_day_num) {
-        case 1:
-            add_txt(str, (char *) "Sun");
-            break;
-        case 2:
-            add_txt(str, (char *) "Mon");
-            break;
-        case 3:
-            add_txt(str, (char *) "Tue");
-            break;
-        case 4:
-            add_txt(str, (char *) "Wed");
-            break;
-        case 5:
-            add_txt(str, (char *) "Thu");
-            break;
-        case 6:
-            add_txt(str, (char *) "Fri");
-            break;
-        case 7:
-            add_txt(str, (char *) "Sat");
-            break;
-        default:
-            add_txt(str, (char *) "Err");
-            break;
-    }
-
+    add_txt(str, day_names[week_day_num - 1]);
     add_txt(str, (char *) " ");
     add_uint_to_string(date_time.day, str);
     add_txt(str, (char *) "/");
@@ -142,7 +117,7 @@ void Rtc::add_txt(char *base_str, const char *adding_str) const
     *base_str = 0;
 }
 
-char Rtc::uint_to_char(uint8_t uint) const
+char Rtc::uint_to_char(const uint8_t uint) const
 {
     char offset = '0';
     return uint + offset;

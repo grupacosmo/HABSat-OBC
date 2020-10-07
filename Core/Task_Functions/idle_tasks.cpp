@@ -27,8 +27,8 @@ void lcd_task_code(void *args)
 
 void rtc_task_code(void *args)
 {
-    char time[20] = {};
-    char date[20] = {};
+    char time[14] = {};
+    char date[16] = {};
     while(true) {
         *time = {};
         *date = {};

@@ -10,21 +10,20 @@
 class Rtc
 {
 public:
-
     Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address);
     void initialize() const;
-    void set_time_date(uint8_t second, uint8_t minute, uint8_t hour, uint8_t weekday, uint8_t day, uint8_t month,
-            uint8_t year) const;
+    void set_time_date(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
+            const uint8_t day, const uint8_t month, const uint8_t year) const;
     void get_time_date();
-    void time_info(char*) const;
-    void date_info(char*) const;
+    void time_info(char *str) const;
+    void date_info(char *str) const;
 
 private:
-    void add_uint_to_string(uint8_t , char*) const;
-    void add_txt(char*, const char*) const;
-    static uint8_t bcd_to_dec(uint8_t);
-    static uint8_t dec_to_bcd(uint8_t);
-    char uint_to_char(uint8_t uint) const;
+    void add_uint_to_string(uint8_t uint, char *str) const;
+    void add_txt(char *base_str, const char *adding_str) const;
+    static uint8_t bcd_to_dec(const uint8_t data_to_convert);
+    static uint8_t dec_to_bcd(const uint8_t data_to_convert);
+    char uint_to_char(const uint8_t uint) const;
 
 private:
     I2C_HandleTypeDef* m_hi2cx;
