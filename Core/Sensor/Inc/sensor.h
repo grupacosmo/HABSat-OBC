@@ -9,9 +9,11 @@
 #include <stm32f4xx_hal.h>
 
 /*IIR Filter*/
+// TODO: zamienic na publiczny enum class
 #define FILTER_OFF 0
 #define FILTER_X2  1
 
+// TODO: zamienic na publiczny enum class
 /*Temperature*/
 #define BME280_TEMPERATURE_DISABLE	0
 #define BME280_TEMPERATURE_16BIT 	1
@@ -44,6 +46,7 @@ public:
     void write_8(uint8_t address, uint8_t data);
 private:
 
+    // TODO: enum class
     uint8_t	BME280_CONFIG = 0xF5;
     uint8_t	BME280_TEMPDATA = 0xFA;
     uint8_t BME280_PRESSUREDATA = 0xF7;
@@ -66,7 +69,7 @@ private:
     uint16_t ut1, ut2, ut3;
 
     /*pressure*/
-
+    // TODO: const tablica
     uint8_t DIG_P1 =0x8E ;
     uint8_t DIG_P2 =0x90 ;
     uint8_t DIG_P3 =0x92 ;

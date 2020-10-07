@@ -4,7 +4,12 @@
 
 #include "Inc/sensor.h"
 
-
+// TODO: consty wszedzie gdzie sie da do parametrow
+// TODO: consty do stalych wewnatrz funkcji
+// TODO: polaczyc krotkie linijki ze soba tam gdzie sie da
+// TODO: powtarzajacy sie kod ubrac w prywatne metody
+// TODO: kod znajdujacy w duzych funkcjachh podzielic na czesci i ubrac w swoje wlasne metody prywatne
+// TODO: lepsze, dluzsze nazwy dla zmiennych
 
 void Sensor::init(SPI_HandleTypeDef* spi_handler, uint8_t temperature_resolution, uint8_t pressure_oversampling, uint8_t humidity_oversampling, uint8_t mode){
     spi_h = spi_handler;
@@ -17,6 +22,9 @@ void Sensor::init(SPI_HandleTypeDef* spi_handler, uint8_t temperature_resolution
     ut2 = read_16(DIG_T2);
     ut3 = read_16(DIG_T3);
 
+
+    // TODO: sprobowac zamienic rzeczy takie jak np p w tablice
+    // TODO: zainicjalizowac w petli
     p1 = read_16(DIG_P1);
     p2 = read_16(DIG_P2);
     p3 = read_16(DIG_P3);
@@ -49,9 +57,10 @@ void Sensor::sensor_set_config(uint8_t standby_time, uint8_t filter)
     write_8(BME280_CONFIG , (uint8_t) (((standby_time & 0x7) << 5) | ((filter & 0x7) << 2)) & 0xFC);
 }
 
+// TODO: float na int
 float Sensor::read_temperature(float& temperature)
 {
-    int32_t var1, var2;
+    int32_t var2;
 
     //Reading
     HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);  // pull the pin low
@@ -63,7 +72,7 @@ float Sensor::read_temperature(float& temperature)
 
     adc_T >>= 4;
 
-    var1  = ((((adc_T>>3) - ((int32_t)ut1 << 1))) * ((int32_t)ut2)) >> 11;
+    const int32_t var1  = ((((adc_T>>3) - ((int32_t)ut1 << 1))) * ((int32_t)ut2)) >> 11;
 
     var2  = (((((adc_T>>4) - ((int32_t)ut1)) * ((adc_T >> 4) - ((int32_t)ut1))) >> 12) * ((int32_t)ut3)) >> 14;
 
@@ -184,23 +193,26 @@ void Sensor::write_8(uint8_t address, uint8_t data)
 }
 uint16_t Sensor::read_16_le(uint8_t addr)
 {
-    uint16_t tmp;
+    const uint16_t tmp = read_16(addr);
 
-    tmp = read_16(addr);
+    //tmp = read_16(addr);
     return (tmp >> 8) | (tmp << 8);
 }
 
 uint16_t Sensor::read_16(uint8_t addr) {
     uint8_t tmp[3];
-    tmp[0] = addr;
-    tmp[0] |= (1 << 7);
+    tmp[0] = addr | (1 << 7);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
     HAL_SPI_TransmitReceive(spi_h, tmp, tmp, 3, 10);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
     //return ((tmp[1] << 8) | tmp[2]);
     uint16_t temp;
 
+    // TODO: sprawdzic uint8_t tmp[1] << 8 i daj znac
     temp =(tmp[1] << 8) | tmp[2];
+    // TODO: sprawdzic ponizsze i daj znac
+    // temp = (tmp[2] << 8) | tmp[1];
+    // return temp;
     return (temp >> 8) | (temp << 8);
 }
 
