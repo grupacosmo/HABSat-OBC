@@ -35,29 +35,31 @@ void mainpp()
         lcd.print_line(line, s);
         HAL_Delay(delay);
     };
-    sensor.init(&hspi2, BME280_TEMPERATURE_20BIT, 1, 3, 3);
-    sensor.sensor_set_config(6, FILTER_OFF);
+    sensor.init(&hspi2, Sensor::InitConfigFlags::BME280_TEMPERATURE_16BIT, Sensor::InitConfigFlags::BME280_PRESSURE_ULTRALOWPOWER, Sensor::InitConfigFlags::BME280_HUMINIDITY_STANDARD, Sensor::InitConfigFlags::BME280_NORMALMODE);
+    sensor.sensor_set_config(Sensor::InitConfigFlags::BME280_STANDBY_MS_10, Sensor::InitConfigFlags::FILTER_OFF);
     HAL_Delay(3000);
 
     while(true)
     {
 
-        /*Temperature*/
+
 
         sensor.read_all(temperature,pressure,humidity);
-        sprintf(buf,"Temp: %.2lf C",temperature);
-        lcd.print_line(0,buf);
+            /*Temperature*/
+            sprintf(buf,"Temp: %.2lf C",temperature);
+            lcd.print_line(0,buf);
 
-        /*Pressure*/
+            /*Pressure*/
 
 
-        sprintf(buf1,"Press: %.2lf hPa",pressure/100);
-        lcd.print_line(1,buf1);
+            sprintf(buf1,"Press: %.2lf hPa",pressure/100);
+            lcd.print_line(1,buf1);
 
-        /*Humidity*/
-        sprintf(buf1,"Hum: %.2lf %%RH",humidity);
-        lcd.print_line(2,buf1);
-        lcd.print_line(3,"Weather Conditions");
+            /*Humidity*/
+            sprintf(buf1,"Hum: %.2lf %%RH",humidity);
+            lcd.print_line(2,buf1);
+            lcd.print_line(3,"Weather Conditions");
+
 
         lcd.clear();
 

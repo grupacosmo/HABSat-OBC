@@ -8,93 +8,101 @@
 
 #include <stm32f4xx_hal.h>
 
-/*IIR Filter*/
-// TODO: zamienic na publiczny enum class
-#define FILTER_OFF 0
-#define FILTER_X2  1
-
-// TODO: zamienic na publiczny enum class
-/*Temperature*/
-#define BME280_TEMPERATURE_DISABLE	0
-#define BME280_TEMPERATURE_16BIT 	1
-#define BME280_TEMPERATURE_17BIT 	2
-#define BME280_TEMPERATURE_18BIT 	3
-#define BME280_TEMPERATURE_19BIT 	4
-#define BME280_TEMPERATURE_20BIT 	5
-
-/*Modes*/
 
 class Sensor {
 public:
+    enum class InitConfigFlags : uint8_t {
+        BME280_TEMPERATURE_16BIT      = 1,
+        FILTER_OFF                    = 0,
+        BME280_NORMALMODE		      = 3,
+        BME280_STANDBY_MS_10	      = 6,
+        BME280_PRESSURE_ULTRALOWPOWER =	1,
+        BME280_HUMINIDITY_STANDARD	  = 3,
+    };
 
+    Sensor(SPI_HandleTypeDef* spi_handler);
+    void init(const InitConfigFlags& temperature_resolution, const InitConfigFlags& pressure_oversampling, const InitConfigFlags& humidity_oversampling, const InitConfigFlags& mode);
 
-    void init(SPI_HandleTypeDef *spi_handler, uint8_t temperature_resolution, uint8_t pressure_oversampling, uint8_t humidity_oversampling, uint8_t mode);
-    void sensor_set_config(uint8_t standby_time, uint8_t filter);
+    void sensor_set_config(const InitConfigFlags& standby_time, const InitConfigFlags& filter);
 
-    float read_temperature(float& temperature);
+    void read_all(float &temperature, float &pressure, float &humidity);
 
-    float read_pressure(float &pressure);
+    void read_temperature(float& temperature);
 
-    int read_all(float &temperature, float &pressure, float &humidity);
+    float convert_data_temperature(int32_t adc_T);
+
+    void read_pressure(float &pressure);
+
+    int32_t convert_data_pressure(int32_t adc_P);
+
+    void read_humidity(float &humidity);
+
+    int32_t convert_data_humidity(int32_t adc_H);
 
     uint32_t read24(uint8_t addr);
 
-    uint16_t read_16_le(uint8_t addr);
+    uint16_t read_16_combine(uint8_t addr);
 
     uint16_t read_16(uint8_t addr);
 
+    uint8_t read_8(uint8_t addr);
+
     void write_8(uint8_t address, uint8_t data);
+
+    void transmit_receive(size_t size, uint8_t *tmp);
+
+
 private:
 
-    // TODO: enum class
-    uint8_t	BME280_CONFIG = 0xF5;
-    uint8_t	BME280_TEMPDATA = 0xFA;
-    uint8_t BME280_PRESSUREDATA = 0xF7;
-    uint8_t BME280_HUMIDDATA=0xFD;
-    uint8_t BME280_HUM_CONTROL= 0xF2;
-
-
-
     /*Handler for SPI Interface*/
-    SPI_HandleTypeDef *spi_h;
+    SPI_HandleTypeDef *spi_h{};
 
     /*t_fine - carries */
-    int32_t t_fine;
+    int32_t t_fine{};
+
+    enum class Command : uint8_t{
+        BME280_CONFIG       = 0xF5,
+        BME280_TEMPDATA     = 0xFA,
+        BME280_PRESSUREDATA = 0xF7,
+        BME280_HUMIDDATA    = 0xFD,
+        BME280_HUM_CONTROL  = 0xF2,
+    };
 
     /*Compensation parameters: temperature*/
-    uint8_t DIG_T1 = 0x88;
-    uint8_t DIG_T2 = 0x8A;
-    uint8_t DIG_T3 = 0x8C;
+    const uint8_t DIG_T[3] = {
+            0x88,
+            0x8A,
+            0x8C
+    };
 
-    uint16_t ut1, ut2, ut3;
+    uint16_t t[3]{};
 
-    /*pressure*/
-    // TODO: const tablica
-    uint8_t DIG_P1 =0x8E ;
-    uint8_t DIG_P2 =0x90 ;
-    uint8_t DIG_P3 =0x92 ;
-    uint8_t DIG_P4 =0x94 ;
-    uint8_t DIG_P5 =0x96 ;
-    uint8_t DIG_P6 =0x98 ;
-    uint8_t DIG_P7 =0x9A ;
-    uint8_t DIG_P8 =0x9C ;
-    uint8_t DIG_P9 =0x9E ;
+    /*Pressure*/
+    const uint8_t DIG_P[9] = {
+            0x8E,
+            0x90,
+            0x92,
+            0x94,
+            0x96,
+            0x98,
+            0x9A,
+            0x9C,
+            0x9E
+    };
 
-    uint16_t p1, p2, p3, p4, p5, p6, p7, p8, p9;
+    uint16_t p[9]{};
 
-    /*humidity*/
+    /*Humidity*/
+    const uint8_t DIG_H[6] = {
+            0xA1,
+            0xE1,
+            0xE3,
+            0xE4,
+            0xE5,
+            0xE7
+    };
 
-     uint8_t DIG_H1 = 0xA1 ;
-     uint8_t DIG_H2 = 0xE1 ;
-     uint8_t DIG_H3 = 0xE3 ;
-     uint8_t DIG_H4 = 0xE4 ;
-     uint8_t DIG_H5 = 0xE5 ;
-     uint8_t DIG_H6 = 0xE7 ;
-
-    uint16_t h1, h2, h3, h4, h5, h6;
-
-
-    uint8_t read_8(uint8_t addr);
+    uint16_t h[6]{};
 };
 
 
