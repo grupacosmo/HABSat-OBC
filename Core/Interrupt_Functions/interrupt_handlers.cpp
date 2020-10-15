@@ -4,7 +4,10 @@
 
 #include "interrupt_handlers.h"
 #include "utils.h"
+#include <os_queue.h>
+#include "obc.h"
 
+// TODO: temporary queue location
 os::Queue<int, 25> uart_notification_queue;
 
 void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
@@ -15,7 +18,7 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
         switch(GPIO_Pin)
         {
             case GPIO_PIN_13:
-                utils.button.task.resume_from_ISR();
+                obc.utils.button.get_input_task().resume_from_ISR();
                 break;
             default:
                 break;

@@ -9,17 +9,14 @@
 #include "constants.h"
 #include "wifi.h"
 #include "lcd.h"
-#include "led.h"
 
-
-struct Peripherals {
-    Led led;
+struct Peripherals
+{
     Lcd lcd{4, 20, &hi2c1, constants::LCD_SLAVE_ADDRESS};
     WiFi wifi{&huart1};
 
-    void initialize();
+public:
+    void init();
 };
-
-extern Peripherals peripherals;
 
 #endif//RCC_SYS_PERIPHERALS_H

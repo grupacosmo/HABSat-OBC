@@ -5,13 +5,18 @@
 #ifndef RCC_SYS_OBC_H
 #define RCC_SYS_OBC_H
 
+#include "peripherals.h"
+#include "utils.h"
 
-
-struct OBC
+struct Obc
 {
+    Peripherals peripherals;
+    Utils utils;
 
+public:
+    void init();
 };
 
-extern OBC obc;
+extern Obc obc;
 
 #endif//RCC_SYS_OBC_H

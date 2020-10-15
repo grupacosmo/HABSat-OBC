@@ -5,10 +5,10 @@
 #ifndef RCC_SYS_WIFI_H
 #define RCC_SYS_WIFI_H
 
-#include "os_queue.h"
 #include "stm32f4xx.h"
 #include "handles.h"
 #include <string>
+#include <array>
 
 class WiFi{
 

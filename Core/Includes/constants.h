@@ -5,8 +5,6 @@
 #ifndef RCC_SYS_CONSTANTS_H
 #define RCC_SYS_CONSTANTS_H
 
-#include <cstdint>
-
 namespace constants
 {
     constexpr uint8_t LCD_SLAVE_ADDRESS = 0x4E;

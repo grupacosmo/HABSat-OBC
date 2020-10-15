@@ -3,6 +3,9 @@
 //
 
 #include "lcd.h"
+#include <array>
+#include "bitwise_operations.h"
+#include "obc.h"
 
 // TODO:
 // SWAP HAL_Delay() FUNCTION FOR A DELAY FUNCTION THAT ACCEPTS MICROSECONDS AS AN ARGUMENT
@@ -26,7 +29,7 @@ Lcd::Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *co
 {}
 
 
-void Lcd::initialize() const
+void Lcd::init() const
 {
     std::byte display_lines_flag{NO_FLAG};
     if(m_lines > 1)
@@ -39,6 +42,8 @@ void Lcd::initialize() const
     HAL_Delay(1);   send_cmd(m_display_ctrl_config);
     HAL_Delay(1);   send_cmd(Command::CLEAR_DISPLAY);
     HAL_Delay(1);   send_cmd(m_entry_mode_config);
+
+    display_task.add_to_scheduler();
 }
 
 void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
@@ -193,3 +198,21 @@ void Lcd::i2c_transmit(std::byte data, const uint16_t data_length) const
     HAL_I2C_Master_Transmit(m_hi2cx, m_slave_address, reinterpret_cast<uint8_t *>(&data), data_length, 100);
 }
 
+void Lcd::display_task_function(void *args)
+{
+    Lcd& lcd = obc.peripherals.lcd;
+
+    const int delay_ms = 1111;
+    while (true)
+    {
+        lcd.print_line(0, "display");
+        os::Task::delay(delay_ms);
+        lcd.print_line(0, "test");
+        os::Task::delay(delay_ms);
+    }
+}
+
+const os::Task &Lcd::get_display_task() const
+{
+    return display_task;
+}

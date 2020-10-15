@@ -7,7 +7,6 @@
 
 #include "FreeRTOS.h"
 #include "queue.h"
-#include <array>
 
 namespace os
 {

@@ -7,13 +7,12 @@
 #define RCC_SYS_LCD_H
 
 #include "stm32f4xx.h"
-#include "bitwise_operations.h"
-#include <array>
 #include <string>
 #include "os_task.h"
 
 class Lcd
 {
+
 public:
 
     /**
@@ -25,7 +24,7 @@ public:
      * @param slave_address Slave address of an LCD.
      */
     Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *hi2cx, const uint8_t slave_address);
-    void initialize() const;
+    void init() const;
     void set_cursor_pos(uint16_t line, const uint16_t column) const;
     void print_line(const uint16_t line_index, const std::string& str) const;
     void print_char(const char character) const;
@@ -40,6 +39,7 @@ public:
     void shift_mode_display();
     void shift_direction_left();
     void shift_direction_right();
+    const os::Task &get_display_task() const;
 
 private:
 
@@ -112,8 +112,10 @@ private:
     void send(const std::byte& byte, const std::byte& flags) const;
     void transmit_nibble(const std::byte& nibble) const;
     inline void i2c_transmit(std::byte data, const uint16_t data_length) const;
+    static void display_task_function(void *args);
 
 private:
+    const os::Task display_task{"display_task", 128, os::Task::Priority::IDLE, display_task_function};
 
     I2C_HandleTypeDef* const m_hi2cx;
     const uint16_t m_lines;

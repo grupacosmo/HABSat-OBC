@@ -3,6 +3,7 @@
 //
 
 #include "Inc/wifi.h"
+#include "os_queue.h"
 
 /*
  * void uart_receive(void *args)
@@ -38,6 +39,24 @@
                     position_old = 0;
             }
  */
+
+#define TEST 0
+#if TEST
+
+auto send_cmd = [](const std::string &s)
+    {
+      HAL_UART_Transmit(&huart1, reinterpret_cast<uint8_t *>(const_cast<char*>(&s[0])), s.size(), 100);
+      HAL_Delay(5000);
+    };
+
+    send_cmd("AT\r\n");
+    send_cmd("AT+CWMODE\r\n");
+
+    while(true)
+    {
+
+    }
+#endif
 
 size_t WiFi::get_buffer_size()
 {

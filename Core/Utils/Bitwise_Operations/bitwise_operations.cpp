@@ -11,7 +11,6 @@ namespace bitwise
         return b & std::byte{0x0f};
     }
 
-
     std::byte nibble_high(std::byte b)
     {
         return b & std::byte{0xf0};

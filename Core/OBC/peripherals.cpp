@@ -4,9 +4,9 @@
 #include "Inc/peripherals.h"
 
 
-void Peripherals::initialize()
+void Peripherals::init()
 {
-    lcd.initialize();
+    lcd.init();
     wifi.initialize();
 }
 

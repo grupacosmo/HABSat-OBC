@@ -3,3 +3,8 @@
 //
 
 #include "utils.h"
+void Utils::init()
+{
+    button.init();
+    led.init();
+}

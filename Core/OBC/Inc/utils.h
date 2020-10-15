@@ -12,8 +12,8 @@ struct Utils
 {
     Button button;
     Led led;
-};
 
-extern Utils utils;
+    void init();
+};
 
 #endif//RCC_SYS_UTILS_H
