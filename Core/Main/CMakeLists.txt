@@ -1,4 +1,4 @@
-set(NAME button)
+set(NAME main_cpp)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,6 +9,8 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
+        freertos
+        button
         freertos_wrapper
         OBC
-        led)
+        interrupt_functions)
