@@ -3,6 +3,7 @@
 //
 
 #include "Inc/rtc.h"
+#include <obc.h>
 
 
 Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
@@ -10,11 +11,13 @@ Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
         m_address(address)
 {}
 
-void Rtc::initialize() const
+void Rtc::init() const
 {
     if(__HAL_RCC_I2C3_IS_CLK_DISABLED()) {
         __HAL_RCC_I2C3_CLK_ENABLE();
     }
+
+    rtc_task.add_to_scheduler();
 }
 
 uint8_t Rtc::bcd_to_dec(const uint8_t data_to_convert)
@@ -125,16 +128,18 @@ char Rtc::uint_to_char(const uint8_t uint) const
 
 void Rtc::rtc_task_code(void *args)
 {
+    Rtc &rtc = obc.peripherals.rtc;
+    Lcd &lcd = obc.peripherals.lcd;
     char time[14] = {};
     char date[16] = {};
     while(true) {
         *time = {};
         *date = {};
-        //rtc.get_time_date();
-        //rtc.time_info(time);
-        //rtc.date_info(date);
-        //lcd.print_line(1, date);
-        //lcd.print_line(2, time);
-        //os::Task::delay(257);
+        rtc.get_time_date();
+        rtc.time_info(time);
+        rtc.date_info(date);
+        lcd.print_line(1, date);
+        lcd.print_line(2, time);
+        os::Task::delay(257);
     }
 }

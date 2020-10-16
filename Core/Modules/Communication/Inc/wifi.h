@@ -14,7 +14,7 @@ class WiFi{
 
 public:
     WiFi(UART_HandleTypeDef *uart_handle);
-    void initialize();
+    void init();
     size_t get_buffer_size();
     void process_data_from_uart(int start, int end);
     void send_cmd(const std::string &s);

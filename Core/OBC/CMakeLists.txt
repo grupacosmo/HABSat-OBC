@@ -13,4 +13,5 @@ target_link_libraries(${NAME}
         lcd
         led
         includes
-        button)
+        button
+        rtc)

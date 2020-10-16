@@ -10,5 +10,6 @@
 extern I2C_HandleTypeDef hi2c1;
 extern UART_HandleTypeDef huart1;
 extern DMA_HandleTypeDef hdma_usart1_rx;
+extern I2C_HandleTypeDef hi2c3;
 
 #endif//RCC_SYS_HANDLES_H

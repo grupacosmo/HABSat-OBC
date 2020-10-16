@@ -6,13 +6,13 @@
 #define RCC_SYS_RTC_H
 
 #include "stm32f4xx.h"
+#include "os_task.h"
 
-//constexpr uint8_t RTC_ADDRESS = 0x68;
 class Rtc
 {
 public:
     Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address);
-    void initialize() const;
+    void init() const;
     void set_time_date(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
             const uint8_t day, const uint8_t month, const uint8_t year) const;
     void get_time_date();

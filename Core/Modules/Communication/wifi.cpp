@@ -74,7 +74,7 @@ WiFi::WiFi(UART_HandleTypeDef *uart_handle)
 
 }
 
-void WiFi::initialize()
+void WiFi::init()
 {
     __HAL_UART_ENABLE_IT(m_uart_handle, UART_IT_IDLE);
     HAL_UART_Receive_DMA(m_uart_handle, reinterpret_cast<uint8_t*>(&m_receive_buffer[0]), m_receive_buffer.size());
