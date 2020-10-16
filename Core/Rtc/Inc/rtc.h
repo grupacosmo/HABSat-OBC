@@ -7,6 +7,7 @@
 
 #include "stm32f4xx.h"
 
+//constexpr uint8_t RTC_ADDRESS = 0x68;
 class Rtc
 {
 public:
@@ -18,14 +19,18 @@ public:
     void time_info(char *str) const;
     void date_info(char *str) const;
 
+
 private:
     void add_uint_to_string(uint8_t uint, char *str) const;
     void add_txt(char *base_str, const char *adding_str) const;
     static uint8_t bcd_to_dec(const uint8_t data_to_convert);
     static uint8_t dec_to_bcd(const uint8_t data_to_convert);
     char uint_to_char(const uint8_t uint) const;
+    static void rtc_task_code(void *args);
 
 private:
+    const os::Task rtc_task{"rtc_task", 128, os::Task::Priority::IDLE, rtc_task_code};
+
     I2C_HandleTypeDef* m_hi2cx;
     uint8_t m_address;
     struct

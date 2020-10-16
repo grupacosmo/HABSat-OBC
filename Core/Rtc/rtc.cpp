@@ -122,3 +122,19 @@ char Rtc::uint_to_char(const uint8_t uint) const
     char offset = '0';
     return uint + offset;
 }
+
+void Rtc::rtc_task_code(void *args)
+{
+    char time[14] = {};
+    char date[16] = {};
+    while(true) {
+        *time = {};
+        *date = {};
+        //rtc.get_time_date();
+        //rtc.time_info(time);
+        //rtc.date_info(date);
+        //lcd.print_line(1, date);
+        //lcd.print_line(2, time);
+        //os::Task::delay(257);
+    }
+}
