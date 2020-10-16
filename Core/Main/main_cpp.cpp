@@ -2,7 +2,6 @@
 // Created by Wiktor Wieclaw on 8/6/20.
 //
 
-
 #include "main_cpp.h"
 #include "obc.h"
 

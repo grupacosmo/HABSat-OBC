@@ -8,7 +8,7 @@
 #include "obc.h"
 
 // TODO: temporary queue location
-os::Queue<int, 25> uart_notification_queue;
+//os::Queue<int, 25> uart_notification_queue;
 
 void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
 {
@@ -36,7 +36,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
         {
             __HAL_UART_CLEAR_IDLEFLAG(huart);                     //Clear idle interrupt sign (otherwise it will continue to enter interrupt)
 
-            uart_notification_queue.send(notification, 0);
+           // uart_notification_queue.send(notification, 0);
         }
     }
 }
@@ -50,7 +50,7 @@ void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx)
         {
             __HAL_UART_CLEAR_IDLEFLAG(&huart1);//Clear idle interrupt sign (otherwise it will continue to enter interrupt)
 
-            uart_notification_queue.send(notification, 0);
+            //uart_notification_queue.send(notification, 0);
         }
     }
 }
