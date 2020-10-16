@@ -1,4 +1,4 @@
-set(NAME button)
+set(NAME freertos_wrapper)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,6 +9,4 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        freertos_wrapper
-        OBC
-        led)
+        freertos)

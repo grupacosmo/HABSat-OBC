@@ -6,14 +6,21 @@
 #define RCC_SYS_BUTTON_H
 
 #include "stm32f4xx.h"
+#include "os_task.h"
 
 class Button
 {
-private:
-    GPIO_TypeDef *const TYPE = GPIOC;
-    const uint16_t PIN = GPIO_PIN_13;
 public:
     bool is_pressed() const;
+    void init();
+    const os::Task &get_input_task() const;
+private:
+    static void input_task_function(void *args);
+private:
+    const os::Task input_task{"input", 128, os::Task::Priority::INTERRUPT, input_task_function};
+
+    GPIO_TypeDef *const TYPE = GPIOC;
+    const uint16_t PIN = GPIO_PIN_13;
 };
 
 #endif //RCC_SYS_BUTTON_H
