@@ -14,4 +14,5 @@ target_link_libraries(${NAME}
         led
         includes
         button
-        rtc)
+        rtc
+        sensor)

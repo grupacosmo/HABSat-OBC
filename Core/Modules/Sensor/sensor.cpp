@@ -2,7 +2,9 @@
 // Created by Agnieszka Rejczak on 8/23/2020.
 //
 
-#include "Inc/sensor.h"
+#include "sensor.h"
+#include "obc.h"
+
 
 // TODO: consty wszedzie gdzie sie da do parametrow
 // TODO: consty do stalych wewnatrz funkcji
@@ -37,7 +39,6 @@ void Sensor::init(const InitConfigFlags& temperature_resolution, const InitConfi
 
     write_8(static_cast<uint8_t>(Command::BME280_HUM_CONTROL), HumReg);
     write_8(0xF4, ((static_cast<uint8_t>(temperature_resolution)<<5) | ((static_cast<uint8_t>(pressure_oversampling)<<2) | (static_cast<uint8_t>(mode)))));
-
 }
 
 void Sensor::sensor_set_config(const InitConfigFlags& standby_time, const InitConfigFlags& filter)
@@ -186,4 +187,32 @@ void Sensor::transmit_receive(const size_t size, uint8_t *tmp)
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
     HAL_SPI_TransmitReceive(spi_h, tmp, tmp, size, 10);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);
+}
+
+void Sensor::measure_task_function(void *args)
+{
+    Sensor& sensor = obc.peripherals.sensor;
+    Lcd& lcd = obc.peripherals.lcd;
+
+    float temperature, pressure, humidity;
+    char buf[16];
+
+    auto print_lambda = [&buf](const char* text, float value){
+      sprintf(buf, text, value);
+      lcd.print_line(3, buf);
+      os::Task::delay(1000);
+    };
+
+    while(true)
+    {
+        sensor.read_all(temperature,pressure,humidity);
+        print_lambda("Temp: %.2lf C", temperature);
+        print_lambda("Press: %.2lf hPa", pressure/100);
+        print_lambda("Hum: %.2lf %%RH",humidity);
+    }
+}
+
+const os::Task &Sensor::getMeasureTask() const
+{
+    return measure_task;
 }

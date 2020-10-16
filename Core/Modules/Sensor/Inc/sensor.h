@@ -6,7 +6,8 @@
 #define RCC_SYS_SENSOR_H
 
 
-#include <stm32f4xx_hal.h>
+#include "stm32f4xx.h"
+#include "os_task.h"
 
 
 class Sensor {
@@ -21,6 +22,7 @@ public:
     };
 
     Sensor(SPI_HandleTypeDef* spi_handler);
+
     void init(const InitConfigFlags& temperature_resolution, const InitConfigFlags& pressure_oversampling, const InitConfigFlags& humidity_oversampling, const InitConfigFlags& mode);
 
     void sensor_set_config(const InitConfigFlags& standby_time, const InitConfigFlags& filter);
@@ -51,11 +53,17 @@ public:
 
     void transmit_receive(size_t size, uint8_t *tmp);
 
+    const os::Task &getMeasureTask() const;
+
+private:
+    static void measure_task_function(void *args);
 
 private:
 
+    const os::Task measure_task{"measure", 128, os::Task::Priority::IDLE, measure_task_function};
+
     /*Handler for SPI Interface*/
-    SPI_HandleTypeDef *spi_h{};
+    SPI_HandleTypeDef *spi_h;
 
     /*t_fine - carries */
     int32_t t_fine{};
