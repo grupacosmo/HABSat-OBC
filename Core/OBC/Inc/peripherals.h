@@ -9,11 +9,13 @@
 #include "constants.h"
 #include "wifi.h"
 #include "lcd.h"
+#include "rtc.h"
 
 struct Peripherals
 {
     Lcd lcd{4, 20, &hi2c1, constants::LCD_SLAVE_ADDRESS};
     WiFi wifi{&huart1};
+    Rtc rtc{&hi2c3, constants::RTC_ADDRESS};
 
 public:
     void init();

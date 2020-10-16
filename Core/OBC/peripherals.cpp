@@ -7,6 +7,7 @@
 void Peripherals::init()
 {
     lcd.init();
-    wifi.initialize();
+    wifi.init();
+    rtc.init();
 }
 
