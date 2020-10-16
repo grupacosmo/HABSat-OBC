@@ -40,7 +40,7 @@ add_definitions(-DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG)
 
 file(GLOB_RECURSE SOURCES "Startup/*.*" "Src/*.*" "Drivers/*.*")
 
-include_directories(Middlewares/Third_Party/FreeRTOS/Source/include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F Inc Drivers/CMSIS/Include Drivers/STM32F4xx_HAL_Driver/Inc Drivers/CMSIS/Device/ST/STM32F4xx/Include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 Drivers/STM32F4xx_HAL_Driver/Inc/Legacy)
+include_directories(Middlewares/Third_Party/FreeRTOS/Source/include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F Inc Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2)
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
@@ -57,6 +57,12 @@ add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
 Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
+
+include_directories(
+        Drivers/CMSIS/Device/ST/STM32F4xx/Include
+        Drivers/CMSIS/Include
+        Drivers/STM32F4xx_HAL_Driver/Inc
+)
 
 add_subdirectory(Core)
 
