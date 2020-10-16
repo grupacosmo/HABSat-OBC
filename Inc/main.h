@@ -1,8 +1,8 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file           : mainpp.h
-  * @brief          : Header for mainpp.c file.
+  * @file           : main_cpp.h
+  * @brief          : Header for main_cpp.c file.
   *                   This file contains the common defines of the application.
   ******************************************************************************
   * @attention
@@ -61,8 +61,6 @@ void Error_Handler(void);
 #define BUTTON_INT_Pin GPIO_PIN_13
 #define BUTTON_INT_GPIO_Port GPIOC
 #define BUTTON_INT_EXTI_IRQn EXTI15_10_IRQn
-#define CSB_Pin GPIO_PIN_3
-#define CSB_GPIO_Port GPIOC
 #define LED_DIODE_Pin GPIO_PIN_5
 #define LED_DIODE_GPIO_Port GPIOA
 /* USER CODE BEGIN Private defines */
