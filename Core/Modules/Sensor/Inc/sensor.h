@@ -60,7 +60,7 @@ private:
 
 private:
 
-    const os::Task measure_task{"measure", 128, os::Task::Priority::IDLE, measure_task_function};
+    const os::Task measure_task{"measure", 256, os::Task::Priority::IDLE, measure_task_function};
 
     /*Handler for SPI Interface*/
     SPI_HandleTypeDef *spi_h;
