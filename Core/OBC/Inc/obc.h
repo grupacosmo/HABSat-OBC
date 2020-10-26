@@ -8,12 +8,14 @@
 #include "peripherals.h"
 #include "utils.h"
 
+/**
+ * The main structure of the entire program, contains every part of the obc.
+ */
 struct Obc
 {
     Peripherals peripherals;
     Utils utils;
 
-public:
     void init();
 };
 

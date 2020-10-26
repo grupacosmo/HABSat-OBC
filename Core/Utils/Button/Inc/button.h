@@ -11,11 +11,27 @@
 class Button
 {
 public:
-    bool is_pressed() const;
+
+    /**
+     * Add task into the scheduler
+     */
     void init();
+
+    /**
+     * Checks whether the button is pressed
+     * @return
+     */
+    bool is_pressed() const;
+
+    /**
+     * Getter for the task object
+     * @return
+     */
     const os::Task &get_input_task() const;
+
 private:
     static void input_task_function(void *args);
+
 private:
     const os::Task input_task{"input", 128, os::Task::Priority::INTERRUPT, input_task_function};
 

@@ -11,14 +11,41 @@
 class Led
 {
 public:
+    /**
+     * Adds task into the scheduler.
+     */
     void init();
+
+    /**
+     * Turns the LED on.
+     */
     void on() const;
+
+    /**
+     * Turns the LED off.
+     */
     void off() const;
+
+    /**
+     * Toggles the LED.
+     */
     void toggle() const;
+
+    /**
+     * Checks whether the LED is on.
+     * @return
+     */
     bool is_on() const;
+
+    /**
+     * Getter for blink task object.
+     * @return
+     */
     const os::Task &get_blink_task() const;
+
 private:
     static void blink_task_function(void *args);
+
 private:
     const os::Task blink_task{"blink", 128, os::Task::Priority::IDLE, blink_task_function};
 

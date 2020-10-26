@@ -117,7 +117,6 @@ namespace os
         static void delete_itself();
 
     private:
-
         TaskHandle_t m_task_handle;
         void (*const m_task_code)(void*);
         const char *const m_name;

@@ -8,6 +8,9 @@
 #include "button.h"
 #include "led.h"
 
+/**
+ * Holds objects that cannot be categorized as peripherals.
+ */
 struct Utils
 {
     Button button;

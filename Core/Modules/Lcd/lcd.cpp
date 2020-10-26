@@ -35,13 +35,18 @@ void Lcd::init() const
     if(m_lines > 1)
         display_lines_flag = std::byte{FunctionSetFlag::DISPLAY_LINES};
 
-    HAL_Delay(20);  send_cmd(Command::FUNCTION_SET);
-    HAL_Delay(5);   send_cmd(Command::FUNCTION_SET);
-    HAL_Delay(1);   send_cmd(Command::FUNCTION_SET);
-    HAL_Delay(1);   send_cmd(std::byte{Command::FUNCTION_SET} | display_lines_flag);
-    HAL_Delay(1);   send_cmd(m_display_ctrl_config);
-    HAL_Delay(1);   send_cmd(Command::CLEAR_DISPLAY);
-    HAL_Delay(1);   send_cmd(m_entry_mode_config);
+    auto wait_and_send_cmd = [this](uint32_t time, std::byte b)
+    {
+        HAL_Delay(time);
+        send_cmd(b);
+    };
+    wait_and_send_cmd(20, std::byte{Command::FUNCTION_SET});
+    wait_and_send_cmd(5, std::byte{Command::FUNCTION_SET});
+    wait_and_send_cmd(1, std::byte{Command::FUNCTION_SET});
+    wait_and_send_cmd(1, std::byte{Command::FUNCTION_SET} | display_lines_flag);
+    wait_and_send_cmd(1, m_display_ctrl_config);
+    wait_and_send_cmd(1, std::byte{Command::CLEAR_DISPLAY});
+    wait_and_send_cmd(1, m_entry_mode_config);
 
     display_task.add_to_scheduler();
 }
@@ -143,11 +148,6 @@ void Lcd::shift_direction_right()
     unset_flag(m_entry_mode_config, std::byte{EntryModeFlag::SHIFT_DIRECTION});
 }
 
-
-
-
-// private:
-
 void Lcd::set_flag(std::byte& config, const std::byte& flag)
 {
     config |= flag;
@@ -212,7 +212,3 @@ void Lcd::display_task_function(void *args)
     }
 }
 
-const os::Task &Lcd::get_display_task() const
-{
-    return display_task;
-}

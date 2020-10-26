@@ -12,11 +12,14 @@
 #include "rtc.h"
 #include "sensor.h"
 
+/**
+ * Holds all instances of the classes that represent peripherals
+ */
 struct Peripherals
 {
     Lcd lcd{4, 20, &hi2c1, constants::LCD_SLAVE_ADDRESS};
     WiFi wifi{&huart1};
-    Rtc rtc{&hi2c3, constants::RTC_ADDRESS};
+    Rtc rtc{&hi2c3, constants::RTC_SLAVE_ADDRESS};
     Sensor sensor{&hspi2};
 
 public:

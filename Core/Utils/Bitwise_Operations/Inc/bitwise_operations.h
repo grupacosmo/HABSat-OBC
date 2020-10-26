@@ -9,7 +9,18 @@
 
 namespace bitwise
 {
+    /**
+     * Returns the lower nibble (4 bits) of a byte.
+     * @param b
+     * @return
+     */
     std::byte nibble_low(std::byte b);
+
+    /**
+     * Returns the higher nibble (4 bits) of a byte.
+     * @param b
+     * @return
+     */
     std::byte nibble_high(std::byte b);
 }
 

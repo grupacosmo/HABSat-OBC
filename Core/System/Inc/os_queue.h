@@ -14,9 +14,29 @@ namespace os
     class Queue
     {
     public:
+        /**
+         * Constructs the object.
+         */
         Queue();
-        void initalize();
+
+        /**
+         * Initializes the Queue.
+         */
+        void init();
+
+        /**
+         * Sends object into the Queue
+         * @param object
+         * @param ticks_to_wait
+         */
         void send(Type &object, TickType_t ticks_to_wait);
+
+        /**
+         * Receives object from the Queue
+         * @param object_holder
+         * @param ticks_to_wait
+         * @return
+         */
         bool receive(Type &object_holder, TickType_t ticks_to_wait);
     private:
         QueueHandle_t m_queue_handle;
@@ -29,7 +49,7 @@ namespace os
 
     }
     template<typename Type, size_t size>
-    void Queue<Type, size>::initalize()
+    void Queue<Type, size>::init()
     {
         m_queue_handle = xQueueCreate(size, sizeof(Type));
     }

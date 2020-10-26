@@ -16,7 +16,7 @@ class Lcd
 public:
 
     /**
-     * Initializes LCD.
+     * Constructs LCD.
      *
      * @param lines         Number of lines on an LCD screen.
      * @param line_length   Number of possible characters per line.
@@ -24,22 +24,86 @@ public:
      * @param slave_address Slave address of an LCD.
      */
     Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *hi2cx, const uint8_t slave_address);
+
+    /**
+     * Initializes LCD hardware and adds tasks to scheduler
+     */
     void init() const;
+
+    /**
+     * Sets position of a cursor. Lines start from 0.
+     * @param line
+     * @param column
+     */
     void set_cursor_pos(uint16_t line, const uint16_t column) const;
+
+    /**
+     * Clears entire line and prints text.
+     * @param line_index
+     * @param str
+     */
     void print_line(const uint16_t line_index, const std::string& str) const;
+
+    /**
+     * Prints one character at the current cursor position;
+     * @param character
+     */
     void print_char(const char character) const;
+
+    /**
+     * Clears entire display
+     */
     void clear() const;
+
+    /**
+     * Turns on the display
+     */
     void display_on();
+
+    /**
+     * Turns off the display
+     */
     void display_off();
+
+    /**
+     * Makes the cursor visible
+     */
     void cursor_on();
+
+    /**
+     * Makes the cursor invisible
+     */
     void cursor_off();
+
+    /**
+     * Sets cursor into blinking mode
+     */
     void cursor_blinking();
+
+    /**
+    * Sets cursor into not blinking mode
+    */
     void cursor_not_blinking();
+
+    /**
+     * Sets shift mode to cursor shift. Whenever new characters are written the cursor is shifting.
+     */
     void shift_mode_cursor();
+
+    /**
+    * Sets shift mode to cursor shift. Whenever new characters are written the entire screen is shifting.
+    */
     void shift_mode_display();
+
+    /**
+     * Sets shift direction to left.
+     */
     void shift_direction_left();
+
+    /**
+     * Sets shift direction to right.
+     */
     void shift_direction_right();
-    const os::Task &get_display_task() const;
 
 private:
 
@@ -103,7 +167,6 @@ private:
     };
 
 private:
-
     void set_flag(std::byte& config, const std::byte& flag);
     void unset_flag(std::byte& config, const std::byte& flag);
     void send_cmd(const std::byte& byte) const;

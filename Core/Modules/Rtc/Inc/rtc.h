@@ -22,7 +22,7 @@ public:
     Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address);
 
     /**
-     * Initializes RTC.
+     * Initializes RTC hardware and task into the scheduler.
      */
     void init() const;
 
