@@ -79,6 +79,10 @@ public:
      */
     void read_humidity(float &humidity);
 
+    /*
+     * Getter for the Measure Task handle.
+     */
+    const os::Task &getMeasureTask() const;
 private:
     /**
      * Converts read data from binary to decimal.
@@ -155,8 +159,6 @@ private:
     * @param args
     */
     static void measure_task_function(void *args);
-
-    const os::Task &getMeasureTask() const;
 
 private:
 
