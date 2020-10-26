@@ -21,42 +21,142 @@ public:
         BME280_HUMINIDITY_STANDARD	  = 3,
     };
 
+    /**
+     * Sensor's constructor.
+     * @param spi_handler Pointer to SPI handle
+     */
+
     Sensor(SPI_HandleTypeDef* spi_handler);
 
+    /**
+     * Initializes Sensor.
+     * Sets size for temperature, pressure and humidity resolution. Set choosen mode.
+     * @param temperature_resolution
+     * @param pressure_oversampling
+     * @param humidity_oversampling
+     * @param mode
+     */
     void init(const InitConfigFlags& temperature_resolution, const InitConfigFlags& pressure_oversampling, const InitConfigFlags& humidity_oversampling, const InitConfigFlags& mode);
 
+    /**
+     * Sets sensor's configuration.
+     * @param standby_time
+     * @param filter
+     */
     void sensor_set_config(const InitConfigFlags& standby_time, const InitConfigFlags& filter);
 
+    /**
+     *Calls function for reading temperature, pressure and humidity
+     * @param temperature
+     * @param pressure
+     * @param humidity
+     */
     void read_all(float &temperature, float &pressure, float &humidity);
 
+    /**
+     * Reads temperature data from sensor in 24-bit format
+     * @param temperature
+     */
     void read_temperature(float& temperature);
 
-    float convert_data_temperature(int32_t adc_T);
-
+    /**
+     * Reads pressure data form sensor in 24-bit format
+     * There is a need to read_temperature first.
+     * For reading pressure, variable t_fine have to be initialized
+     * (It happens in read_temperature)
+     * t_fine will be used in convertion
+     * @param pressure
+     */
     void read_pressure(float &pressure);
 
-    int32_t convert_data_pressure(int32_t adc_P);
-
+    /**
+     * Reads humidity data from sensor in 16-bit format
+     * There is a need to read_temperature first.
+     * For reading humidity, variable t_fine have to be initialized
+     * (It happens in read_temperature)
+     * t_fine will be used in convertion
+     * @param humidity
+     */
     void read_humidity(float &humidity);
 
+private:
+    /**
+     * Converts read data from binary to decimal.
+     * Uses patterns for temperature convertion from documentation.
+     * @param adc_T  read data
+     * @return       converted data
+     */
+    float convert_data_temperature(int32_t adc_T);
+
+    /**
+    * Converts read data from binary to decimal.
+    * Uses patterns for pressure convertion from documentation.
+    * @param adc_P  read data
+    * @return       converted data
+    */
+    int32_t convert_data_pressure(int32_t adc_P);
+
+    /**
+     * Converts read data from binary to decimal.
+     * Uses patterns for humidity convertion from documentation.
+     * @param adc_H     read data
+     * @return          converted data
+     */
     int32_t convert_data_humidity(int32_t adc_H);
 
+    /**
+     * Reads data from register addr in 24-bit format to table
+     * @param addr
+     * @return      read data
+     */
     uint32_t read24(uint8_t addr);
 
+    /**
+     * Combines two bytes by swapping their places
+     * @param addr
+     * @return      combined data
+     */
     uint16_t read_16_combine(uint8_t addr);
 
+    /**
+     * Reads data from register addr in 16-bit format to table
+     * @param addr
+     * @return      read data
+     */
     uint16_t read_16(uint8_t addr);
 
+    /**
+     * Reads data from register addr in 8-but format to table
+     * @param addr
+     * @return      read data
+     */
     uint8_t read_8(uint8_t addr);
 
+    /**
+     * Writes data in 8-bit format to register - address
+     * @param address
+     * @param data
+     */
     void write_8(uint8_t address, uint8_t data);
 
+    /**
+     * Writes data in 8-bit format to register - tmp[0]
+     * Then reads data to tmp (from tmp[1] to tmp[size-1])
+     * @param size  size of tmp
+     * @param tmp   table of uint8
+     */
     void transmit_receive(size_t size, uint8_t *tmp);
 
-    const os::Task &getMeasureTask() const;
-
-private:
+    /**
+    * Defines Sensor task.
+    *
+    * Reads temperature,pressure and humidity
+    * Prints read data on LCD screen.
+    * @param args
+    */
     static void measure_task_function(void *args);
+
+    const os::Task &getMeasureTask() const;
 
 private:
 
