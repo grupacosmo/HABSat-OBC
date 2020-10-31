@@ -1,0 +1,18 @@
+/*
+    This is a template for your hardware configuration file.
+    Create a "hardware_config.h" file in "Core/Includes/" directory.
+    Copy and paste the content of this file and configure according to your hardware.
+*/
+
+#ifndef RCC_SYS_HARDWARE_CONFIG_H
+#define RCC_SYS_HARDWARE_CONFIG_H
+
+#define HW_LCD      0   // 1 if LCD connected
+#define HW_WIFI     0   // 1 if WIFI connected
+#define HW_SENSOR   0   // 1 if SENSOR connected
+#define HW_RTC      0   // 1 if RTC connected
+
+/* 1 if you have PCF8574A (instead of PCF8574) I2C converter in your LCD */
+#define HW_LCD_I2C_CONVERTER_TYPE_A 0
+
+#endif//RCC_SYS_HARDWARE_CONFIG_H

@@ -202,7 +202,7 @@ void Lcd::display_task_function(void *args)
 {
     Lcd& lcd = obc.peripherals.lcd;
 
-    const int delay_ms = 1111;
+    const int delay_ms = 1000;
     while (true)
     {
         lcd.print_line(0, "display");
