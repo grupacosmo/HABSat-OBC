@@ -21,6 +21,13 @@ public:
         BME280_HUMINIDITY_STANDARD	  = 3,
     };
 
+    struct Buffers
+    {
+        float temperature = 0;
+        float pressure = 0;
+        float humidity = 0;
+    };
+
     /**
      * Sensor's constructor.
      * @param spi_handler Pointer to SPI handle
@@ -47,11 +54,8 @@ public:
 
     /**
      *Calls function for reading temperature, pressure and humidity
-     * @param temperature
-     * @param pressure
-     * @param humidity
      */
-    void read_all(float &temperature, float &pressure, float &humidity);
+    void read_all();
 
     /**
      * Reads temperature data from sensor in 24-bit format
@@ -83,6 +87,9 @@ public:
      * Getter for the Measure Task handle.
      */
     const os::Task &getMeasureTask() const;
+
+    const Sensor::Buffers &getBuffers() const;
+
 private:
     /**
      * Converts read data from binary to decimal.
@@ -161,6 +168,8 @@ private:
     static void measure_task_function(void *args);
 
 private:
+
+    Buffers buffers;
 
     const os::Task measure_task{"measure", 256, os::Task::Priority::IDLE, measure_task_function};
 

@@ -46,13 +46,13 @@ void Sensor::sensor_set_config(const InitConfigFlags& standby_time, const InitCo
     write_8(static_cast<uint8_t>(Command::BME280_CONFIG) , (uint8_t) (((static_cast<uint8_t>(standby_time) & 0x7) << 5) | ((static_cast<uint8_t>(filter) & 0x7) << 2)) & 0xFC);
 }
 
-void Sensor::read_all(float& temperature, float& pressure, float& humidity)
+void Sensor::read_all()
 {
-    read_temperature(temperature);
+    read_temperature(buffers.temperature);
 
-    read_pressure(pressure);
+    read_pressure(buffers.pressure);
 
-    read_humidity(humidity);
+    read_humidity(buffers.humidity);
 
 }
 
@@ -87,7 +87,7 @@ void Sensor::read_pressure(float& pressure){
     int32_t adc_P = read24(static_cast<uint8_t>(Command::BME280_PRESSUREDATA));
     HAL_GPIO_WritePin (GPIOC, GPIO_PIN_3, GPIO_PIN_SET);  // pull the pin high to end reading
 
-    pressure = convert_data_pressure(adc_P);
+    pressure = convert_data_pressure(adc_P) / 100;
 
 
 }
@@ -192,23 +192,11 @@ void Sensor::transmit_receive(const size_t size, uint8_t *tmp)
 void Sensor::measure_task_function(void *args)
 {
     Sensor& sensor = obc.peripherals.sensor;
-    Lcd& lcd = obc.peripherals.lcd;
-
-    float temperature, pressure, humidity;
-    char buf[16];
-
-    auto print_lambda = [&buf](const char* text, float value){
-      sprintf(buf, text, value);
-      lcd.print_line(3, buf);
-      os::Task::delay(1000);
-    };
 
     while(true)
     {
-        sensor.read_all(temperature,pressure,humidity);
-        print_lambda("Temp: %.2lf C", temperature);
-        print_lambda("Press: %.2lf hPa", pressure/100);
-        print_lambda("Hum: %.2lf %%RH",humidity);
+        sensor.read_all();
+        os::Task::delay(256);
     }
 }
 
@@ -216,3 +204,9 @@ const os::Task &Sensor::getMeasureTask() const
 {
     return measure_task;
 }
+const Sensor::Buffers &Sensor::getBuffers() const
+{
+    return buffers;
+}
+
+

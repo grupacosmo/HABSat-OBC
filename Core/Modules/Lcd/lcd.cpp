@@ -200,15 +200,30 @@ void Lcd::i2c_transmit(std::byte data, const uint16_t data_length) const
 
 void Lcd::display_task_function(void *args)
 {
-    Lcd& lcd = obc.peripherals.lcd;
+    Lcd &lcd = obc.peripherals.lcd;
+    auto &buffers = const_cast<Sensor::Buffers&>(obc.peripherals.sensor.getBuffers());
 
-    const int delay_ms = 1000;
+    auto lcd_formatted_print_line = [](short line, const char *text, float value) {
+        std::array<char, 16> print_line_buffer;
+        sprintf(&print_line_buffer[0], text, value);
+        lcd.print_line(line, &print_line_buffer[0]);
+    };
+
+    constexpr std::array line_0_texts{"display", "test"};
+    constexpr std::array line_3_texts{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};
+    const std::array<float*, 3> line_3_values{&buffers.temperature, &buffers.pressure, &buffers.humidity};
+
+    std::size_t line_0_index = 0;
+    std::size_t line_3_index = 0;
     while (true)
     {
-        lcd.print_line(0, "display");
-        os::Task::delay(delay_ms);
-        lcd.print_line(0, "test");
-        os::Task::delay(delay_ms);
+        lcd.print_line(0, line_0_texts[line_0_index]);
+        lcd_formatted_print_line(3, line_3_texts[line_3_index], *line_3_values[line_3_index]);
+
+        line_0_index = (line_0_index + 1) % line_0_texts.size();
+        line_3_index = (line_3_index + 1) % line_3_texts.size();
+
+        os::Task::delay(1000);
     }
 }
 

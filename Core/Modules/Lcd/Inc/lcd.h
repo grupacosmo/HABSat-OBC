@@ -178,7 +178,7 @@ private:
     static void display_task_function(void *args);
 
 private:
-    const os::Task display_task{"display_task", 128, os::Task::Priority::IDLE, display_task_function};
+    const os::Task display_task{"display_task", 512, os::Task::Priority::IDLE, display_task_function};
 
     I2C_HandleTypeDef* const m_hi2cx;
     const uint16_t m_lines;
