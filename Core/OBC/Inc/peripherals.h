@@ -17,9 +17,9 @@
  */
 struct Peripherals
 {
-    Lcd lcd{4, 20, &hi2c1, constants::LCD_SLAVE_ADDRESS};
+    Lcd lcd{4, 20, &hi2c3, constants::LCD_SLAVE_ADDRESS};
     WiFi wifi{&huart1};
-    Rtc rtc{&hi2c1, constants::RTC_SLAVE_ADDRESS};
+    Rtc rtc{&hi2c3, constants::RTC_SLAVE_ADDRESS};
     Sensor sensor{&hspi2};
 
 public:

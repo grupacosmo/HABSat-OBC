@@ -13,8 +13,8 @@ Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
 
 void Rtc::init() const
 {
-    if(__HAL_RCC_I2C1_IS_CLK_DISABLED()) {
-        __HAL_RCC_I2C1_CLK_ENABLE();
+    if(__HAL_RCC_I2C3_IS_CLK_DISABLED()) {
+        __HAL_RCC_I2C3_CLK_ENABLE();
     }
 
     rtc_task.add_to_scheduler();
