@@ -25,8 +25,8 @@ SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
 #SET(FPU_FLAGS "-mfloat-abi=soft")
 
 SET(COMMON_FLAGS
-    "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections \
-    -g -fno-common -fmessage-length=0 ")
+    "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections\
+    -g -fno-common -fmessage-length=0")
 
 SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++11")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")
@@ -57,6 +57,8 @@ add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
 Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
+
+add_compile_options(-O3 -Wall -Wextra)
 
 include_directories(
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
