@@ -204,7 +204,7 @@ void Lcd::display_task_function(void *args)
     auto &buffers = const_cast<Sensor::Buffers&>(obc.peripherals.sensor.getBuffers());
 
     auto lcd_formatted_print_line = [](short line, const char *text, float value) {
-        std::array<char, 16> print_line_buffer;
+        std::array<char, 20> print_line_buffer;
         sprintf(&print_line_buffer[0], text, value);
         lcd.print_line(line, &print_line_buffer[0]);
     };
