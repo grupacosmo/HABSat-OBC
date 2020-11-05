@@ -29,7 +29,7 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
 
 void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 {
-    int notification = 1;
+    //int notification = 1;
     if(USART1 == huart->Instance)                                   //Determine whether it is serial port 1
     {
         if(RESET != __HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))   //Judging whether it is idle interruption
@@ -43,7 +43,7 @@ void USER_UART_IRQHandler(UART_HandleTypeDef *huart)
 
 void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx)
 {
-    int notification = 1;
+    //int notification = 1;
     if(DMA2_Stream2 == hdma_usart_rx->Instance)
     {
         if(RESET != __HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))   //Judging whether it is idle interruption

@@ -49,7 +49,7 @@ namespace os
         vTaskResume(NULL);
     }
 
-    const Task::State Task::get_state() const
+    Task::State Task::get_state() const
     {
         return eTaskGetState(m_task_handle);
     }

@@ -65,7 +65,7 @@ size_t WiFi::get_buffer_size()
 
 void WiFi::process_data_from_uart(int start, int end)
 {
-
+    (void)start; (void)end;
 }
 
 WiFi::WiFi(UART_HandleTypeDef *uart_handle)

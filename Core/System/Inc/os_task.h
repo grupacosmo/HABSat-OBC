@@ -64,7 +64,7 @@ namespace os
          *
          * @return State from os::Thread::State enum.
          */
-        const State get_state() const;
+        State get_state() const;
 
         /**
          * Resumes the task from the interrupt handler. To use this you need to create a global pointer

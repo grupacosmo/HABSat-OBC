@@ -12,6 +12,7 @@ bool Button::is_pressed() const
 
 void Button::input_task_function(void *args)
 {
+    (void)args;
     Lcd &lcd = obc.peripherals.lcd;
     const os::Task &led_blink_task = obc.utils.led.get_blink_task();
     while (true)

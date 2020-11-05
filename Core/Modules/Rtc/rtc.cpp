@@ -128,6 +128,7 @@ char Rtc::uint_to_char(const uint8_t uint) const
 
 void Rtc::rtc_task_code(void *args)
 {
+    (void)args;
     Rtc &rtc = obc.peripherals.rtc;
     Lcd &lcd = obc.peripherals.lcd;
     char time[14] = {};

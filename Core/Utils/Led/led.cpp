@@ -25,6 +25,7 @@ bool Led::is_on() const
 
 void Led::blink_task_function(void *args)
 {
+    (void)args;
     while (true)
     {
         obc.utils.led.toggle();

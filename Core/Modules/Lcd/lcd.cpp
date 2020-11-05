@@ -20,9 +20,9 @@
 // public:
 
 Lcd::Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *const hi2cx, uint8_t slave_address)
-: m_lines(lines),
+: m_hi2cx(hi2cx),
+  m_lines(lines),
   m_line_length(line_length),
-  m_hi2cx(hi2cx),
   m_slave_address(slave_address),
   m_display_ctrl_config(std::byte{Command::DISPLAY_CRTL} | std::byte{DisplayCtrlFlag::DISPLAY_STATE}),
   m_entry_mode_config(std::byte{Command::ENTRY_MODE} | std::byte{EntryModeFlag::SHIFT_DIRECTION})
@@ -55,7 +55,7 @@ void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
 {
     set_cursor_pos(line_index, 0);
 
-    int i;
+    size_t i;
     for(i = 0; i < m_line_length && i < str.size(); i++)
     {
         send_data(std::byte{str[i]});
@@ -200,6 +200,7 @@ void Lcd::i2c_transmit(std::byte data, const uint16_t data_length) const
 
 void Lcd::display_task_function(void *args)
 {
+    (void)args;
     Lcd &lcd = obc.peripherals.lcd;
     auto &buffers = const_cast<Sensor::Buffers&>(obc.peripherals.sensor.getBuffers());
 

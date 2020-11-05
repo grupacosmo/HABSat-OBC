@@ -191,6 +191,7 @@ void Sensor::transmit_receive(const size_t size, uint8_t *tmp)
 
 void Sensor::measure_task_function(void *args)
 {
+    (void)args;
     Sensor& sensor = obc.peripherals.sensor;
 
     while(true)
