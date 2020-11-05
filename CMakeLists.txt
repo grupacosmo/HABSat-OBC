@@ -15,7 +15,7 @@ set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
 set(CMAKE_OBJDUMP arm-none-eabi-objdump)
 set(SIZE arm-none-eabi-size)
 
-SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld Core/Modules/MsdReader/Inc/msdReader.h Core/Modules/MsdReader/msdReader.cpp)
+SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld)
 
 #Uncomment for hardware floating point
 SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
@@ -25,8 +25,8 @@ SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
 #SET(FPU_FLAGS "-mfloat-abi=soft")
 
 SET(COMMON_FLAGS
-    "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections\
-    -g -fno-common -fmessage-length=0")
+    "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections \
+    -g -fno-common -fmessage-length=0 ")
 
 SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++11")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")

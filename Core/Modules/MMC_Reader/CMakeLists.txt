@@ -1,4 +1,4 @@
-set(NAME msdReader)
+set(NAME mmc_reader)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
