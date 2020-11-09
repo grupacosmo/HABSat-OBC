@@ -17,6 +17,16 @@ void Rtc::init() const
         __HAL_RCC_I2C3_CLK_ENABLE();
     }
 
+#if HW_RTC_SET_TIME
+    set_time_date(
+        HW_RTC_SECOND,
+        HW_RTC_MINUTE,
+        HW_RTC_HOUR,
+        HW_RTC_WEEKDAY,
+        HW_RTC_DAY,
+        HW_RTC_MONTH,
+        HW_RTC_YEAR);
+#endif
     rtc_task.add_to_scheduler();
 }
 

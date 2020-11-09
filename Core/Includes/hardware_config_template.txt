@@ -15,4 +15,15 @@
 /* 1 if you have PCF8574A (instead of PCF8574) I2C converter in your LCD */
 #define HW_LCD_I2C_CONVERTER_TYPE_A 0
 
+/* sets time in rtc */
+#define HW_RTC_SET_TIME 1
+/* see comment regarding parameters of set_time_date() function in rtc.h */
+#define HW_RTC_SECOND   0
+#define HW_RTC_MINUTE   27
+#define HW_RTC_HOUR     22
+#define HW_RTC_WEEKDAY  2
+#define HW_RTC_DAY      9
+#define HW_RTC_MONTH    11
+#define HW_RTC_YEAR     20
+
 #endif//RCC_SYS_HARDWARE_CONFIG_H
