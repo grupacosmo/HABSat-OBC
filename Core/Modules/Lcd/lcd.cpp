@@ -12,13 +12,6 @@
 // FIND MISSING DELAYS
 // CHECK DATASHEET AND ARDUINO I2C LIQUID CRYSTAL LIB FOR ACCURATE DELAY USAGE
 
-
-
-
-
-
-// public:
-
 Lcd::Lcd(const uint16_t lines, const uint16_t line_length, I2C_HandleTypeDef *const hi2cx, uint8_t slave_address)
 : m_hi2cx(hi2cx),
   m_lines(lines),
@@ -198,33 +191,59 @@ void Lcd::i2c_transmit(std::byte data, const uint16_t data_length) const
     HAL_I2C_Master_Transmit(m_hi2cx, m_slave_address, reinterpret_cast<uint8_t *>(&data), data_length, 100);
 }
 
+void Lcd::prepareHeaderData(std::array<char, 20> &lineBuffer)
+{
+    constexpr std::array options {"display", "test"};
+    static std::size_t index;
+
+    std::sprintf(lineBuffer.data(), "%s", options[index]);
+    index = (index + 1) % options.size();
+}
+
+void Lcd::prepareTimeData(std::array<char, 20> &lineBuffer)
+{
+    static const auto &rtcBuffers = obc.peripherals.rtc.getDateTime();
+    std::sprintf(lineBuffer.data(), "      %'.02d:%'.02d:%'.02d", rtcBuffers.hour, rtcBuffers.minute, rtcBuffers.second);
+}
+
+void Lcd::prepareDateData(std::array<char, 20> &lineBuffer)
+{
+    static const auto &rtcBuffers = obc.peripherals.rtc.getDateTime();
+    // TODO: the first string is a weird workaround for program crashing when calling day_names[rtcBuffers.weekday_name - 1]
+    static const std::array day_names = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+
+    std::sprintf(lineBuffer.data(), "    %s %'.02d/%'.02d/%'.02d", day_names[rtcBuffers.weekday_name],
+                 rtcBuffers.day, rtcBuffers.month, rtcBuffers.year);
+}
+
+void Lcd::prepareSensorData(std::array<char, 20> &lineBuffer)
+{
+    static const auto &sensorBuffers = obc.peripherals.sensor.getBuffers();
+    static const std::array bufferArray{&sensorBuffers.temperature, &sensorBuffers.pressure, &sensorBuffers.humidity};
+
+    static constexpr std::array options{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};
+    static std::size_t index = 0;
+
+    std::sprintf(lineBuffer.data(), options[index], *bufferArray[index]);
+    index = (index + 1) % options.size();
+}
+
 void Lcd::display_task_function(void *args)
 {
     (void)args;
-    Lcd &lcd = obc.peripherals.lcd;
-    auto &buffers = const_cast<Sensor::Buffers&>(obc.peripherals.sensor.getBuffers());
+    const auto &lcd = obc.peripherals.lcd;
+    std::array<std::array<char, 20>, 4> lineBuffers;
 
-    auto lcd_formatted_print_line = [](short line, const char *text, float value) {
-        std::array<char, 20> print_line_buffer;
-        sprintf(&print_line_buffer[0], text, value);
-        lcd.print_line(line, &print_line_buffer[0]);
-    };
-
-    constexpr std::array line_0_texts{"display", "test"};
-    constexpr std::array line_3_texts{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};
-    const std::array<float*, 3> line_3_values{&buffers.temperature, &buffers.pressure, &buffers.humidity};
-
-    std::size_t line_0_index = 0;
-    std::size_t line_3_index = 0;
     while (true)
     {
-        lcd.print_line(0, line_0_texts[line_0_index]);
-        lcd_formatted_print_line(3, line_3_texts[line_3_index], *line_3_values[line_3_index]);
+        prepareHeaderData(lineBuffers[0]);
+        prepareTimeData(lineBuffers[1]);
+        prepareDateData(lineBuffers[2]);
+        prepareSensorData(lineBuffers[3]);
 
-        line_0_index = (line_0_index + 1) % line_0_texts.size();
-        line_3_index = (line_3_index + 1) % line_3_texts.size();
+        for(std::size_t i = 0; i < 4; ++i)
+            lcd.print_line(i, lineBuffers[i].data());
 
-        os::Task::delay(1000);
+        os::Task::delay(980);
     }
 }
-

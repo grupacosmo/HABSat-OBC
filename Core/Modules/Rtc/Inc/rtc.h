@@ -14,6 +14,18 @@
 class Rtc
 {
 public:
+    struct TimeDay
+    {
+        uint8_t second;
+        uint8_t minute;
+        uint8_t hour;
+        uint8_t weekday_name;
+        uint8_t day;
+        uint8_t month;
+        uint8_t year;
+    };
+
+public:
     /**
      * RTC's constructor.
      * @param i2c_handle  Pointer to an I2C handle.
@@ -49,34 +61,10 @@ public:
      */
     void get_time_date();
 
-    /**
-     * Writes time from object's date_time structure in HH:MM:SS format to a given string.
-     * @param str
-     */
-    void time_info(char *str) const;
-
-    /**
-     * Writes date from object's date_time structure in NAME DD/MM/YY format to a given string.
-     * @param str
-     */
-    void date_info(char *str) const;
-
+public:
+    const TimeDay &getDateTime() const;
 
 private:
-
-    /**
-     * Writes given uint8_t at the end of the given string.
-     * @param uint
-     * @param str
-     */
-    void add_uint_to_string(uint8_t uint, char *str) const;
-
-    /**
-     * Writes adding_str at the end of the base_str.
-     * @param base_str
-     * @param adding_str
-     */
-    void add_txt(char *base_str, const char *adding_str) const;
 
     /**
      * Converts a binary-coded decimal to a decimal (base-10).
@@ -93,13 +81,6 @@ private:
     static uint8_t dec_to_bcd(const uint8_t data_to_convert);
 
     /**
-     * Converts uint8_t to char.
-     * @param uint
-     * @return converted char
-     */
-    char uint_to_char(const uint8_t uint) const;
-
-    /**
      * Defines RTC task.
      *
      * Updates date in object's date_time structure.
@@ -108,21 +89,13 @@ private:
      */
     static void rtc_task_code(void *args);
 
+
 private:
     const os::Task rtc_task{"rtc_task", 128, os::Task::Priority::IDLE, rtc_task_code};
 
     I2C_HandleTypeDef* m_hi2cx;
     uint8_t m_address;
-    struct
-    {
-        uint8_t second;
-        uint8_t minute;
-        uint8_t hour;
-        uint8_t weekday_name;
-        uint8_t day;
-        uint8_t month;
-        uint8_t year;
-    } date_time;
+    TimeDay date_time;
 };
 
 

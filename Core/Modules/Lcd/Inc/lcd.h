@@ -9,6 +9,7 @@
 #include "stm32f4xx.h"
 #include <string>
 #include "os_task.h"
+#include <array>
 
 class Lcd
 {
@@ -175,10 +176,16 @@ private:
     void send(const std::byte& byte, const std::byte& flags) const;
     void transmit_nibble(const std::byte& nibble) const;
     inline void i2c_transmit(std::byte data, const uint16_t data_length) const;
+
+    static void prepareHeaderData(std::array<char, 20>& lineBuffer);
+    static void prepareTimeData(std::array<char, 20> &lineBuffer);
+    static void prepareDateData(std::array<char, 20> &lineBuffer);
+    static void prepareSensorData(std::array<char, 20> &lineBuffer);
     static void display_task_function(void *args);
 
+
 private:
-    const os::Task display_task{"display_task", 512, os::Task::Priority::IDLE, display_task_function};
+    const os::Task display_task{"display_task", 256, os::Task::Priority::IDLE, display_task_function};
 
     I2C_HandleTypeDef* const m_hi2cx;
     const uint16_t m_lines;
