@@ -34,7 +34,7 @@ void Led::blink_task_function(void *args)
 }
 void Led::init()
 {
-    blink_task.add_to_scheduler();
+    blink_task.addToScheduler();
 }
 const os::Task &Led::get_blink_task() const
 {

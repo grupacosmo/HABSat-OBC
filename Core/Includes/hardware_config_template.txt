@@ -17,7 +17,7 @@
 
 /* sets time in rtc */
 #define HW_RTC_SET_TIME 1
-/* see comment regarding parameters of set_time_date() function in rtc.h */
+/* see comment regarding parameters of setTimeAndDate() function in rtc.h */
 #define HW_RTC_SECOND   0
 #define HW_RTC_MINUTE   27
 #define HW_RTC_HOUR     22

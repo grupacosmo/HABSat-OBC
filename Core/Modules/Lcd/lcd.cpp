@@ -41,7 +41,7 @@ void Lcd::init() const
     wait_and_send_cmd(1, std::byte{Command::CLEAR_DISPLAY});
     wait_and_send_cmd(1, m_entry_mode_config);
 
-    display_task.add_to_scheduler();
+    display_task.addToScheduler();
 }
 
 void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
@@ -202,13 +202,13 @@ void Lcd::prepareHeaderData(std::array<char, 20> &lineBuffer)
 
 void Lcd::prepareTimeData(std::array<char, 20> &lineBuffer)
 {
-    static const auto &rtcBuffers = obc.peripherals.rtc.getDateTime();
+    static const auto &rtcBuffers = obc.peripherals.rtc.getTimeAndDateBuffer();
     std::sprintf(lineBuffer.data(), "      %'.02d:%'.02d:%'.02d", rtcBuffers.hour, rtcBuffers.minute, rtcBuffers.second);
 }
 
 void Lcd::prepareDateData(std::array<char, 20> &lineBuffer)
 {
-    static const auto &rtcBuffers = obc.peripherals.rtc.getDateTime();
+    static const auto &rtcBuffers = obc.peripherals.rtc.getTimeAndDateBuffer();
     // TODO: the first string is a weird workaround for program crashing when calling day_names[rtcBuffers.weekday_name - 1]
     static const std::array day_names = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 

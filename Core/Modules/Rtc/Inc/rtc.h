@@ -14,8 +14,7 @@
 class Rtc
 {
 public:
-    struct TimeDay
-    {
+    struct Buffer {
         uint8_t second;
         uint8_t minute;
         uint8_t hour;
@@ -28,10 +27,10 @@ public:
 public:
     /**
      * RTC's constructor.
-     * @param i2c_handle  Pointer to an I2C handle.
+     * @param i2cHandle  Pointer to an I2C handle.
      * @param address     RTC address
      */
-    Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address);
+    Rtc(I2C_HandleTypeDef*i2cHandle, uint8_t address);
 
     /**
      * Initializes RTC hardware and task into the scheduler.
@@ -53,32 +52,35 @@ public:
      * @param month
      * @param year      Two last digits of the year
      */
-    void set_time_date(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
+    void setTimeAndDate(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
                        const uint8_t day, const uint8_t month, const uint8_t year) const;
 
     /**
      * Puts the date from RTC to object's date_time structure.
      */
-    void get_time_date();
+    void readTimeAndDate();
 
-public:
-    const TimeDay &getDateTime() const;
+    /**
+     * Getter for timeAndDateBuffer.
+     * @return
+     */
+    const Buffer &getTimeAndDateBuffer() const;
 
 private:
 
     /**
      * Converts a binary-coded decimal to a decimal (base-10).
-     * @param data_to_convert      Binary-coded decimal
+     * @param bcdData      Binary-coded decimal
      * @return converted decimal (base-10).
      */
-    static uint8_t bcd_to_dec(const uint8_t data_to_convert);
+    static uint8_t convertBcdToDec(const uint8_t bcdData);
 
     /**
      * Converts a decimal (base-10) to a binary-coded decimal.
-     * @param data_to_convert      Decimal (base-10)
+     * @param decData      Decimal (base-10)
      * @return converted binary-coded decimal.
      */
-    static uint8_t dec_to_bcd(const uint8_t data_to_convert);
+    static uint8_t convertDecToBcd(const uint8_t decData);
 
     /**
      * Defines RTC task.
@@ -87,15 +89,18 @@ private:
      * Prints updated date on LCD screen in two lines.
      * @param args
      */
-    static void rtc_task_code(void *args);
+    static void readTimeAndDateTaskFunction(void *args);
 
 
 private:
-    const os::Task rtc_task{"rtc_task", 128, os::Task::Priority::IDLE, rtc_task_code};
+    const os::Task m_readTimeAndDateTask{"rtc_task",
+                                         128,
+                                         os::Task::Priority::IDLE,
+                                         readTimeAndDateTaskFunction};
 
     I2C_HandleTypeDef* m_hi2cx;
     uint8_t m_address;
-    TimeDay date_time;
+    Buffer m_timeAndDateBuffer;
 };
 
 

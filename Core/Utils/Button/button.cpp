@@ -29,7 +29,7 @@ void Button::input_task_function(void *args)
 }
 void Button::init()
 {
-    input_task.add_to_scheduler();
+    input_task.addToScheduler();
 }
 const os::Task &Button::get_input_task() const
 {

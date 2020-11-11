@@ -15,13 +15,13 @@ void Peripherals::init()
     rtc.init();
 #endif
 #if HW_SENSOR == 1
-    sensor.init(Sensor::InitConfigFlags::BME280_TEMPERATURE_16BIT,
-                Sensor::InitConfigFlags::BME280_PRESSURE_ULTRALOWPOWER,
-                Sensor::InitConfigFlags::BME280_HUMINIDITY_STANDARD,
-                Sensor::InitConfigFlags::BME280_NORMALMODE);
-    sensor.sensor_set_config(Sensor::InitConfigFlags::BME280_STANDBY_MS_10,
-                             Sensor::InitConfigFlags::FILTER_OFF);
-    sensor.getMeasureTask().add_to_scheduler();
+    sensor.init(Sensor::ConfigFlags::BME280_TEMPERATURE_16BIT,
+                Sensor::ConfigFlags::BME280_PRESSURE_ULTRALOWPOWER,
+                Sensor::ConfigFlags::BME280_HUMINIDITY_STANDARD,
+                Sensor::ConfigFlags::BME280_NORMALMODE);
+    sensor.configure(Sensor::ConfigFlags::BME280_STANDBY_MS_10,
+                     Sensor::ConfigFlags::FILTER_OFF);
+    sensor.getMeasureTask().addToScheduler();
 #endif
 }
 

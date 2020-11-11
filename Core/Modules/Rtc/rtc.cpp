@@ -6,17 +6,13 @@
 #include <obc.h>
 
 
-Rtc::Rtc(I2C_HandleTypeDef* i2c_handle, uint8_t address)
-        : m_hi2cx(i2c_handle),
+Rtc::Rtc(I2C_HandleTypeDef*i2cHandle, uint8_t address)
+        : m_hi2cx(i2cHandle),
         m_address(address)
 {}
 
 void Rtc::init() const
 {
-    if(__HAL_RCC_I2C3_IS_CLK_DISABLED()) {
-        __HAL_RCC_I2C3_CLK_ENABLE();
-    }
-
 #if HW_RTC_SET_TIME
     set_time_date(
         HW_RTC_SECOND,
@@ -27,59 +23,61 @@ void Rtc::init() const
         HW_RTC_MONTH,
         HW_RTC_YEAR);
 #endif
-    rtc_task.add_to_scheduler();
+    m_readTimeAndDateTask.addToScheduler();
 }
 
-uint8_t Rtc::bcd_to_dec(const uint8_t data_to_convert)
+uint8_t Rtc::convertBcdToDec(const uint8_t bcdData)
 {
-    return ((data_to_convert >> 4) * 10) + (data_to_convert & 0x0F);
+    return ((bcdData >> 4) * 10) + (bcdData & 0x0F);
 }
 
-uint8_t Rtc::dec_to_bcd(const uint8_t data_to_convert)
+uint8_t Rtc::convertDecToBcd(const uint8_t decData)
 {
-    return ((data_to_convert / 10) << 4) | (data_to_convert % 10);
+    return ((decData / 10) << 4) | (decData % 10);
 }
 
-void Rtc::set_time_date(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
+void Rtc::setTimeAndDate(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
         const uint8_t day, const uint8_t month,const uint8_t year) const
 {
-    uint8_t date_to_set[7] = {
-            dec_to_bcd(second),
-            dec_to_bcd(minute),
-            dec_to_bcd(hour),
-            dec_to_bcd(weekday),
-            dec_to_bcd(day),
-            dec_to_bcd(month),
-            dec_to_bcd(year)
+    std::array<uint8_t, 7> timeAndDateToSet = {
+            convertDecToBcd(second),
+            convertDecToBcd(minute),
+            convertDecToBcd(hour),
+            convertDecToBcd(weekday),
+            convertDecToBcd(day),
+            convertDecToBcd(month),
+            convertDecToBcd(year)
     };
 
-    HAL_I2C_Mem_Write(m_hi2cx, m_address << 1, 0x00, 1, date_to_set, 7, HAL_MAX_DELAY);
+    HAL_I2C_Mem_Write(m_hi2cx, m_address << 1, 0x00, 1,
+                      timeAndDateToSet.data(), timeAndDateToSet.size(), HAL_MAX_DELAY);
 }
 
-void Rtc::get_time_date()
+void Rtc::readTimeAndDate()
 {
-    std::array<uint8_t, 7> date{};
-    if (HAL_I2C_Mem_Read(m_hi2cx, m_address << 1, 0x00, 1, date.data(), 7, HAL_MAX_DELAY) == HAL_OK) {
-        date_time.second = bcd_to_dec(date[0]);
-        date_time.minute = bcd_to_dec(date[1]);
-        date_time.hour = bcd_to_dec(date[2]);
-        date_time.weekday_name = bcd_to_dec(date[3]);
-        date_time.day = bcd_to_dec(date[4]);
-        date_time.month = bcd_to_dec(date[5]);
-        date_time.year = bcd_to_dec(date[6]);
+    std::array<uint8_t, 7> timeAndDate;
+    if (HAL_I2C_Mem_Read(m_hi2cx, m_address << 1, 0x00, 1,
+                         timeAndDate.data(), timeAndDate.size(), HAL_MAX_DELAY) == HAL_OK) {
+        m_timeAndDateBuffer.second = convertBcdToDec(timeAndDate[0]);
+        m_timeAndDateBuffer.minute = convertBcdToDec(timeAndDate[1]);
+        m_timeAndDateBuffer.hour = convertBcdToDec(timeAndDate[2]);
+        m_timeAndDateBuffer.weekday_name = convertBcdToDec(timeAndDate[3]);
+        m_timeAndDateBuffer.day = convertBcdToDec(timeAndDate[4]);
+        m_timeAndDateBuffer.month = convertBcdToDec(timeAndDate[5]);
+        m_timeAndDateBuffer.year = convertBcdToDec(timeAndDate[6]);
     }
 }
 
-void Rtc::rtc_task_code(void *args)
+void Rtc::readTimeAndDateTaskFunction(void *args)
 {
     (void)args;
     Rtc &rtc = obc.peripherals.rtc;
     while(true) {
-        rtc.get_time_date();
+        rtc.readTimeAndDate();
         os::Task::delay(500);
     }
 }
-const Rtc::TimeDay &Rtc::getDateTime() const
+const Rtc::Buffer &Rtc::getTimeAndDateBuffer() const
 {
-    return date_time;
+    return m_timeAndDateBuffer;
 }

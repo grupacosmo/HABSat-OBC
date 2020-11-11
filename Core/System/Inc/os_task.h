@@ -75,7 +75,7 @@ namespace os
         /**
          * Allocated memory and adds the task to the scheduler.
          */
-        void add_to_scheduler() const;
+        void addToScheduler() const;
 
     public:
         /**

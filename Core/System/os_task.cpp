@@ -74,7 +74,7 @@ namespace os
         vTaskDelete(m_task_handle);
     }
 
-    void Task::add_to_scheduler() const
+    void Task::addToScheduler() const
     {
         xTaskCreate(m_task_code, m_name, m_stack_depth, const_cast<void *>(m_args),
                     static_cast<int>(m_priority), const_cast<TaskHandle_t *const>(&m_task_handle));
