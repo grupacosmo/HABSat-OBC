@@ -25,34 +25,38 @@ FRESULT MmcReader::unmount(void){
 
 FRESULT MmcReader::write(std::array<char, 256> &path, std::array<char, 256> &text){
     //TODO check if the file exist in order to not overwrite it
-    if(f_open(&SDFile,path.data(), FA_CREATE_ALWAYS | FA_WRITE) == FR_OK){
+    FRESULT fresult;
 
-        if(f_write(&SDFile, text.data(), text.size(), &bytes_written) == FR_OK){
+    fresult = f_open(&SDFile,path.data(), FA_CREATE_ALWAYS | FA_WRITE);
+    if(fresult == FR_OK){
+
+        fresult = f_write(&SDFile, text.data(), text.size(), &bytes_written);
+        if(fresult == FR_OK){
             //TODO additional lcd or led comm
         }
 
-        if(f_close(&SDFile) == FR_OK){
-            //TODO additional lcd or led comm
-        }
+        f_close(&SDFile);
     }
-    //TODO returning FRESULT
-    return FR_OK; //it's uber stupid, don't even look
+
+    return fresult;
 }
 
 FRESULT MmcReader::update(std::array<char, 256> &path, std::array<char, 256> &text){
     //TODO check if the file exist
-    if(f_open(&SDFile, path.data(), FA_OPEN_APPEND | FA_WRITE) == FR_OK){
+    FRESULT fresult;
 
-        if(f_write(&SDFile, text.data(), text.size(), &bytes_written) == FR_OK){
+    fresult = f_open(&SDFile, path.data(), FA_OPEN_APPEND | FA_WRITE);
+    if(fresult == FR_OK){
+
+        fresult = f_write(&SDFile, text.data(), text.size(), &bytes_written);
+        if(fresult == FR_OK){
             //TODO additional lcd or led comm
         }
 
-        if(f_close(&SDFile) == FR_OK){
-            //TODO additional lcd or led comm
-        }
+        f_close(&SDFile);
     }
-    //TODO returning FRESULT
-    return FR_OK; //it's uber stupid, don't even look
+
+    return fresult;
 }
 
 FRESULT MmcReader::make_directory(std::array<char, 256> &path){
@@ -75,13 +79,16 @@ void MmcReader::check_free_space(void){
 
 FRESULT MmcReader::format(void){
 
-    std::array<char, 256> path{"/"};
+    std::array<char, 2> path{"/"};
+    FRESULT fresult;
 
-    if (f_opendir(&directory, path.data()) == FR_OK){
+    fresult = f_opendir(&directory, path.data());
+    if (fresult == FR_OK){
 
         while (true){
 
-            if (f_readdir(&directory, &file_info) != FR_OK || file_info.fname[0] == 0)
+            fresult = f_readdir(&directory, &file_info);
+            if (fresult != FR_OK || file_info.fname[0] == 0)
                 break;
 
             if (file_info.fattrib & AM_DIR && "SYSTEM~1" != file_info.fname){
@@ -92,13 +99,10 @@ FRESULT MmcReader::format(void){
             else
                 f_unlink(file_info.fname);
         }
-        if (f_closedir(&directory) != FR_OK){
-            //TODO additional lcd or led comm
-        }
+        f_closedir(&directory);
     }
 
-    //TODO returning FRESULT
-    return FR_OK; //it's uber stupid, don't even look
+    return fresult;
 }
 
 void MmcReader::mmc_task_function(void *args){
