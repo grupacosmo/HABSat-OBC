@@ -19,4 +19,6 @@ extern UART_HandleTypeDef huart1;
 
 extern DMA_HandleTypeDef hdma_usart1_rx;
 
+extern SD_HandleTypeDef hsd;
+
 #endif//RCC_SYS_HANDLES_H

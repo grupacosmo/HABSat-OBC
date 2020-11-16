@@ -23,5 +23,8 @@ void Peripherals::init()
                              Sensor::InitConfigFlags::FILTER_OFF);
     sensor.getMeasureTask().add_to_scheduler();
 #endif
+#if HW_MMCREADER == 1
+    mmcReader.init();
+#endif
 }
 

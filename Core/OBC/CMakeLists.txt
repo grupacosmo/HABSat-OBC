@@ -15,4 +15,5 @@ target_link_libraries(${NAME}
         includes
         button
         rtc
+        mmc_reader
         sensor)

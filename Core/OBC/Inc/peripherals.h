@@ -11,6 +11,7 @@
 #include "lcd.h"
 #include "rtc.h"
 #include "sensor.h"
+#include "mmc_reader.h"
 
 /**
  * Holds all instances of the classes that represent peripherals
@@ -21,6 +22,7 @@ struct Peripherals
     WiFi wifi{&huart1};
     Rtc rtc{&hi2c3, constants::RTC_SLAVE_ADDRESS};
     Sensor sensor{&hspi2};
+    MmcReader mmcReader{&hsd};
 
 public:
     void init();
