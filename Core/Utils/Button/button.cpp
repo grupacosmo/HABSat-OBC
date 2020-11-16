@@ -2,8 +2,10 @@
 // Created by Wiktor Wieclaw on 8/20/20.
 //
 
-#include <button.h>
+#include "button.h"
 #include "obc.h"
+
+namespace hw {
 
 bool Button::is_pressed() const
 {
@@ -13,8 +15,8 @@ bool Button::is_pressed() const
 void Button::input_task_function(void *args)
 {
     (void)args;
-    Lcd &lcd = obc.peripherals.lcd;
-    const os::Task &led_blink_task = obc.utils.led.get_blink_task();
+    hw::Lcd &lcd = obc.hardware.lcd;
+    const os::Task &led_blink_task = obc.hardware.led.get_blink_task();
     while (true)
     {
         os::Task::suspend_itself();
@@ -27,6 +29,7 @@ void Button::input_task_function(void *args)
         lcd.print_line(3, "");
     }
 }
+
 void Button::init()
 {
     input_task.addToScheduler();
@@ -34,4 +37,6 @@ void Button::init()
 const os::Task &Button::get_input_task() const
 {
     return input_task;
+}
+
 }

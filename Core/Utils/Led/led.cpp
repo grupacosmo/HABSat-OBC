@@ -3,7 +3,8 @@
 //
 
 #include "led.h"
-#include "obc.h"
+#include "../../OBC/obc.h"
+namespace hw {
 
 void Led::on() const
 {
@@ -28,7 +29,7 @@ void Led::blink_task_function(void *args)
     (void)args;
     while (true)
     {
-        obc.utils.led.toggle();
+        obc.hardware.led.toggle();
         os::Task::delay(1000);
     }
 }
@@ -39,4 +40,6 @@ void Led::init()
 const os::Task &Led::get_blink_task() const
 {
     return blink_task;
+}
+
 }

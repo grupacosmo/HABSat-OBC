@@ -69,5 +69,5 @@ include_directories(
 add_subdirectory(Core)
 
 target_link_libraries(${projectName}.elf
-        main_cpp
-        led)
+        Main_Loop
+        )

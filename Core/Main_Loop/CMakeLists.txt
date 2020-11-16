@@ -1,4 +1,4 @@
-set(NAME System)
+set(NAME Main_Loop)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,4 +9,8 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        FreeRTOS)
+        FreeRTOS
+        Button
+        System
+        OBC
+        Interrupt_Handlers)

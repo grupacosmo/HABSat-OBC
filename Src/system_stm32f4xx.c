@@ -7,7 +7,7 @@
   *   This file provides two functions and one global variable to be called from 
   *   user application:
   *      - SystemInit(): This function is called at startup just after reset and 
-  *                      before branch to main_cpp program. This call is made inside
+  *                      before branch to main program. This call is made inside
   *                      the "startup_stm32f4xx.s" file.
   *
   *      - SystemCoreClock variable: Contains the core clock (HCLK), it can be used
@@ -255,7 +255,7 @@ void SystemCoreClockUpdate(void)
  || defined(STM32F469xx) || defined(STM32F479xx)
 /**
   * @brief  Setup the external memory controller.
-  *         Called in startup_stm32f4xx.s before jump to main_cpp.
+  *         Called in startup_stm32f4xx.s before jump to main.
   *         This function configures the external memories (SRAM/SDRAM)
   *         This SRAM/SDRAM will be used as program data memory (including heap and stack).
   * @param  None
@@ -418,7 +418,7 @@ void SystemInit_ExtMemCtl(void)
 #elif defined (DATA_IN_ExtSRAM) || defined (DATA_IN_ExtSDRAM)
 /**
   * @brief  Setup the external memory controller.
-  *         Called in startup_stm32f4xx.s before jump to main_cpp.
+  *         Called in startup_stm32f4xx.s before jump to main.
   *         This function configures the external memories (SRAM/SDRAM)
   *         This SRAM/SDRAM will be used as program data memory (including heap and stack).
   * @param  None
