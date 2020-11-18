@@ -58,7 +58,8 @@ Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
-add_compile_options(-O3 -Wall -Wextra)
+SET(CMAKE_CXX_FLAGS "-fno-rtti -fno-exceptions")
+add_compile_options(-O2 -Wall -Wextra)
 
 include_directories(
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
