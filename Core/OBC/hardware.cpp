@@ -3,6 +3,7 @@
 //
 #include "hardware.h"
 #include "hardware_config.h"
+
 void Hardware::init()
 {
 #if HW_LCD == 1

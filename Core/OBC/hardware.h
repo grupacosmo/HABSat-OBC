@@ -19,9 +19,10 @@
 /**
  * Holds all instances of the classes that represent peripherals
  */
-struct Hardware {
-    hw::I2CBus i2c{hw::Handles::i2c3};
-    hw::SPIBus spi{hw::Handles::spi2};
+struct Hardware
+{
+    constexpr static hw::I2CBus i2c{hw::Handles::i2c3};
+    constexpr static hw::SPIBus spi{hw::Handles::spi2};
 
     hw::Button button;
     hw::Led led;

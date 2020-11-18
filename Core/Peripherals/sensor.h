@@ -38,7 +38,7 @@ public:
      * @param spi_handler Pointer to SPI handle
      */
 
-    Sensor(SPIBus* spi);
+    Sensor(const SPIBus* spi);
 
     /**
      * Initializes Sensor.
@@ -169,7 +169,7 @@ private:
     const os::Task measure_task{"measure", 256, os::Priority::IDLE, measureTaskFunction};
 
     /*Handler for SPI Interface*/
-    SPIBus *const spi;
+    const SPIBus *const spi;
 
     /*t_fine - carries */
     int32_t t_fine;

@@ -23,19 +23,19 @@ class Bus
 {
 protected:
     T *const handle;
-    explicit Bus(T *handle);
+    constexpr explicit Bus(T *handle);
 
 public:
-    T *getHandle() const;
+    constexpr T *getHandle() const;
 };
 
 template<typename T>
-Bus<T>::Bus(T *handle) : handle(handle)
+constexpr Bus<T>::Bus(T *handle) : handle(handle)
 {
 }
 
 template<typename T>
-T *Bus<T>::getHandle() const
+constexpr T *Bus<T>::getHandle() const
 {
     return handle;
 }

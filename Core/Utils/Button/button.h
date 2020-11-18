@@ -38,7 +38,7 @@ private:
     const os::Task input_task{"input", 128, os::Priority::INTERRUPT, input_task_function};
 
     GPIO_TypeDef *const TYPE = GPIOC;
-    const uint16_t PIN = GPIO_PIN_13;
+    static constexpr uint16_t PIN = GPIO_PIN_13;
 };
 
 }

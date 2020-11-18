@@ -16,7 +16,7 @@
 #define HW_LCD_I2C_CONVERTER_TYPE_A 0
 
 /* sets time in rtc */
-#define HW_RTC_SET_TIME 1
+#define HW_RTC_SET_TIME 0
 /* see comment regarding parameters of setTimeAndDate() function in rtc.h */
 #define HW_RTC_SECOND   0
 #define HW_RTC_MINUTE   27

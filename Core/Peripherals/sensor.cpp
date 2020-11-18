@@ -9,7 +9,7 @@
 namespace hw
 {
 
-Sensor::Sensor(SPIBus* spi) : spi(spi) {}
+Sensor::Sensor(const SPIBus* spi) : spi(spi) {}
 
 void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags & pressure_oversampling, const ConfigFlags & humidity_oversampling, const ConfigFlags & mode)
 {

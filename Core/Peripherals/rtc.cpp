@@ -8,7 +8,7 @@
 namespace hw
 {
 
-Rtc::Rtc(I2CBus* i2c, uint8_t address)
+Rtc::Rtc(const I2CBus* i2c, uint8_t address)
         : i2c(i2c),
         m_address(address)
 {}
@@ -50,14 +50,13 @@ void Rtc::setTimeAndDate(const uint8_t second, const uint8_t minute, const uint8
             convertDecToBcd(month),
             convertDecToBcd(year)
     };
-
-    i2c->memoryWrite(m_address << 1, 0x00, timeAndDateToSet.data(), timeAndDateToSet.size());
+    i2c->memoryWrite<0x00>(m_address, timeAndDateToSet.data(), timeAndDateToSet.size());
 }
 
 void Rtc::readTimeAndDate()
 {
     std::array<uint8_t, 7> timeAndDate;
-    if (i2c->memoryRead(m_address << 1, 0x00, timeAndDate.data(), timeAndDate.size()) == BusResult::ok)
+    if (i2c->memoryRead<0x00>(m_address, timeAndDate.data(), timeAndDate.size()) == BusResult::ok)
     {
         m_timeAndDateBuffer.second = convertBcdToDec(timeAndDate[0]);
         m_timeAndDateBuffer.minute = convertBcdToDec(timeAndDate[1]);

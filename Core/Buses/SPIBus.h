@@ -16,21 +16,38 @@ struct ChipSelect
     const uint16_t pinNumber;
 
     ChipSelect() = delete;
-    ChipSelect(GPIO_TypeDef* gpioType, uint16_t pinNumber)
+    constexpr ChipSelect(GPIO_TypeDef* gpioType, uint16_t pinNumber)
     : gpioType(gpioType), pinNumber(pinNumber) { }
 };
 
 class SPIBus : public Bus<SPIHandle>
 {
 public:
-    explicit SPIBus(SPIHandle* handle);
-    void clearCS(const ChipSelect& cs) const;
-    void setCS(const ChipSelect& cs) const;
-    BusResult transmit(uint8_t* data, uint16_t size, uint32_t timeout = defaultTimeout) const;
-    BusResult transmitAndReceive(uint8_t* txData, uint8_t* rxData, uint16_t size, uint32_t timeout = defaultTimeout) const;
+    constexpr explicit SPIBus(SPIHandle* handle) : Bus(handle) { };
+    inline void clearCS(const ChipSelect& cs) const;
+    inline void setCS(const ChipSelect& cs) const;
+    inline BusResult transmit(uint8_t* data, uint16_t size, uint32_t timeout = defaultTimeout) const;
+    inline BusResult transmitAndReceive(uint8_t* txData, uint8_t* rxData, uint16_t size, uint32_t timeout = defaultTimeout) const;
 private:
     static constexpr uint32_t defaultTimeout = 100;
 };
+
+void SPIBus::clearCS(const ChipSelect& cs) const
+{
+    HAL_GPIO_WritePin(cs.gpioType, cs.pinNumber, GPIO_PIN_RESET);
+}
+void SPIBus::setCS(const ChipSelect& cs) const
+{
+    HAL_GPIO_WritePin(cs.gpioType, cs.pinNumber, GPIO_PIN_SET);
+}
+BusResult SPIBus::transmit(uint8_t *data, uint16_t size, uint32_t timeout) const
+{
+    return static_cast<BusResult>(HAL_SPI_Transmit(handle, data, size, timeout));
+}
+BusResult SPIBus::transmitAndReceive(uint8_t *txData, uint8_t *rxData, uint16_t size, uint32_t timeout) const
+{
+    return static_cast<BusResult>(HAL_SPI_TransmitReceive(handle, txData, rxData, size, timeout));
+}
 
 }
 

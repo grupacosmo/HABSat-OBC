@@ -1,12 +1,12 @@
 set(NAME System)
 
-aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
+aux_source_directory(${CMAKE_CURRENT_LIST_DIR} FILES)
 
-add_library(${NAME} STATIC ${SOURCE})
+add_library(${NAME} INTERFACE ${FILES})
 
 target_include_directories(${NAME}
-        PUBLIC ${CMAKE_CURRENT_LIST_DIR}
+        INTERFACE ${CMAKE_CURRENT_LIST_DIR}
         )
 
 target_link_libraries(${NAME}
-        FreeRTOS)
+        INTERFACE FreeRTOS)

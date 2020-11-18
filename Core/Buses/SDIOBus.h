@@ -13,7 +13,7 @@ namespace hw
 class SDIOBus : public Bus<SDIOHandle>
 {
 public:
-    explicit SDIOBus(SDIOHandle* handle);
+    constexpr explicit SDIOBus(SDIOHandle* handle) : Bus(handle) { }
 private:
     static constexpr uint32_t defaultTimeout = 100;
 };

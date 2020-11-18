@@ -34,7 +34,7 @@ public:
      * @param i2cHandle  Pointer to an I2C handle.
      * @param address     RTC address
      */
-    Rtc(I2CBus* i2c, uint8_t address);
+    Rtc(const I2CBus* i2c, uint8_t address);
 
     /**
      * Initializes RTC hardware and task into the scheduler.
@@ -102,7 +102,7 @@ private:
                                          os::Priority::IDLE,
                                          readTimeAndDateTaskFunction};
 
-    I2CBus *const i2c;
+    const I2CBus *const i2c;
     uint8_t m_address;
     Buffer m_timeAndDateBuffer;
 };

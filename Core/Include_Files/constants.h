@@ -16,7 +16,7 @@ namespace constants {
     constexpr uint8_t lcdSlaveAddress = 0x4E;
 #endif
 
-    constexpr uint8_t rtcSlaveAddress = 0x68;
+    constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
 }
 
 #endif//RCC_SYS_CONSTANTS_H

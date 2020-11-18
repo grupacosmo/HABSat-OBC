@@ -28,7 +28,7 @@ public:
      * @param hi2cx         I2C handle.
      * @param slave_address Slave address of an LCD.
      */
-    Lcd(uint16_t lines, uint16_t line_length, I2CBus* i2c, uint8_t slave_address);
+    Lcd(uint16_t lines, uint16_t line_length, const I2CBus* i2c, uint8_t slave_address);
 
     /**
      * Initializes LCD hardware and adds tasks to scheduler
@@ -189,10 +189,10 @@ private:
 private:
     const os::Task display_task{"display_task", 256, os::Priority::IDLE, display_task_function};
 
-    I2CBus* const i2c;
+    const I2CBus* const i2c;
     const uint16_t m_lines;
     const uint16_t m_line_length;
-    const uint8_t m_slave_address;
+    const uint16_t m_slave_address;
 
     uint8_t m_display_ctrl_config;
     uint8_t m_entry_mode_config;

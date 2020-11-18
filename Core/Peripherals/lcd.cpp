@@ -15,7 +15,7 @@ namespace hw
 // FIND MISSING DELAYS
 // CHECK DATASHEET AND ARDUINO I2C LIQUID CRYSTAL LIB FOR ACCURATE DELAY USAGE
 
-Lcd::Lcd(uint16_t lines, uint16_t line_length, I2CBus* i2c, uint8_t slave_address)
+Lcd::Lcd(uint16_t lines, uint16_t line_length, const I2CBus* i2c, uint8_t slave_address)
 : i2c(i2c),
   m_lines(lines),
   m_line_length(line_length),
