@@ -5,10 +5,8 @@
 #include "main_loop.h"
 #include "obc.h"
 
-Obc obc;
-
 void mainLoop()
 {
-    obc.init();
+    obc().init();
     os::Task::start_scheduler();
 }

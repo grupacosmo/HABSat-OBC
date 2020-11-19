@@ -3,6 +3,12 @@
 //
 #include "obc.h"
 
+Obc& obc()
+{
+    static Obc onBoardComputer;
+    return onBoardComputer;
+}
+
 void Obc::init()
 {
     hardware.init();

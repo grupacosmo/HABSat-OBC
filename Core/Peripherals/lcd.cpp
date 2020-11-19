@@ -197,13 +197,13 @@ void Lcd::prepareHeaderData(std::array<char, 20> &lineBuffer)
 
 void Lcd::prepareTimeData(std::array<char, 20> &lineBuffer)
 {
-    static const auto &rtcBuffers = obc.hardware.rtc.getTimeAndDateBuffer();
+    static const auto &rtcBuffers = obc().hardware.rtc.getTimeAndDateBuffer();
     std::sprintf(lineBuffer.data(), "      %'.02d:%'.02d:%'.02d", rtcBuffers.hour, rtcBuffers.minute, rtcBuffers.second);
 }
 
 void Lcd::prepareDateData(std::array<char, 20> &lineBuffer)
 {
-    static const auto &rtcBuffers = obc.hardware.rtc.getTimeAndDateBuffer();
+    static const auto &rtcBuffers = obc().hardware.rtc.getTimeAndDateBuffer();
     // TODO: the first string is a weird workaround for program crashing when calling day_names[rtcBuffers.weekday_name - 1]
     static const std::array day_names = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
@@ -213,7 +213,7 @@ void Lcd::prepareDateData(std::array<char, 20> &lineBuffer)
 
 void Lcd::prepareSensorData(std::array<char, 20> &lineBuffer)
 {
-    static const auto &sensorBuffers = obc.hardware.sensor.getBuffers();
+    static const auto &sensorBuffers = obc().hardware.sensor.getBuffers();
     static const std::array bufferArray{&sensorBuffers.temperature, &sensorBuffers.pressure, &sensorBuffers.humidity};
 
     static constexpr std::array options{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};
@@ -226,7 +226,7 @@ void Lcd::prepareSensorData(std::array<char, 20> &lineBuffer)
 void Lcd::display_task_function(void *args)
 {
     (void)args;
-    const auto &lcd = obc.hardware.lcd;
+    const auto &lcd = obc().hardware.lcd;
     std::array<std::array<char, 20>, 4> lineBuffers;
 
     while (true)

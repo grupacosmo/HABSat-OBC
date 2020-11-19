@@ -123,7 +123,7 @@ uint32_t Sensor::read24(const Address& address)
 void Sensor::measureTaskFunction(void *args)
 {
     (void)args;
-    Sensor& sensor = obc.hardware.sensor;
+    Sensor& sensor = obc().hardware.sensor;
 
     while(true)
     {

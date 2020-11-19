@@ -29,7 +29,7 @@ void Led::blink_task_function(void *args)
     (void)args;
     while (true)
     {
-        obc.hardware.led.toggle();
+        obc().hardware.led.toggle();
         os::Task::delay(1000);
     }
 }

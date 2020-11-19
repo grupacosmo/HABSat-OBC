@@ -71,7 +71,7 @@ void Rtc::readTimeAndDate()
 void Rtc::readTimeAndDateTaskFunction(void *args)
 {
     (void)args;
-    Rtc &rtc = obc.hardware.rtc;
+    Rtc &rtc = obc().hardware.rtc;
     while(true) {
         rtc.readTimeAndDate();
         os::Task::delay(500);

@@ -19,6 +19,6 @@ struct Obc
     void init();
 };
 
-extern Obc obc;
+Obc& obc();
 
 #endif//RCC_SYS_OBC_H
