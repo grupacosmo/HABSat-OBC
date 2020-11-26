@@ -12,51 +12,54 @@ namespace bitwise
 {
     /**
      * Returns the lower nibble (4 bits) of a byte.
-     * @param b
+     * @param byte
      * @return
      */
-    constexpr uint8_t nibble_low(uint8_t b)
+    [[nodiscard]] constexpr uint8_t nibbleLow(uint8_t byte)
     {
-        return b & 0x0f;
+        return byte & 0x0f;
     }
 
     /**
      * Returns the higher nibble (4 bits) of a byte.
-     * @param b
+     * @param byte
      * @return
      */
-    constexpr uint8_t nibble_high(uint8_t b)
+    [[nodiscard]] constexpr uint8_t nibbleHigh(uint8_t byte)
     {
-        return b & 0xf0;
+        return byte & 0xf0;
     }
 
     /**
      * Sets variable number of bits.
-     * @tparam Integral
+     * @tparam bits
      * @param byte
-     * @param bit from 0 to 7
      * @return
      */
-    template<typename... Integral>
-    constexpr uint8_t setBits(uint8_t byte, Integral... bit)
+    template<size_t... bits>
+    [[nodiscard]] constexpr uint8_t setBits(uint8_t byte)
     {
-        return ((byte | (1 << bit)), ...);
+        return ((byte | (1 << bits)), ...);
     }
 
     /**
      * Clears variable number of bits.
-     * @tparam Integral
+     * @tparam bits
      * @param byte
-     * @param bit from 0 to 7
      * @return
      */
-    template<typename... Integral>
-    constexpr uint8_t clearBits(uint8_t byte, Integral... bit)
+    template<size_t... bits>
+    [[nodiscard]] constexpr uint8_t clearBits(uint8_t byte)
     {
-        return ((byte & ~(1 << bit)), ...);
+        return ((byte & ~(1 << bits)), ...);
     }
 
-    constexpr uint16_t swapBytes(uint16_t twoBytes)
+    /**
+     * Swaps bytes in a uint16_t
+     * @param twoBytes
+     * @return
+     */
+    [[nodiscard]] constexpr uint16_t swapBytes(uint16_t twoBytes)
     {
         return (twoBytes >> 8) | (twoBytes << 8);
     }

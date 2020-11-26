@@ -23,22 +23,22 @@ public:
      * Checks whether the button is pressed
      * @return
      */
-    bool is_pressed() const;
+    bool isPressed() const;
 
     /**
      * Getter for the task object
      * @return
      */
-    const os::Task &get_input_task() const;
+    const os::Task &getInputTask() const;
 
 private:
-    static void input_task_function(void *args);
+    static void inputTaskFunction(void *args);
 
 private:
-    const os::Task input_task{"input", 128, os::Priority::INTERRUPT, input_task_function};
+    const os::Task inputTask_{"input", 128, os::Priority::interrupt, inputTaskFunction};
 
-    GPIO_TypeDef *const TYPE = GPIOC;
-    static constexpr uint16_t PIN = GPIO_PIN_13;
+    GPIO_TypeDef *const type_ = GPIOC;
+    static constexpr uint16_t pin_ = GPIO_PIN_13;
 };
 
 }

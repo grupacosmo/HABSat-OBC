@@ -37,22 +37,22 @@ public:
      * Checks whether the LED is on.
      * @return
      */
-    bool is_on() const;
+    bool isOn() const;
 
     /**
      * Getter for blink task object.
      * @return
      */
-    const os::Task &get_blink_task() const;
+    const os::Task &getBlinkTask() const;
 
 private:
-    static void blink_task_function(void *args);
+    static void blinkTaskFunction(void *args);
 
 private:
-    const os::Task blink_task{"blink", 128, os::Priority::IDLE, blink_task_function};
+    const os::Task blinkTask_{"blink", 128, os::Priority::idle, blinkTaskFunction};
 
-    GPIO_TypeDef *const TYPE = GPIOA;
-    const uint16_t PIN = GPIO_PIN_5;
+    GPIO_TypeDef *const type_ = GPIOA;
+    const uint16_t pin_ = GPIO_PIN_5;
 };
 
 }

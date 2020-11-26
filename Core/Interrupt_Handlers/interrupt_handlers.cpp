@@ -18,7 +18,7 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
         switch(GPIO_Pin)
         {
             case GPIO_PIN_13:
-                obc().hardware.button.get_input_task().resume_from_ISR();
+                obc().hardware.button.getInputTask().resumeFromISR();
                 break;
             default:
                 break;

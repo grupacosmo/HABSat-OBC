@@ -8,5 +8,5 @@
 void mainLoop()
 {
     obc().init();
-    os::Task::start_scheduler();
+    os::Task::startScheduler();
 }

@@ -42,11 +42,11 @@ void SPIBus::setCS(const ChipSelect& cs) const
 }
 BusResult SPIBus::transmit(uint8_t *data, uint16_t size, uint32_t timeout) const
 {
-    return static_cast<BusResult>(HAL_SPI_Transmit(handle, data, size, timeout));
+    return static_cast<BusResult>(HAL_SPI_Transmit(handle_, data, size, timeout));
 }
 BusResult SPIBus::transmitAndReceive(uint8_t *txData, uint8_t *rxData, uint16_t size, uint32_t timeout) const
 {
-    return static_cast<BusResult>(HAL_SPI_TransmitReceive(handle, txData, rxData, size, timeout));
+    return static_cast<BusResult>(HAL_SPI_TransmitReceive(handle_, txData, rxData, size, timeout));
 }
 
 }

@@ -9,8 +9,8 @@ namespace hw
 {
 
 Rtc::Rtc(const I2CBus* i2c, uint8_t address)
-        : i2c(i2c),
-        m_address(address)
+        : i2c_(i2c),
+          slaveAddress_(address)
 {}
 
 void Rtc::init() const
@@ -25,7 +25,7 @@ void Rtc::init() const
         HW_RTC_MONTH,
         HW_RTC_YEAR);
 #endif
-    m_readTimeAndDateTask.addToScheduler();
+    readTimeAndDateTask_.addToScheduler();
 }
 
 uint8_t Rtc::convertBcdToDec(const uint8_t bcdData)
@@ -50,21 +50,21 @@ void Rtc::setTimeAndDate(const uint8_t second, const uint8_t minute, const uint8
             convertDecToBcd(month),
             convertDecToBcd(year)
     };
-    i2c->memoryWrite<0x00>(m_address, timeAndDateToSet.data(), timeAndDateToSet.size());
+    i2c_->memoryWrite<0x00>(slaveAddress_, timeAndDateToSet.data(), timeAndDateToSet.size());
 }
 
 void Rtc::readTimeAndDate()
 {
     std::array<uint8_t, 7> timeAndDate;
-    if (i2c->memoryRead<0x00>(m_address, timeAndDate.data(), timeAndDate.size()) == BusResult::ok)
+    if (i2c_->memoryRead<0x00>(slaveAddress_, timeAndDate.data(), timeAndDate.size()) == BusResult::ok)
     {
-        m_timeAndDateBuffer.second = convertBcdToDec(timeAndDate[0]);
-        m_timeAndDateBuffer.minute = convertBcdToDec(timeAndDate[1]);
-        m_timeAndDateBuffer.hour = convertBcdToDec(timeAndDate[2]);
-        m_timeAndDateBuffer.weekday_name = convertBcdToDec(timeAndDate[3]);
-        m_timeAndDateBuffer.day = convertBcdToDec(timeAndDate[4]);
-        m_timeAndDateBuffer.month = convertBcdToDec(timeAndDate[5]);
-        m_timeAndDateBuffer.year = convertBcdToDec(timeAndDate[6]);
+        timeAndDateBuffer_.second = convertBcdToDec(timeAndDate[0]);
+        timeAndDateBuffer_.minute = convertBcdToDec(timeAndDate[1]);
+        timeAndDateBuffer_.hour = convertBcdToDec(timeAndDate[2]);
+        timeAndDateBuffer_.weekday_name = convertBcdToDec(timeAndDate[3]);
+        timeAndDateBuffer_.day = convertBcdToDec(timeAndDate[4]);
+        timeAndDateBuffer_.month = convertBcdToDec(timeAndDate[5]);
+        timeAndDateBuffer_.year = convertBcdToDec(timeAndDate[6]);
     }
 }
 
@@ -79,7 +79,7 @@ void Rtc::readTimeAndDateTaskFunction(void *args)
 }
 const Rtc::Buffer &Rtc::getTimeAndDateBuffer() const
 {
-    return m_timeAndDateBuffer;
+    return timeAndDateBuffer_;
 }
 
 }

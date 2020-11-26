@@ -97,14 +97,14 @@ private:
 
 
 private:
-    const os::Task m_readTimeAndDateTask{"rtc_task",
+    const os::Task readTimeAndDateTask_{"rtc_task",
                                          128,
-                                         os::Priority::IDLE,
+                                         os::Priority::idle,
                                          readTimeAndDateTaskFunction};
 
-    const I2CBus *const i2c;
-    uint8_t m_address;
-    Buffer m_timeAndDateBuffer;
+    const I2CBus *const i2c_;
+    uint8_t slaveAddress_;
+    Buffer timeAndDateBuffer_;
 };
 
 }

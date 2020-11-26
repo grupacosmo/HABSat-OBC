@@ -7,21 +7,21 @@
 
 namespace hw {
 
-bool Button::is_pressed() const
+bool Button::isPressed() const
 {
-    return HAL_GPIO_ReadPin(TYPE, PIN) == GPIO_PIN_RESET;
+    return HAL_GPIO_ReadPin(type_, pin_) == GPIO_PIN_RESET;
 }
 
-void Button::input_task_function(void *args)
+void Button::inputTaskFunction(void *args)
 {
     (void)args;
     hw::Lcd &lcd = obc().hardware.lcd;
-    const os::Task &led_blink_task = obc().hardware.led.get_blink_task();
+    const os::Task &led_blink_task = obc().hardware.led.getBlinkTask();
     while (true)
     {
-        os::Task::suspend_itself();
+        os::Task::suspendItself();
         lcd.print_line(3, "click");
-        if (led_blink_task.get_state() != os::Task::State::eSuspended)
+        if (led_blink_task.getState() != os::Task::State::eSuspended)
             led_blink_task.suspend();
         else
             led_blink_task.resume();
@@ -32,11 +32,11 @@ void Button::input_task_function(void *args)
 
 void Button::init()
 {
-    input_task.addToScheduler();
+    inputTask_.addToScheduler();
 }
-const os::Task &Button::get_input_task() const
+const os::Task &Button::getInputTask() const
 {
-    return input_task;
+    return inputTask_;
 }
 
 }

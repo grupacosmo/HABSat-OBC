@@ -187,15 +187,15 @@ private:
 
 
 private:
-    const os::Task display_task{"display_task", 256, os::Priority::IDLE, display_task_function};
+    const os::Task displayTask_{"display_task", 256, os::Priority::idle, display_task_function};
 
-    const I2CBus* const i2c;
-    const uint16_t m_lines;
-    const uint16_t m_line_length;
-    const uint16_t m_slave_address;
+    const I2CBus* const i2c_;
+    const uint16_t lines_;
+    const uint16_t lineLength_;
+    const uint16_t slaveAddress_;
 
-    uint8_t m_display_ctrl_config;
-    uint8_t m_entry_mode_config;
+    uint8_t displayCtrlConfig_;
+    uint8_t entryModeConfig_;
 };
 
 }

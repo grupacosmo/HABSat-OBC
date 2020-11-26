@@ -14,8 +14,8 @@ namespace os {
  */
 enum class Priority
 {
-    IDLE = tskIDLE_PRIORITY,
-    INTERRUPT = configMAX_SYSCALL_INTERRUPT_PRIORITY
+    idle = tskIDLE_PRIORITY,
+    interrupt = configMAX_SYSCALL_INTERRUPT_PRIORITY
 };
 
 class Task
@@ -26,18 +26,19 @@ public:
      * Alias for eTaskState enum.
      */
     using State = eTaskState;
+    using StackDepth = configSTACK_DEPTH_TYPE;
 
 public:
     /**
      * Task's constructor.
      * @param name          Name of the task.
-     * @param stack_depth  Approximate size of the stack needed for the task's function.
+     * @param stackDepth  Approximate size of the stack needed for the task's function.
      * @param priority      Priority of the task.
-     * @param task_code     Pointer to a function that contains the code of the task.
+     * @param taskCode     Pointer to a function that contains the code of the task.
      * @param args          void* used to pass arguments to the task
      */
-    constexpr Task(const char * const name, const configSTACK_DEPTH_TYPE stack_depth, const Priority &priority,
-         void (*const task_code)(void*), void const* args = nullptr);
+    constexpr Task(const char * const name, const StackDepth stackDepth, const Priority &priority,
+         void (*const taskCode)(void*), void const* args = nullptr);
 
     /**
      * Suspends the task.
@@ -52,19 +53,19 @@ public:
     /**
      * Deletes the task form scheduler.
      */
-    inline void delete_task() const;
+    inline void deleteTask() const;
 
     /**
      *
      * @return State from os::Thread::State enum.
      */
-    inline State get_state() const;
+    inline State getState() const;
 
     /**
      * Resumes the task from the interrupt handler. To use this you need to create a global pointer
      * to the object and then invoke this function in a interrupt callback function implementation.
      */
-    inline void resume_from_ISR() const;
+    inline void resumeFromISR() const;
 
     /**
      * Allocated memory and adds the task to the scheduler.
@@ -82,47 +83,47 @@ public:
     /**
      * Stops the task for the exact time specified in miliseconds.
      *
-     * @param previous_wake_time
+     * @param previousWakeTime
      * @param miliseconds
      */
-    inline static void delay_until(TickType_t *previous_wake_time, const uint32_t miliseconds);
+    inline static void delayUntil(TickType_t *previousWakeTime, const uint32_t miliseconds);
 
     /**
      * Starts the scheduler. In other words, starts all the tasks.
      */
-    inline static void start_scheduler();
+    inline static void startScheduler();
 
     /**
      * Allows the task to resume itself. This method has to be static as the task's function does not
      * have access to non-static methods, since the object is not yet created.
      */
-    inline static void suspend_itself();
+    inline static void suspendItself();
 
     /**
      * Allows the task to suspend itself. This method has to be static as the task's function does not
      * have access to non-static methods, since the object is not yet created.
      */
-    inline static void resume_itself();
+    inline static void resumeItself();
 
     /**
      * Allows the task to delete itself from scheduler. This method has to be static as the task's function does not
      * have access to non-static methods, since the object is not yet created.
      */
-    inline static void delete_itself();
+    inline static void deleteItself();
 
 private:
-    const TaskHandle_t m_task_handle;
-    void (*const m_task_code)(void*);
-    const char *const m_name;
-    const configSTACK_DEPTH_TYPE m_stack_depth;
-    const Priority m_priority;
-    void const* m_args;
+    const TaskHandle_t taskHandle_;
+    void (*const taskCode_)(void*);
+    const char *const name_;
+    const StackDepth stackDepth_;
+    const Priority priority_;
+    void const* args_;
 };
 
-constexpr Task::Task(const char *const name, const uint16_t stack_depth, const Priority &priority,
-           void (*task_code)(void *), void const* args)
-    : m_task_handle(NULL), m_task_code(task_code), m_name(name), m_stack_depth(stack_depth),
-      m_priority(priority), m_args(args)
+constexpr Task::Task(const char *const name, const StackDepth stackDepth, const Priority &priority,
+           void (*taskCode)(void *), void const* args)
+    : taskHandle_(NULL), taskCode_(taskCode), name_(name), stackDepth_(stackDepth),
+      priority_(priority), args_(args)
 {
 
 }
@@ -132,58 +133,58 @@ void Task::delay(const uint32_t miliseconds)
     vTaskDelay(pdMS_TO_TICKS(miliseconds));
 }
 
-void Task::delay_until(TickType_t *previous_wake_time, const uint32_t miliseconds)
+void Task::delayUntil(TickType_t *previousWakeTime, const uint32_t miliseconds)
 {
-    vTaskDelayUntil(previous_wake_time, pdMS_TO_TICKS(miliseconds));
+    vTaskDelayUntil(previousWakeTime, pdMS_TO_TICKS(miliseconds));
 }
 
 void Task::suspend() const
 {
-    vTaskSuspend(m_task_handle);
+    vTaskSuspend(taskHandle_);
 }
 
 void Task::resume() const
 {
-    vTaskResume(m_task_handle);
+    vTaskResume(taskHandle_);
 }
 
-void Task::suspend_itself()
+void Task::suspendItself()
 {
     vTaskSuspend(NULL);
 }
 
-void Task::resume_itself()
+void Task::resumeItself()
 {
     vTaskResume(NULL);
 }
 
-Task::State Task::get_state() const
+Task::State Task::getState() const
 {
-    return eTaskGetState(m_task_handle);
+    return eTaskGetState(taskHandle_);
 }
 
-void Task::resume_from_ISR() const
+void Task::resumeFromISR() const
 {
-    portYIELD_FROM_ISR(xTaskResumeFromISR(m_task_handle));
+    portYIELD_FROM_ISR(xTaskResumeFromISR(taskHandle_));
 }
 
-void Task::delete_itself()
+void Task::deleteItself()
 {
     vTaskDelete(NULL);
 }
 
-void Task::delete_task() const
+void Task::deleteTask() const
 {
-    vTaskDelete(m_task_handle);
+    vTaskDelete(taskHandle_);
 }
 
 void Task::addToScheduler() const
 {
-    xTaskCreate(m_task_code, m_name, m_stack_depth, const_cast<void *>(m_args),
-                static_cast<int>(m_priority), const_cast<TaskHandle_t *>(&m_task_handle));
+    xTaskCreate(taskCode_, name_, stackDepth_, const_cast<void *>(args_),
+                static_cast<int>(priority_), const_cast<TaskHandle_t *>(&taskHandle_));
 }
 
-void Task::start_scheduler()
+void Task::startScheduler()
 {
     vTaskStartScheduler();
 }

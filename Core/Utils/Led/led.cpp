@@ -8,23 +8,23 @@ namespace hw {
 
 void Led::on() const
 {
-    HAL_GPIO_WritePin(TYPE, PIN, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(type_, pin_, GPIO_PIN_SET);
 }
 void Led::off() const
 {
-    HAL_GPIO_WritePin(TYPE, PIN, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(type_, pin_, GPIO_PIN_RESET);
 }
 void Led::toggle() const
 {
-    HAL_GPIO_TogglePin(TYPE, PIN);
+    HAL_GPIO_TogglePin(type_, pin_);
 }
 
-bool Led::is_on() const
+bool Led::isOn() const
 {
-    return HAL_GPIO_ReadPin(TYPE, PIN) == GPIO_PIN_SET;
+    return HAL_GPIO_ReadPin(type_, pin_) == GPIO_PIN_SET;
 }
 
-void Led::blink_task_function(void *args)
+void Led::blinkTaskFunction(void *args)
 {
     (void)args;
     while (true)
@@ -35,11 +35,11 @@ void Led::blink_task_function(void *args)
 }
 void Led::init()
 {
-    blink_task.addToScheduler();
+    blinkTask_.addToScheduler();
 }
-const os::Task &Led::get_blink_task() const
+const os::Task &Led::getBlinkTask() const
 {
-    return blink_task;
+    return blinkTask_;
 }
 
 }

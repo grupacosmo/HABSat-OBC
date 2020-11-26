@@ -22,38 +22,38 @@ namespace os
         /**
          * Sends object into the Queue
          * @param object
-         * @param ticks_to_wait
+         * @param ticksToWait
          */
-        constexpr void send(Type &object, TickType_t ticks_to_wait);
+        constexpr void send(Type &object, TickType_t ticksToWait);
 
         /**
          * Receives object from the Queue
-         * @param object_holder
-         * @param ticks_to_wait
+         * @param objectHolder
+         * @param ticksToWait
          * @return
          */
-        inline bool receive(Type &object_holder, TickType_t ticks_to_wait);
+        inline bool receive(Type &objectHolder, TickType_t ticksToWait);
     private:
-        const QueueHandle_t m_queue_handle;
+        const QueueHandle_t queueHandle_;
     };
 
     template<typename Type, size_t size>
     constexpr Queue<Type, size>::Queue()
-    : m_queue_handle(xQueueCreate(size, sizeof(Type)))
+    : queueHandle_(xQueueCreate(size, sizeof(Type)))
     {
 
     }
 
     template<typename Type, size_t size>
-    constexpr void Queue<Type, size>::send(Type &object, TickType_t ticks_to_wait)
+    constexpr void Queue<Type, size>::send(Type &object, TickType_t ticksToWait)
     {
-        xQueueSend(m_queue_handle, &object, ticks_to_wait);
+        xQueueSend(queueHandle_, &object, ticksToWait);
     }
 
     template<typename Type, size_t size>
-    bool Queue<Type, size>::receive(Type &object_holder, TickType_t ticks_to_wait)
+    bool Queue<Type, size>::receive(Type &objectHolder, TickType_t ticksToWait)
     {
-        return xQueueReceive(m_queue_handle, &object_holder, ticks_to_wait);
+        return xQueueReceive(queueHandle_, &objectHolder, ticksToWait);
     }
 
 }

@@ -62,32 +62,6 @@ public:
      */
     void readAll();
 
-    /**
-     * Reads temperature data from sensor in 24-bit format
-     * @param temperature
-     */
-    float readTemperature();
-
-    /**
-     * Reads pressure data form sensor in 24-bit format
-     * There is a need to readTemperature first.
-     * For reading pressure, variable t_fine have to be initialized
-     * (It happens in readTemperature)
-     * t_fine will be used in convertion
-     * @param pressure
-     */
-    float readPressure();
-
-    /**
-     * Reads humidity data from sensor in 16-bit format
-     * There is a need to readTemperature first.
-     * For reading humidity, variable t_fine have to be initialized
-     * (It happens in readTemperature)
-     * t_fine will be used in convertion
-     * @param humidity
-     */
-    float readHumidity();
-
     /*
      * Getter for the Measure Task handle.
      */
@@ -112,6 +86,32 @@ private:
     * @return       converted data
     */
     uint32_t convert_data_pressure(int32_t adc_P);
+
+    /**
+    * Reads temperature data from sensor in 24-bit format
+    * @param temperature
+    */
+    float readTemperature();
+
+    /**
+     * Reads pressure data form sensor in 24-bit format
+     * There is a need to readTemperature first.
+     * For reading pressure, variable t_fine have to be initialized
+     * (It happens in readTemperature)
+     * t_fine will be used in convertion
+     * @param pressure
+     */
+    float readPressure();
+
+    /**
+     * Reads humidity data from sensor in 16-bit format
+     * There is a need to readTemperature first.
+     * For reading humidity, variable t_fine have to be initialized
+     * (It happens in readTemperature)
+     * t_fine will be used in convertion
+     * @param humidity
+     */
+    float readHumidity();
 
     /**
      * Converts read data from binary to decimal.
@@ -163,16 +163,16 @@ private:
 
 private:
 
-    const ChipSelect cs{GPIOC, GPIO_PIN_3};
-    Buffers buffers;
+    const ChipSelect cs_{GPIOC, GPIO_PIN_3};
+    Buffers buffers_;
 
-    const os::Task measure_task{"measure", 256, os::Priority::IDLE, measureTaskFunction};
+    const os::Task measureTask_{"measure", 256, os::Priority::idle, measureTaskFunction};
 
     /*Handler for SPI Interface*/
-    const SPIBus *const spi;
+    const SPIBus *const spi_;
 
     /*t_fine - carries */
-    int32_t t_fine;
+    int32_t tFine_;
 
     enum class Address : uint8_t {
         BME280_HUM_CONTROL      = 0xF2,
@@ -185,17 +185,17 @@ private:
     };
 
     /*Compensation parameters: temperature*/
-    static constexpr size_t tSize = 3;
-    const std::array<uint8_t, tSize> DIG_T = {
+    static constexpr size_t tSize_ = 3;
+    const std::array<uint8_t, tSize_> digT_ = {
             0x88,
             0x8A,
             0x8C
     };
-    std::array<uint16_t, tSize> t;
+    std::array<uint16_t, tSize_> t_;
 
     /*Pressure*/
-    static constexpr size_t pSize = 9;
-    const std::array<uint8_t, pSize> DIG_P = {
+    static constexpr size_t pSize_ = 9;
+    const std::array<uint8_t, pSize_> digP_ = {
             0x8E,
             0x90,
             0x92,
@@ -206,11 +206,11 @@ private:
             0x9C,
             0x9E
     };
-    std::array<uint16_t, pSize> p;
+    std::array<uint16_t, pSize_> p_;
 
     /*Humidity*/
-    static constexpr size_t hSize = 6;
-    const std::array<uint8_t, hSize> DIG_H = {
+    static constexpr size_t hSize_ = 6;
+    const std::array<uint8_t, hSize_> digH_ = {
             0xA1,
             0xE1,
             0xE3,
@@ -218,7 +218,7 @@ private:
             0xE5,
             0xE7
     };
-    std::array<uint16_t, hSize> h;
+    std::array<uint16_t, hSize_> h_;
 };
 
 }

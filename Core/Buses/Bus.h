@@ -22,7 +22,7 @@ template<typename T>
 class Bus
 {
 protected:
-    T *const handle;
+    T *const handle_;
     constexpr explicit Bus(T *handle);
 
 public:
@@ -30,14 +30,14 @@ public:
 };
 
 template<typename T>
-constexpr Bus<T>::Bus(T *handle) : handle(handle)
+constexpr Bus<T>::Bus(T *handle) : handle_(handle)
 {
 }
 
 template<typename T>
 constexpr T *Bus<T>::getHandle() const
 {
-    return handle;
+    return handle_;
 }
 
 }
