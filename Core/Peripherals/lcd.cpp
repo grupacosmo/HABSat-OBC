@@ -20,8 +20,8 @@ Lcd::Lcd(uint16_t lines, uint16_t line_length, const I2CBus* i2c, uint8_t slave_
       lines_(lines),
       lineLength_(line_length),
       slaveAddress_(slave_address),
-      displayCtrlConfig_(Command::DISPLAY_CRTL | DisplayCtrlFlag::DISPLAY_STATE),
-      entryModeConfig_(Command::ENTRY_MODE | EntryModeFlag::SHIFT_DIRECTION)
+      displayCtrlConfig_(Command::DisplayCtrl | DisplayCtrlFlag::DisplayState),
+      entryModeConfig_(Command::EntryMode | EntryModeFlag::ShiftDirection)
 {}
 
 
@@ -29,54 +29,54 @@ void Lcd::init() const
 {
     uint8_t display_lines_flag = NO_FLAG;
     if(lines_ > 1)
-        display_lines_flag = FunctionSetFlag::DISPLAY_LINES;
+        display_lines_flag = FunctionSetFlag::DisplayLines;
 
     auto wait_and_send_cmd = [this](uint32_t time, uint8_t b)
     {
         HAL_Delay(time);
-        send_cmd(b);
+        sendCmd(b);
     };
-    wait_and_send_cmd(20, Command::FUNCTION_SET);
-    wait_and_send_cmd(5, Command::FUNCTION_SET);
-    wait_and_send_cmd(1, Command::FUNCTION_SET);
-    wait_and_send_cmd(1, Command::FUNCTION_SET | display_lines_flag);
+    wait_and_send_cmd(20, Command::FunctionSet);
+    wait_and_send_cmd(5, Command::FunctionSet);
+    wait_and_send_cmd(1, Command::FunctionSet);
+    wait_and_send_cmd(1, Command::FunctionSet | display_lines_flag);
     wait_and_send_cmd(1, displayCtrlConfig_);
-    wait_and_send_cmd(1, Command::CLEAR_DISPLAY);
+    wait_and_send_cmd(1, Command::ClearDisplay);
     wait_and_send_cmd(1, entryModeConfig_);
 
     displayTask_.addToScheduler();
 }
 
-void Lcd::print_line(const u_int16_t line_index, const std::string& str) const
+void Lcd::printLine(const u_int16_t lineIndex, const std::string& str) const
 {
-    set_cursor_pos(line_index, 0);
+    setCursorPosition(lineIndex, 0);
 
     size_t i;
     for(i = 0; i < lineLength_ && i < str.size(); i++)
     {
-        send_data(str[i]);
+        sendData(str[i]);
     }
 
     for(; i < lineLength_; i++)
     {
-        send_data(' ');
+        sendData(' ');
     }
 
-    set_cursor_pos(line_index, str.size());
+    setCursorPosition(lineIndex, str.size());
 }
 
-void Lcd::print_char(const char character) const
+void Lcd::printChar(const char character) const
 {
-    send_data(character);
+    sendData(character);
 }
 
-void Lcd::set_cursor_pos(uint16_t line, const uint16_t column) const
+void Lcd::setCursorPosition(uint16_t line, const uint16_t column) const
 {
     const std::array<LineOffset, 4> line_offsets {
-        LineOffset::LINE_0,
-        LineOffset::LINE_1,
-        LineOffset::LINE_2,
-        LineOffset::LINE_3,
+        LineOffset::Line0,
+        LineOffset::Line1,
+        LineOffset::Line2,
+        LineOffset::Line3,
     };
 
     if(line >= lines_)
@@ -84,104 +84,104 @@ void Lcd::set_cursor_pos(uint16_t line, const uint16_t column) const
 
     const uint8_t address = column + line_offsets[line];
 
-    send_cmd(Command::DDRAM_ADDRESS | address);
+    sendCmd(Command::DDRAMaddress | address);
 }
 
 void Lcd::clear() const
 {
-    send_cmd(Command::CLEAR_DISPLAY);
+    sendCmd(Command::ClearDisplay);
     // TODO DELAY
     HAL_Delay(1);
 }
 
-void Lcd::display_on()
+void Lcd::displayOn()
 {
-    set_flag(displayCtrlConfig_, DisplayCtrlFlag::DISPLAY_STATE);
+    setFlag(displayCtrlConfig_, DisplayCtrlFlag::DisplayState);
 }
 
-void Lcd::display_off()
+void Lcd::displayOff()
 {
-    unset_flag(displayCtrlConfig_, DisplayCtrlFlag::DISPLAY_STATE);
+    unsetFlag(displayCtrlConfig_, DisplayCtrlFlag::DisplayState);
 }
 
-void Lcd::cursor_on()
+void Lcd::cursorOn()
 {
-    set_flag(displayCtrlConfig_, DisplayCtrlFlag::CURSOR_STATE);
+    setFlag(displayCtrlConfig_, DisplayCtrlFlag::CursorState);
 }
 
-void Lcd::cursor_off()
+void Lcd::cursorOff()
 {
-    unset_flag(displayCtrlConfig_, DisplayCtrlFlag::CURSOR_STATE);
+    unsetFlag(displayCtrlConfig_, DisplayCtrlFlag::CursorState);
 }
 
-void Lcd::cursor_blinking()
+void Lcd::cursorBlinking()
 {
-    set_flag(displayCtrlConfig_, DisplayCtrlFlag::CURSOR_BLINK);
+    setFlag(displayCtrlConfig_, DisplayCtrlFlag::CursorBlink);
 }
 
-void Lcd::cursor_not_blinking()
+void Lcd::cursorNotBlinking()
 {
-    unset_flag(displayCtrlConfig_, DisplayCtrlFlag::CURSOR_BLINK);
+    unsetFlag(displayCtrlConfig_, DisplayCtrlFlag::CursorBlink);
 }
 
-void Lcd::shift_mode_display()
+void Lcd::shiftModeDisplay()
 {
-    set_flag(entryModeConfig_, EntryModeFlag::SHIFT_TYPE);
+    setFlag(entryModeConfig_, EntryModeFlag::ShiftType);
 }
 
-void Lcd::shift_mode_cursor()
+void Lcd::shiftModeCursor()
 {
-    unset_flag(entryModeConfig_, EntryModeFlag::SHIFT_TYPE);
+    unsetFlag(entryModeConfig_, EntryModeFlag::ShiftType);
 }
 
-void Lcd::shift_direction_left()
+void Lcd::shiftDirectionLeft()
 {
-    set_flag(entryModeConfig_, EntryModeFlag::SHIFT_DIRECTION);
+    setFlag(entryModeConfig_, EntryModeFlag::ShiftDirection);
 }
 
-void Lcd::shift_direction_right()
+void Lcd::shiftDirectionRight()
 {
-    unset_flag(entryModeConfig_, EntryModeFlag::SHIFT_DIRECTION);
+    unsetFlag(entryModeConfig_, EntryModeFlag::ShiftDirection);
 }
 
-void Lcd::set_flag(uint8_t& config, uint8_t flag)
+void Lcd::setFlag(uint8_t& config, uint8_t flag)
 {
     config |= flag;
-    send_cmd(config);
+    sendCmd(config);
 }
 
-void Lcd::unset_flag(uint8_t& config, uint8_t flag)
+void Lcd::unsetFlag(uint8_t& config, uint8_t flag)
 {
     config &= ~flag;
-    send_cmd(config);
+    sendCmd(config);
 }
 
-void Lcd::send_cmd(uint8_t byte) const
+void Lcd::sendCmd(uint8_t byte) const
 {
-    send(byte, DataSendingFlag::BACKLIGHT);
+    send(byte, DataSendingFlag::Backlight);
 }
 
-void Lcd::send_data(uint8_t data) const
+void Lcd::sendData(uint8_t data) const
 {
-    send(data, DataSendingFlag::REGISTER | DataSendingFlag::BACKLIGHT);
+    send(data, DataSendingFlag::Register | DataSendingFlag::Backlight);
 }
 
 void Lcd::send(uint8_t byte, uint8_t flags) const
 {
     // since I2C requires 4 bit interface, bytes of data need to be split into nibbles
-    transmit_nibble(bitwise::nibbleHigh(byte) | flags);
-    transmit_nibble((bitwise::nibbleLow(byte) << 4) | flags);
+    transmitNibble(bitwise::nibbleHigh(byte) | flags);
+    transmitNibble((bitwise::nibbleLow(byte) << 4) | flags);
 }
 
-void Lcd::transmit_nibble(uint8_t nibble) const
+void Lcd::transmitNibble(uint8_t nibble) const
 {
     // the data needs to be transmitted twice
     // first time with PULSE flag, second time without it
-    uint8_t data = nibble | DataSendingFlag::PULSE;
+    uint8_t data = nibble | DataSendingFlag::Pulse;
     i2c_->transmit(slaveAddress_, &data, 1);
     // TODO DELAY > 450 ns
 
-    data = nibble & ~DataSendingFlag::PULSE;
+    data = nibble & ~DataSendingFlag::Pulse;
     i2c_->transmit(slaveAddress_, &data, 1);
     // TODO DELAY > 37 us
 }
@@ -207,7 +207,7 @@ void Lcd::prepareDateData(std::array<char, 20> &lineBuffer)
     // TODO: the first string is a weird workaround for program crashing when calling day_names[rtcBuffers.weekday_name - 1]
     static const std::array day_names = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
-    std::sprintf(lineBuffer.data(), "    %s %'.02d/%'.02d/%'.02d", day_names[rtcBuffers.weekday_name],
+    std::sprintf(lineBuffer.data(), "    %s %'.02d/%'.02d/%'.02d", day_names[rtcBuffers.weekday],
                  rtcBuffers.day, rtcBuffers.month, rtcBuffers.year);
 }
 
@@ -223,7 +223,7 @@ void Lcd::prepareSensorData(std::array<char, 20> &lineBuffer)
     index = (index + 1) % options.size();
 }
 
-void Lcd::display_task_function(void *args)
+void Lcd::displayTaskFunction(void *args)
 {
     (void)args;
     const auto &lcd = obc().hardware.lcd;
@@ -237,7 +237,7 @@ void Lcd::display_task_function(void *args)
         prepareSensorData(lineBuffers[3]);
 
         for(std::size_t i = 0; i < 4; ++i)
-            lcd.print_line(i, lineBuffers[i].data());
+            lcd.printLine(i, lineBuffers[i].data());
 
         os::Task::delay(980);
     }

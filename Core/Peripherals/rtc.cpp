@@ -3,7 +3,7 @@
 //
 
 #include "rtc.h"
-#include "../OBC/obc.h"
+#include "obc.h"
 
 namespace hw
 {
@@ -16,14 +16,16 @@ Rtc::Rtc(const I2CBus* i2c, uint8_t address)
 void Rtc::init() const
 {
 #if HW_RTC_SET_TIME
-    setTimeAndDate(
-        HW_RTC_SECOND,
-        HW_RTC_MINUTE,
-        HW_RTC_HOUR,
-        HW_RTC_WEEKDAY,
-        HW_RTC_DAY,
-        HW_RTC_MONTH,
-        HW_RTC_YEAR);
+    TimeAndDate data;
+    data.second  = HW_RTC_SECOND;
+    data.minute  = HW_RTC_MINUTE;
+    data.hour    = HW_RTC_HOUR;
+    data.weekday = HW_RTC_WEEKDAY;
+    data.day     = HW_RTC_DAY;
+    data.month   = HW_RTC_MONTH;
+    data.year    = HW_RTC_YEAR;
+
+    setTimeAndDate(data);
 #endif
     readTimeAndDateTask_.addToScheduler();
 }
@@ -38,33 +40,24 @@ uint8_t Rtc::convertDecToBcd(const uint8_t decData)
     return ((decData / 10) << 4) | (decData % 10);
 }
 
-void Rtc::setTimeAndDate(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
-        const uint8_t day, const uint8_t month,const uint8_t year) const
+void Rtc::setTimeAndDate(const TimeAndDate& timeAndDate) const
 {
-    std::array<uint8_t, 7> timeAndDateToSet = {
-            convertDecToBcd(second),
-            convertDecToBcd(minute),
-            convertDecToBcd(hour),
-            convertDecToBcd(weekday),
-            convertDecToBcd(day),
-            convertDecToBcd(month),
-            convertDecToBcd(year)
-    };
-    i2c_->memoryWrite<0x00>(slaveAddress_, timeAndDateToSet.data(), timeAndDateToSet.size());
+    TimeAndDate converted;
+    for(size_t i = 0; i < converted.array.size(); ++i)
+    {
+        converted.array[i] = convertDecToBcd(timeAndDate.array[i]);
+    }
+    i2c_->memoryWrite<0x00>(slaveAddress_, converted.array.data(), converted.array.size());
 }
 
 void Rtc::readTimeAndDate()
 {
-    std::array<uint8_t, 7> timeAndDate;
-    if (i2c_->memoryRead<0x00>(slaveAddress_, timeAndDate.data(), timeAndDate.size()) == BusResult::ok)
+    if(i2c_->memoryRead<0x00>(slaveAddress_, buffer_.array.data(), buffer_.array.size()) == BusResult::Ok)
     {
-        timeAndDateBuffer_.second = convertBcdToDec(timeAndDate[0]);
-        timeAndDateBuffer_.minute = convertBcdToDec(timeAndDate[1]);
-        timeAndDateBuffer_.hour = convertBcdToDec(timeAndDate[2]);
-        timeAndDateBuffer_.weekday_name = convertBcdToDec(timeAndDate[3]);
-        timeAndDateBuffer_.day = convertBcdToDec(timeAndDate[4]);
-        timeAndDateBuffer_.month = convertBcdToDec(timeAndDate[5]);
-        timeAndDateBuffer_.year = convertBcdToDec(timeAndDate[6]);
+        for(auto& elem : buffer_.array)
+        {
+            elem = convertBcdToDec(elem);
+        }
     }
 }
 
@@ -72,14 +65,16 @@ void Rtc::readTimeAndDateTaskFunction(void *args)
 {
     (void)args;
     Rtc &rtc = obc().hardware.rtc;
-    while(true) {
+    while(true)
+    {
         rtc.readTimeAndDate();
         os::Task::delay(500);
     }
 }
-const Rtc::Buffer &Rtc::getTimeAndDateBuffer() const
+
+const TimeAndDate &Rtc::getTimeAndDateBuffer() const
 {
-    return timeAndDateBuffer_;
+    return buffer_;
 }
 
 }

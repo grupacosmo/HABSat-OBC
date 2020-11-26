@@ -12,10 +12,10 @@ namespace hw
 
 enum class BusResult
 {
-    ok = HAL_OK,
-    error = HAL_ERROR,
-    busy = HAL_BUSY,
-    timeout = HAL_TIMEOUT
+    Ok = HAL_OK,
+    Error = HAL_ERROR,
+    Busy = HAL_BUSY,
+    Timeout = HAL_TIMEOUT
 };
 
 template<typename T>

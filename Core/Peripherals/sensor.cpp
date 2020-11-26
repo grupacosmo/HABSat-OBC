@@ -30,9 +30,9 @@ void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags 
     h_[5] = read8(digH_[5]);
 
 
-    const uint8_t HumReg = (read8(Address::BME280_HUM_CONTROL) & 0xF8 ) | humidity_oversampling;
+    const uint8_t HumReg = (read8(Address::HumControl) & 0xF8 ) | humidity_oversampling;
 
-    write8(Address::BME280_HUM_CONTROL, HumReg);
+    write8(Address::HumControl, HumReg);
     write8(0xF4, (temperature_resolution << 5 ) | (pressure_oversampling << 2) | mode);
     spi_->setCS(cs_);
 }
@@ -41,7 +41,7 @@ void Sensor::configure(const ConfigFlags& standby_time, const ConfigFlags& filte
 {
     const uint8_t data = ((standby_time & 0x07) << 5) | (((filter & 0x07) << 2) & 0xFC);
     spi_->clearCS(cs_);
-    write8(Address::BME280_CONFIG, data);
+    write8(Address::Config, data);
     spi_->setCS(cs_);
 }
 
@@ -56,19 +56,19 @@ void Sensor::readAll()
 
 float Sensor::readTemperature()
 {
-    auto adc_T = read24(Address::BME280_TEMP_DATA);
+    auto adc_T = read24(Address::TempData);
     return convert_data_temperature(adc_T);
 }
 
 float Sensor::readPressure()
 {
-    auto adc_P = read24(Address::BME280_PRESSURE_DATA);
+    auto adc_P = read24(Address::PressureData);
     return convert_data_pressure(adc_P) / 100;
 }
 
 float Sensor::readHumidity()
 {
-    auto adc_H = read16(Address::BME280_HUMID_DATA);
+    auto adc_H = read16(Address::HumidityData);
     return convert_data_humidity(adc_H);
 }
 

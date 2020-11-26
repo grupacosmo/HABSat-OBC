@@ -5,29 +5,30 @@
 #ifndef RCC_SYS_RTC_H
 #define RCC_SYS_RTC_H
 
-#include "../System/os_task.h"
+#include "os_task.h"
 #include "I2CBus.h"
 #include "stm32f4xx.h"
+#include <array>
 
 namespace hw
 {
+
+struct TimeAndDate {
+    std::array<uint8_t, 7> array;
+    uint8_t& second  = array[0];
+    uint8_t& minute  = array[1];
+    uint8_t& hour    = array[2];
+    uint8_t& weekday = array[3];
+    uint8_t& day     = array[4];
+    uint8_t& month   = array[5];
+    uint8_t& year    = array[6];
+};
 
 /**
  * RTC DS1307 library for STM32F4xx.
  */
 class Rtc
 {
-public:
-    struct Buffer {
-        uint8_t second;
-        uint8_t minute;
-        uint8_t hour;
-        uint8_t weekday_name;
-        uint8_t day;
-        uint8_t month;
-        uint8_t year;
-    };
-
 public:
     /**
      * RTC's constructor.
@@ -48,16 +49,9 @@ public:
      * You should use this only once and then remove the function call from the source code.
      * Otherwise clock would start measuring from the given date every time the circuit is connected to the power.
      *
-     * @param second
-     * @param minute
-     * @param hour      24 hour format
-     * @param weekday   1 for Sunday, ..., 7 for Saturday
-     * @param day
-     * @param month
-     * @param year      Two last digits of the year
+     * @param timeAndDate
      */
-    void setTimeAndDate(const uint8_t second, const uint8_t minute, const uint8_t hour, const uint8_t weekday,
-                       const uint8_t day, const uint8_t month, const uint8_t year) const;
+    void setTimeAndDate(const TimeAndDate& timeAndDate) const;
 
     /**
      * Puts the date from RTC to object's date_time structure.
@@ -68,7 +62,7 @@ public:
      * Getter for timeAndDateBuffer.
      * @return
      */
-    const Buffer &getTimeAndDateBuffer() const;
+    const TimeAndDate &getTimeAndDateBuffer() const;
 
 private:
 
@@ -99,12 +93,12 @@ private:
 private:
     const os::Task readTimeAndDateTask_{"rtc_task",
                                          128,
-                                         os::Priority::idle,
+                                         os::Priority::Idle,
                                          readTimeAndDateTaskFunction};
 
     const I2CBus *const i2c_;
     uint8_t slaveAddress_;
-    Buffer timeAndDateBuffer_;
+    TimeAndDate buffer_;
 };
 
 }

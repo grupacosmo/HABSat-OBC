@@ -17,12 +17,12 @@ namespace hw
 class Sensor {
 public:
     enum ConfigFlags : uint8_t {
-        BME280_TEMPERATURE_16BIT      = 0x01,
-        FILTER_OFF                    = 0x00,
-        BME280_NORMALMODE		      = 0x03,
-        BME280_STANDBY_MS_10	      = 0x06,
-        BME280_PRESSURE_ULTRALOWPOWER =	0x01,
-        BME280_HUMINIDITY_STANDARD	  = 0x03,
+        Temperature16Bit      = 0x01,
+        FilterOff             = 0x00,
+        NormalMode            = 0x03,
+        Standby10Ms           = 0x06,
+        PressureUltraLowPower =	0x01,
+        HumidityStandard      = 0x03,
     };
 
     struct Buffers
@@ -166,7 +166,7 @@ private:
     const ChipSelect cs_{GPIOC, GPIO_PIN_3};
     Buffers buffers_;
 
-    const os::Task measureTask_{"measure", 256, os::Priority::idle, measureTaskFunction};
+    const os::Task measureTask_{"measure", 256, os::Priority::Idle, measureTaskFunction};
 
     /*Handler for SPI Interface*/
     const SPIBus *const spi_;
@@ -175,12 +175,12 @@ private:
     int32_t tFine_;
 
     enum class Address : uint8_t {
-        BME280_HUM_CONTROL      = 0xF2,
-        BME280_CONFIG           = 0xF5,
-        BME280_TEMP_DATA        = 0xFA,
-        BME280_PRESSURE_DATA    = 0xF7,
-        BME280_HUMID_DATA       = 0xFD,
-        BME280_CTRL_MEAS_ADDR   = 0xF4
+        HumControl      = 0xF2,
+        Config          = 0xF5,
+        TempData        = 0xFA,
+        PressureData    = 0xF7,
+        HumidityData    = 0xFD,
+        CTRLmeasAddress = 0xF4
 
     };
 

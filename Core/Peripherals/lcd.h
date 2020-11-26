@@ -40,20 +40,20 @@ public:
      * @param line
      * @param column
      */
-    void set_cursor_pos(uint16_t line, const uint16_t column) const;
+    void setCursorPosition(uint16_t line, const uint16_t column) const;
 
     /**
      * Clears entire line and prints text.
-     * @param line_index
+     * @param lineIndex
      * @param str
      */
-    void print_line(const uint16_t line_index, const std::string& str) const;
+    void printLine(const uint16_t lineIndex, const std::string& str) const;
 
     /**
      * Prints one character at the current cursor position;
      * @param character
      */
-    void print_char(const char character) const;
+    void printChar(const char character) const;
 
     /**
      * Clears entire display
@@ -63,52 +63,52 @@ public:
     /**
      * Turns on the display
      */
-    void display_on();
+    void displayOn();
 
     /**
      * Turns off the display
      */
-    void display_off();
+    void displayOff();
 
     /**
      * Makes the cursor visible
      */
-    void cursor_on();
+    void cursorOn();
 
     /**
      * Makes the cursor invisible
      */
-    void cursor_off();
+    void cursorOff();
 
     /**
      * Sets cursor into blinking mode
      */
-    void cursor_blinking();
+    void cursorBlinking();
 
     /**
     * Sets cursor into not blinking mode
     */
-    void cursor_not_blinking();
+    void cursorNotBlinking();
 
     /**
      * Sets shift mode to cursor shift. Whenever new characters are written the cursor is shifting.
      */
-    void shift_mode_cursor();
+    void shiftModeCursor();
 
     /**
     * Sets shift mode to cursor shift. Whenever new characters are written the entire screen is shifting.
     */
-    void shift_mode_display();
+    void shiftModeDisplay();
 
     /**
      * Sets shift direction to left.
      */
-    void shift_direction_left();
+    void shiftDirectionLeft();
 
     /**
      * Sets shift direction to right.
      */
-    void shift_direction_right();
+    void shiftDirectionRight();
 
 private:
 
@@ -117,77 +117,77 @@ private:
      * https://mil.ufl.edu/3744/docs/lcdmanual/commands.html
      */
     enum Command : uint8_t {
-        CLEAR_DISPLAY   = 0x01, // has no flags, clears display
-        CURSOR_HOME     = 0x02, // has no flags, sets cursor to line, 0 char 0
-        ENTRY_MODE      = 0x04, // has flags, changes the mode of entering new characters
-        DISPLAY_CRTL    = 0x08, // has flags, changes the mode of displaying
-        SHIFT           = 0x10, // has flags, shifts cursor or entire display
-        FUNCTION_SET    = 0x20, // has flags, changes the function set
-        CGRAM_ADDRESS   = 0x40, //
-        DDRAM_ADDRESS   = 0x80, //
+        ClearDisplay = 0x01, // has no flags, clears display
+        CursorHome   = 0x02, // has no flags, sets cursor to line, 0 char 0
+        EntryMode    = 0x04, // has flags, changes the mode of entering new characters
+        DisplayCtrl  = 0x08, // has flags, changes the mode of displaying
+        Shift        = 0x10, // has flags, shifts cursor or entire display
+        FunctionSet  = 0x20, // has flags, changes the function set
+        CGRAMaddress = 0x40, //
+        DDRAMaddress = 0x80, //
     };
 
     // Below are the flags of all the commands that have them
 
     enum EntryModeFlag : uint8_t {
-        SHIFT_TYPE      = 0x01,
-        SHIFT_DIRECTION = 0x02,
+        ShiftType      = 0x01,
+        ShiftDirection = 0x02,
     };
 
     enum DisplayCtrlFlag : uint8_t {
-        CURSOR_BLINK    = 0x01,
-        CURSOR_STATE    = 0x02,
-        DISPLAY_STATE   = 0x04,
+        CursorBlink  = 0x01,
+        CursorState  = 0x02,
+        DisplayState = 0x04,
     };
 
     enum ShiftFlag : uint8_t {
-        DIRECTION   = 0x04,
-        TYPE        = 0x08,
+        Direction = 0x04,
+        Type      = 0x08,
     };
 
     enum FunctionSetFlag : uint8_t {
-        FONT                = 0x04,
-        DISPLAY_LINES       = 0x08, // flag not set - 1 line function set, flag set - 2 line function set
-        INTERFACE_LENGTH    = 0x10, // flag not set - 4 bit interface, flag set - 8 bit interface
+        Font            = 0x04,
+        DisplayLines    = 0x08, // flag not set - 1 line function set, flag set - 2 line function set
+        InterfaceLength = 0x10, // flag not set - 4 bit interface, flag set - 8 bit interface
     };
 
-    static constexpr uint8_t NO_FLAG = 0x00;
+    enum NoFlag : uint8_t {};
 
     // Flags that are appended to the data
     // therefore the lower nibble of data has to be equal 0x00
     // TODO provide explanations for those flags
     enum DataSendingFlag : uint8_t {
-        REGISTER    = 0x01,
-        READ_WRITE  = 0x02,
-        PULSE       = 0x04,
-        BACKLIGHT   = 0x08,
+        Register = 0x01,
+        ReadWrite = 0x02,
+        Pulse = 0x04,
+        Backlight = 0x08,
     };
 
     // Line start addresses
     enum LineOffset : uint8_t {
-        LINE_0 = 0x00,
-        LINE_1 = 0xC0,
-        LINE_2 = 0x94,
-        LINE_3 = 0x54,
+        Line0 = 0x00,
+        Line1 = 0xC0,
+        Line2 = 0x94,
+        Line3 = 0x54,
     };
 
 private:
-    void set_flag(uint8_t& config, uint8_t flag);
-    void unset_flag(uint8_t& config, uint8_t flag);
-    void send_cmd(uint8_t byte) const;
-    void send_data(uint8_t data) const;
+    void setFlag(uint8_t& config, uint8_t flag);
+    void unsetFlag(uint8_t& config, uint8_t flag);
+    void sendCmd(uint8_t byte) const;
+    void sendData(uint8_t data) const;
     void send(uint8_t byte, uint8_t flags) const;
-    void transmit_nibble(uint8_t nibble) const;
+    void transmitNibble(uint8_t nibble) const;
 
     static void prepareHeaderData(std::array<char, 20>& lineBuffer);
     static void prepareTimeData(std::array<char, 20> &lineBuffer);
     static void prepareDateData(std::array<char, 20> &lineBuffer);
     static void prepareSensorData(std::array<char, 20> &lineBuffer);
-    static void display_task_function(void *args);
+    static void displayTaskFunction(void *args);
 
 
 private:
-    const os::Task displayTask_{"display_task", 256, os::Priority::idle, display_task_function};
+    const os::Task displayTask_{"display_task", 256, os::Priority::Idle, displayTaskFunction};
 
     const I2CBus* const i2c_;
     const uint16_t lines_;

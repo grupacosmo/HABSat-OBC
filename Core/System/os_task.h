@@ -8,15 +8,18 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-namespace os {
+namespace os
+{
+
 /**
  * Priority of a task.
  */
 enum class Priority
 {
-    idle = tskIDLE_PRIORITY,
-    interrupt = configMAX_SYSCALL_INTERRUPT_PRIORITY
+    Idle = tskIDLE_PRIORITY,
+    Interrupt = configMAX_SYSCALL_INTERRUPT_PRIORITY
 };
+
 
 class Task
 {
@@ -25,8 +28,17 @@ public:
     /**
      * Alias for eTaskState enum.
      */
-    using State = eTaskState;
     using StackDepth = configSTACK_DEPTH_TYPE;
+
+    enum class State
+    {
+        Running   = eRunning,
+        Ready     = eReady,
+        Blocked   = eBlocked,
+        Suspended = eSuspended,
+        Deleted   = eDeleted,
+        Invalid   = eInvalid
+    };
 
 public:
     /**
@@ -160,7 +172,7 @@ void Task::resumeItself()
 
 Task::State Task::getState() const
 {
-    return eTaskGetState(taskHandle_);
+    return static_cast<Task::State>(eTaskGetState(taskHandle_));
 }
 
 void Task::resumeFromISR() const

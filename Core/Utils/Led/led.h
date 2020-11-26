@@ -49,7 +49,7 @@ private:
     static void blinkTaskFunction(void *args);
 
 private:
-    const os::Task blinkTask_{"blink", 128, os::Priority::idle, blinkTaskFunction};
+    const os::Task blinkTask_{"blink", 128, os::Priority::Idle, blinkTaskFunction};
 
     GPIO_TypeDef *const type_ = GPIOA;
     const uint16_t pin_ = GPIO_PIN_5;

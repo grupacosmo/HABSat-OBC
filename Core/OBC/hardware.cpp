@@ -16,12 +16,12 @@ void Hardware::init()
     rtc.init();
 #endif
 #if HW_SENSOR == 1
-    sensor.init(hw::Sensor::ConfigFlags::BME280_TEMPERATURE_16BIT,
-                hw::Sensor::ConfigFlags::BME280_PRESSURE_ULTRALOWPOWER,
-                hw::Sensor::ConfigFlags::BME280_HUMINIDITY_STANDARD,
-                hw::Sensor::ConfigFlags::BME280_NORMALMODE);
-    sensor.configure(hw::Sensor::ConfigFlags::BME280_STANDBY_MS_10,
-                     hw::Sensor::ConfigFlags::FILTER_OFF);
+    sensor.init(hw::Sensor::ConfigFlags::Temperature16Bit,
+                hw::Sensor::ConfigFlags::PressureUltraLowPower,
+                hw::Sensor::ConfigFlags::HumidityStandard,
+                hw::Sensor::ConfigFlags::NormalMode);
+    sensor.configure(hw::Sensor::ConfigFlags::Standby10Ms,
+                     hw::Sensor::ConfigFlags::FilterOff);
     sensor.getMeasureTask().addToScheduler();
 #endif
     button.init();
