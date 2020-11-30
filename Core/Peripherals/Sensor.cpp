@@ -9,13 +9,13 @@
 namespace hw
 {
 
-Sensor::Sensor(const SPIBus * spi) : spi_(spi) {}
+Sensor::Sensor(const SPIBus* spi, ChipSelect* cs) : spi_(spi), cs_(cs) {}
 
 void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags & pressure_oversampling, const ConfigFlags & humidity_oversampling, const ConfigFlags & mode)
 {
-    spi_->clearCS(cs_);
+    cs_->reset();
     HAL_Delay(5);
-    spi_->setCS(cs_);
+    cs_->set();
 
     for(size_t i = 0; i < t_.size(); ++i)
         t_[i] = bitwise::swapBytes(read16(digT_[i]));
@@ -71,35 +71,35 @@ float Sensor::readHumidity()
 void Sensor::write8(const uint8_t address, const uint8_t data)
 {
     std::array<uint8_t, 2> bytes = {bitwise::clearBits<7>(address), data};
-    spi_->clearCS(cs_);
+    cs_->reset();
     spi_->transmit(bytes.data(), bytes.size());
-    spi_->setCS(cs_);
+    cs_->set();
 }
 
 uint8_t Sensor::read8(const uint8_t address)
 {
     std::array<uint8_t, 2> bytes = {bitwise::setBits<7>(address)};
-    spi_->clearCS(cs_);
+    cs_->reset();
     spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
-    spi_->setCS(cs_);
+    cs_->set();
     return bytes[1];
 }
 
 uint16_t Sensor::read16(const uint8_t address)
 {
     std::array<uint8_t, 3> bytes = {bitwise::setBits<7>(address)};
-    spi_->clearCS(cs_);
+    cs_->reset();
     spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
-    spi_->setCS(cs_);
+    cs_->set();
     return (bytes[1] << 8) | (bytes[2]);
 }
 
 uint32_t Sensor::read24(const uint8_t address)
 {
     std::array<uint8_t, 4> bytes = {bitwise::setBits<7>(address)};
-    spi_->clearCS(cs_);
+    cs_->reset();
     spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
-    spi_->setCS(cs_);
+    cs_->set();
     return (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
 }
 

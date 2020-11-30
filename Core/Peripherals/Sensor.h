@@ -40,7 +40,7 @@ public:
      * @param spi_handler Pointer to SPI handle
      */
 
-    Sensor(const SPIBus * spi);
+    Sensor(const SPIBus* spi, ChipSelect* chipSelect);
 
     /**
      * Initializes Sensor.
@@ -149,11 +149,9 @@ private:
 
 private:
 
-    const ChipSelect cs_{GPIOC, GPIO_PIN_3};
-    Buffer buffers_;
-
     /*Handler for SPI Interface*/
     const SPIBus *const spi_;
+    ChipSelect* cs_;
 
     /*t_fine - carries */
     int32_t tFine_;

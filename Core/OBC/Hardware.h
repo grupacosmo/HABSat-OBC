@@ -24,12 +24,13 @@ struct Hardware
 
     hw::GPIOPin pinC13{GPIOC, GPIO_PIN_13};
     hw::GPIOPin pinA5{GPIOA, GPIO_PIN_5};
+    hw::ChipSelect sensorCS{GPIOC, GPIO_PIN_3};
 
     hw::Button button{&pinC13};
     hw::Led led{&pinA5};
     hw::Lcd lcd{4, 20, &i2c, constants::lcdSlaveAddress};
     hw::Rtc rtc{&i2c, constants::rtcSlaveAddress};
-    hw::Sensor sensor{&spi};
+    hw::Sensor sensor{&spi, &sensorCS};
 public:
     void init();
 };

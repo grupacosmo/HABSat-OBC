@@ -47,9 +47,8 @@ void Blink::blinkTaskFunction(void *args)
     }
 }
 
-void Blink::inputTaskFunction(void *args)
+void Blink::inputTaskFunction([[maybe_unused]] void *args)
 {
-    (void)args;
     while (true)
     {
         os::Task::suspendItself();
