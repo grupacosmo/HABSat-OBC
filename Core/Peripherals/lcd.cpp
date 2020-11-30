@@ -15,34 +15,34 @@ namespace hw
 // FIND MISSING DELAYS
 // CHECK DATASHEET AND ARDUINO I2C LIQUID CRYSTAL LIB FOR ACCURATE DELAY USAGE
 
-Lcd::Lcd(uint16_t lines, uint16_t line_length, const I2CBus* i2c, uint8_t slave_address)
-: i2c_(i2c),
+Lcd::Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress)
+    : i2c_(i2c),
       lines_(lines),
-      lineLength_(line_length),
-      slaveAddress_(slave_address),
+      lineLength_(lineLength),
+      slaveAddress_(slaveAddress),
       displayCtrlConfig_(Command::DisplayCtrl | DisplayCtrlFlag::DisplayState),
       entryModeConfig_(Command::EntryMode | EntryModeFlag::ShiftDirection)
-{}
+{
 
+}
 
 void Lcd::init() const
 {
-    uint8_t display_lines_flag = NO_FLAG;
-    if(lines_ > 1)
-        display_lines_flag = FunctionSetFlag::DisplayLines;
-
-    auto wait_and_send_cmd = [this](uint32_t time, uint8_t b)
-    {
-        HAL_Delay(time);
+    auto waitAndSendCmd = [this](uint32_t timeMs, uint8_t b) {
+        HAL_Delay(timeMs);
         sendCmd(b);
     };
-    wait_and_send_cmd(20, Command::FunctionSet);
-    wait_and_send_cmd(5, Command::FunctionSet);
-    wait_and_send_cmd(1, Command::FunctionSet);
-    wait_and_send_cmd(1, Command::FunctionSet | display_lines_flag);
-    wait_and_send_cmd(1, displayCtrlConfig_);
-    wait_and_send_cmd(1, Command::ClearDisplay);
-    wait_and_send_cmd(1, entryModeConfig_);
+
+    waitAndSendCmd(20, Command::FunctionSet);
+    waitAndSendCmd(5, Command::FunctionSet);
+    waitAndSendCmd(1, Command::FunctionSet);
+    if(lines_ > 1)
+        waitAndSendCmd(1, Command::FunctionSet | FunctionSetFlag::DisplayLines);
+    else
+        waitAndSendCmd(1, Command::FunctionSet);
+    waitAndSendCmd(1, displayCtrlConfig_);
+    waitAndSendCmd(1, Command::ClearDisplay);
+    waitAndSendCmd(1, entryModeConfig_);
 
     displayTask_.addToScheduler();
 }
@@ -72,7 +72,7 @@ void Lcd::printChar(const char character) const
 
 void Lcd::setCursorPosition(uint16_t line, const uint16_t column) const
 {
-    const std::array<LineOffset, 4> line_offsets {
+    static constexpr std::array<LineOffset, 4> lineOffsets{
         LineOffset::Line0,
         LineOffset::Line1,
         LineOffset::Line2,
@@ -82,7 +82,7 @@ void Lcd::setCursorPosition(uint16_t line, const uint16_t column) const
     if(line >= lines_)
         line = lines_ - 1;
 
-    const uint8_t address = column + line_offsets[line];
+    const uint8_t address = column + lineOffsets[line];
 
     sendCmd(Command::DDRAMaddress | address);
 }

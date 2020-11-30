@@ -24,11 +24,11 @@ public:
      * Constructs LCD.
      *
      * @param lines         Number of lines on an LCD screen.
-     * @param line_length   Number of possible characters per line.
+     * @param lineLength   Number of possible characters per line.
      * @param hi2cx         I2C handle.
-     * @param slave_address Slave address of an LCD.
+     * @param slaveAddress Slave address of an LCD.
      */
-    Lcd(uint16_t lines, uint16_t line_length, const I2CBus* i2c, uint8_t slave_address);
+    Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress);
 
     /**
      * Initializes LCD hardware and adds tasks to scheduler
@@ -151,8 +151,6 @@ private:
         InterfaceLength = 0x10, // flag not set - 4 bit interface, flag set - 8 bit interface
     };
 
-    enum NoFlag : uint8_t {};
-
     // Flags that are appended to the data
     // therefore the lower nibble of data has to be equal 0x00
     // TODO provide explanations for those flags
@@ -184,7 +182,6 @@ private:
     static void prepareDateData(std::array<char, 20> &lineBuffer);
     static void prepareSensorData(std::array<char, 20> &lineBuffer);
     static void displayTaskFunction(void *args);
-
 
 private:
     const os::Task displayTask_{"display_task", 256, os::Priority::Idle, displayTaskFunction};

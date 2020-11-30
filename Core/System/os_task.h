@@ -20,6 +20,15 @@ enum class Priority
     Interrupt = configMAX_SYSCALL_INTERRUPT_PRIORITY
 };
 
+enum class TaskState
+{
+    Running   = eRunning,
+    Ready     = eReady,
+    Blocked   = eBlocked,
+    Suspended = eSuspended,
+    Deleted   = eDeleted,
+    Invalid   = eInvalid
+};
 
 class Task
 {
@@ -29,16 +38,6 @@ public:
      * Alias for eTaskState enum.
      */
     using StackDepth = configSTACK_DEPTH_TYPE;
-
-    enum class State
-    {
-        Running   = eRunning,
-        Ready     = eReady,
-        Blocked   = eBlocked,
-        Suspended = eSuspended,
-        Deleted   = eDeleted,
-        Invalid   = eInvalid
-    };
 
 public:
     /**
@@ -71,7 +70,7 @@ public:
      *
      * @return State from os::Thread::State enum.
      */
-    inline State getState() const;
+    inline TaskState getState() const;
 
     /**
      * Resumes the task from the interrupt handler. To use this you need to create a global pointer
@@ -170,9 +169,9 @@ void Task::resumeItself()
     vTaskResume(NULL);
 }
 
-Task::State Task::getState() const
+TaskState Task::getState() const
 {
-    return static_cast<Task::State>(eTaskGetState(taskHandle_));
+    return static_cast<TaskState>(eTaskGetState(taskHandle_));
 }
 
 void Task::resumeFromISR() const

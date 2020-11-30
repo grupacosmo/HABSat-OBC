@@ -21,7 +21,7 @@ void Button::inputTaskFunction(void *args)
     {
         os::Task::suspendItself();
         lcd.printLine(3, "click");
-        if (led_blink_task.getState() != os::Task::State::eSuspended)
+        if (led_blink_task.getState() != os::TaskState::Suspended)
             led_blink_task.suspend();
         else
             led_blink_task.resume();

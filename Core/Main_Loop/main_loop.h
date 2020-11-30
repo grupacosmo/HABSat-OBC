@@ -8,7 +8,6 @@
 #ifdef __cplusplus
 extern "C"
 #endif
-void
-        mainLoop();
+void mainLoop();
 
 #endif //FREERTOS_INTRO_MAIN_CPP_H
