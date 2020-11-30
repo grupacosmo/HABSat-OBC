@@ -4,8 +4,8 @@
 
 #include "interruptHandlers.h"
 #include "Obc.h"
-#include "Queue.h"
 #include "handles.h"
+#include "osQueue.h"
 
 void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
 {

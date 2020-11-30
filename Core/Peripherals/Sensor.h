@@ -6,7 +6,7 @@
 #define RCC_SYS_SENSOR_H
 
 
-#include "Task.h"
+#include "osTask.h"
 #include "stm32f4xx.h"
 #include <SPIBus.h>
 #include <array>

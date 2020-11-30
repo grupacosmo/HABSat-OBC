@@ -6,7 +6,7 @@
 #define RCC_SYS_MEASURETIME_H
 
 #include <Rtc.h>
-#include <Task.h>
+#include <osTask.h>
 
 namespace services {
 

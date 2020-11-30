@@ -6,7 +6,7 @@
 #define RCC_SYS_RTC_H
 
 #include "I2CBus.h"
-#include "Task.h"
+#include "osTask.h"
 #include "stm32f4xx.h"
 #include <array>
 

@@ -7,7 +7,7 @@
 #define RCC_SYS_LCD_H
 
 #include "I2CBus.h"
-#include "Task.h"
+#include "osTask.h"
 #include "stm32f4xx.h"
 #include <array>
 #include <string>
