@@ -8,17 +8,23 @@
 
 #include "I2CBus.h"
 #include "hardware.h"
+#include "Blink.h"
+#include "Display.h"
+#include "MeasureTime.h"
+#include "MeasureWeather.h"
 
 /**
  * The main structure of the entire program, contains every part of the obc.
  */
 struct Obc
 {
-    Hardware hardware;
+    Hardware h;
+    services::Blink blink{&h.led};
+    services::MeasureTime measureTime{&h.rtc};
+    services::MeasureWeather measureWeather{&h.sensor};
+    services::Display display{&h.lcd, &measureWeather.getBuffer(), &measureTime.getBuffer()};
 
     void init();
 };
-
-Obc& obc();
 
 #endif//RCC_SYS_OBC_H

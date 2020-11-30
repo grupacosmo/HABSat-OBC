@@ -21,12 +21,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f4xx_it.h"
+#include "../Core/Interrupt_Handlers/interrupt_handlers.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-// TODO: decide what to do with this:
-extern void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
-extern void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
-extern void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx);
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -174,7 +172,7 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-  USER_UART_IRQHandler(&huart1);
+
   /* USER CODE END USART1_IRQn 1 */
 }
 
@@ -218,7 +216,6 @@ void DMA2_Stream2_IRQHandler(void)
   HAL_DMA_IRQHandler(&hdma_usart1_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
 
-  USER_UART_DMA_IRQHandler(&hdma_usart1_rx);
   /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
 

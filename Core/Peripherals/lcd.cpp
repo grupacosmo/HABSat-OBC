@@ -3,7 +3,7 @@
 //
 
 #include "lcd.h"
-#include "bitwise_operations.h"
+#include "../Utils/bitwise_operations.h"
 #include "obc.h"
 #include <array>
 
@@ -15,7 +15,7 @@ namespace hw
 // FIND MISSING DELAYS
 // CHECK DATASHEET AND ARDUINO I2C LIQUID CRYSTAL LIB FOR ACCURATE DELAY USAGE
 
-Lcd::Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress)
+Lcd::Lcd(uint16_t lines, uint16_t lineLength, const I2CBus * i2c, uint8_t slaveAddress)
     : i2c_(i2c),
       lines_(lines),
       lineLength_(lineLength),
@@ -43,8 +43,6 @@ void Lcd::init() const
     waitAndSendCmd(1, displayCtrlConfig_);
     waitAndSendCmd(1, Command::ClearDisplay);
     waitAndSendCmd(1, entryModeConfig_);
-
-    displayTask_.addToScheduler();
 }
 
 void Lcd::printLine(const u_int16_t lineIndex, const std::string& str) const
@@ -184,63 +182,6 @@ void Lcd::transmitNibble(uint8_t nibble) const
     data = nibble & ~DataSendingFlag::Pulse;
     i2c_->transmit(slaveAddress_, &data, 1);
     // TODO DELAY > 37 us
-}
-
-void Lcd::prepareHeaderData(std::array<char, 20> &lineBuffer)
-{
-    constexpr std::array options {"display", "test"};
-    static std::size_t index;
-
-    std::sprintf(lineBuffer.data(), "%s", options[index]);
-    index = (index + 1) % options.size();
-}
-
-void Lcd::prepareTimeData(std::array<char, 20> &lineBuffer)
-{
-    static const auto &rtcBuffers = obc().hardware.rtc.getTimeAndDateBuffer();
-    std::sprintf(lineBuffer.data(), "      %'.02d:%'.02d:%'.02d", rtcBuffers.hour, rtcBuffers.minute, rtcBuffers.second);
-}
-
-void Lcd::prepareDateData(std::array<char, 20> &lineBuffer)
-{
-    static const auto &rtcBuffers = obc().hardware.rtc.getTimeAndDateBuffer();
-    // TODO: the first string is a weird workaround for program crashing when calling day_names[rtcBuffers.weekday_name - 1]
-    static const std::array day_names = {"", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
-
-    std::sprintf(lineBuffer.data(), "    %s %'.02d/%'.02d/%'.02d", day_names[rtcBuffers.weekday],
-                 rtcBuffers.day, rtcBuffers.month, rtcBuffers.year);
-}
-
-void Lcd::prepareSensorData(std::array<char, 20> &lineBuffer)
-{
-    static const auto &sensorBuffers = obc().hardware.sensor.getBuffers();
-    static const std::array bufferArray{&sensorBuffers.temperature, &sensorBuffers.pressure, &sensorBuffers.humidity};
-
-    static constexpr std::array options{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};
-    static std::size_t index = 0;
-
-    std::sprintf(lineBuffer.data(), options[index], *bufferArray[index]);
-    index = (index + 1) % options.size();
-}
-
-void Lcd::displayTaskFunction(void *args)
-{
-    (void)args;
-    const auto &lcd = obc().hardware.lcd;
-    std::array<std::array<char, 20>, 4> lineBuffers;
-
-    while (true)
-    {
-        prepareHeaderData(lineBuffers[0]);
-        prepareTimeData(lineBuffers[1]);
-        prepareDateData(lineBuffers[2]);
-        prepareSensorData(lineBuffers[3]);
-
-        for(std::size_t i = 0; i < 4; ++i)
-            lcd.printLine(i, lineBuffers[i].data());
-
-        os::Task::delay(980);
-    }
 }
 
 }

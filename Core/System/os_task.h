@@ -49,7 +49,7 @@ public:
      * @param args          void* used to pass arguments to the task
      */
     constexpr Task(const char * const name, const StackDepth stackDepth, const Priority &priority,
-         void (*const taskCode)(void*), void const* args = nullptr);
+         void (*const taskCode)(void*));
 
     /**
      * Suspends the task.
@@ -81,7 +81,7 @@ public:
     /**
      * Allocated memory and adds the task to the scheduler.
      */
-    inline void addToScheduler() const;
+    inline void addToScheduler(void* params) const;
 
 public:
     /**
@@ -128,13 +128,12 @@ private:
     const char *const name_;
     const StackDepth stackDepth_;
     const Priority priority_;
-    void const* args_;
 };
 
 constexpr Task::Task(const char *const name, const StackDepth stackDepth, const Priority &priority,
-           void (*taskCode)(void *), void const* args)
+           void (*taskCode)(void *))
     : taskHandle_(NULL), taskCode_(taskCode), name_(name), stackDepth_(stackDepth),
-      priority_(priority), args_(args)
+      priority_(priority)
 {
 
 }
@@ -189,9 +188,9 @@ void Task::deleteTask() const
     vTaskDelete(taskHandle_);
 }
 
-void Task::addToScheduler() const
+void Task::addToScheduler(void* params = nullptr) const
 {
-    xTaskCreate(taskCode_, name_, stackDepth_, const_cast<void *>(args_),
+    xTaskCreate(taskCode_, name_, stackDepth_, const_cast<void *>(params),
                 static_cast<int>(priority_), const_cast<TaskHandle_t *>(&taskHandle_));
 }
 

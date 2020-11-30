@@ -7,6 +7,7 @@
 
 void mainLoop()
 {
-    obc().init();
+    static Obc obc;
+    obc.init();
     os::Task::startScheduler();
 }

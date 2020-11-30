@@ -7,8 +7,12 @@
 
 #include "stm32f4xx.h"
 
-extern "C" void USER_UART_IRQHandler(UART_HandleTypeDef *huart);
-extern "C" void USER_UART_DMA_IRQHandler(DMA_HandleTypeDef *hdma_usart_rx);
-extern "C" void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
+#ifdef __cplusplus
+#define EXTERN_C extern "C"
+#else
+#define EXTERN_C
+#endif
+
+EXTERN_C void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
 
 #endif//RCC_SYS_INTERRUPT_HANDLERS_H

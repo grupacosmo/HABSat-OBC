@@ -6,8 +6,8 @@
 #ifndef RCC_SYS_LCD_H
 #define RCC_SYS_LCD_H
 
-#include "os_task.h"
 #include "I2CBus.h"
+#include "os_task.h"
 #include "stm32f4xx.h"
 #include <array>
 #include <string>
@@ -28,7 +28,7 @@ public:
      * @param hi2cx         I2C handle.
      * @param slaveAddress Slave address of an LCD.
      */
-    Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress);
+    Lcd(uint16_t lines, uint16_t lineLength, const I2CBus * i2c, uint8_t slaveAddress);
 
     /**
      * Initializes LCD hardware and adds tasks to scheduler
@@ -177,16 +177,8 @@ private:
     void send(uint8_t byte, uint8_t flags) const;
     void transmitNibble(uint8_t nibble) const;
 
-    static void prepareHeaderData(std::array<char, 20>& lineBuffer);
-    static void prepareTimeData(std::array<char, 20> &lineBuffer);
-    static void prepareDateData(std::array<char, 20> &lineBuffer);
-    static void prepareSensorData(std::array<char, 20> &lineBuffer);
-    static void displayTaskFunction(void *args);
-
 private:
-    const os::Task displayTask_{"display_task", 256, os::Priority::Idle, displayTaskFunction};
-
-    const I2CBus* const i2c_;
+    const I2CBus * const i2c_;
     const uint16_t lines_;
     const uint16_t lineLength_;
     const uint16_t slaveAddress_;

@@ -3,13 +3,11 @@
 //
 #include "obc.h"
 
-Obc& obc()
-{
-    static Obc onBoardComputer;
-    return onBoardComputer;
-}
-
 void Obc::init()
 {
-    hardware.init();
+    h.init();
+    blink.init();
+    display.init();
+    measureTime.init();
+    measureWeather.init();
 }

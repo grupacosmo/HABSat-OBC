@@ -9,9 +9,6 @@ void Hardware::init()
 #if HW_LCD == 1
     lcd.init();
 #endif
-#if HW_WIFI == 1
-    wifi.init();
-#endif
 #if HW_RTC == 1
     rtc.init();
 #endif
@@ -22,9 +19,6 @@ void Hardware::init()
                 hw::Sensor::ConfigFlags::NormalMode);
     sensor.configure(hw::Sensor::ConfigFlags::Standby10Ms,
                      hw::Sensor::ConfigFlags::FilterOff);
-    sensor.getMeasureTask().addToScheduler();
 #endif
-    button.init();
-    led.init();
 }
 

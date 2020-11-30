@@ -9,8 +9,8 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        Led
         Include_Files
-        Button
         Peripherals
-        Buses)
+        Buses
+        MCU
+        Services)

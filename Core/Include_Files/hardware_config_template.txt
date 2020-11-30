@@ -8,7 +8,6 @@
 #define RCC_SYS_HARDWARE_CONFIG_H
 
 #define HW_LCD      0   // 1 if LCD connected
-#define HW_WIFI     0   // 1 if WIFI connected
 #define HW_SENSOR   0   // 1 if SENSOR connected
 #define HW_RTC      0   // 1 if RTC connected
 

@@ -6,7 +6,7 @@
 #define RCC_SYS_SENSOR_H
 
 
-#include "../System/os_task.h"
+#include "os_task.h"
 #include "stm32f4xx.h"
 #include <SPIBus.h>
 #include <array>
@@ -16,6 +16,15 @@ namespace hw
 
 class Sensor {
 public:
+
+    struct Buffer
+    {
+        std::array<float, 3> array;
+        float& temperature = array[0];
+        float& pressure    = array[1];
+        float& humidity    = array[2];
+    };
+
     enum ConfigFlags : uint8_t {
         Temperature16Bit      = 0x01,
         FilterOff             = 0x00,
@@ -25,20 +34,13 @@ public:
         HumidityStandard      = 0x03,
     };
 
-    struct Buffers
-    {
-        float temperature = 0;
-        float pressure = 0;
-        float humidity = 0;
-    };
-
 public:
     /**
      * Sensor's constructor.
      * @param spi_handler Pointer to SPI handle
      */
 
-    Sensor(const SPIBus* spi);
+    Sensor(const SPIBus * spi);
 
     /**
      * Initializes Sensor.
@@ -60,14 +62,7 @@ public:
     /**
      *Calls function for reading temperature, pressure and humidity
      */
-    void readAll();
-
-    /*
-     * Getter for the Measure Task handle.
-     */
-    const os::Task &getMeasureTask() const;
-
-    const Sensor::Buffers &getBuffers() const;
+    void readAll(Buffer& buffer);
 
 private:
     enum class Address : uint8_t;
@@ -152,21 +147,10 @@ private:
     void write8(const uint8_t address, const uint8_t data);
     void write8(const Address& address, const uint8_t data);
 
-    /**
-    * Defines Sensor task.
-    *
-    * Reads temperature,pressure and humidity
-    * Prints read data on LCD screen.
-    * @param args
-    */
-    static void measureTaskFunction(void *args);
-
 private:
 
     const ChipSelect cs_{GPIOC, GPIO_PIN_3};
-    Buffers buffers_;
-
-    const os::Task measureTask_{"measure", 256, os::Priority::Idle, measureTaskFunction};
+    Buffer buffers_;
 
     /*Handler for SPI Interface*/
     const SPIBus *const spi_;

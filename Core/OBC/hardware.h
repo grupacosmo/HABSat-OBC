@@ -5,16 +5,14 @@
 #ifndef RCC_SYS_HARDWARE_H
 #define RCC_SYS_HARDWARE_H
 
-#include "lcd.h"
-#include "rtc.h"
-#include "sensor.h"
-#include "wifi.h"
+#include "button.h"
+#include "led.h"
 #include "I2CBus.h"
 #include "constants.h"
 #include "handles.h"
-#include "button.h"
-#include "led.h"
-
+#include "lcd.h"
+#include "rtc.h"
+#include "sensor.h"
 
 /**
  * Holds all instances of the classes that represent peripherals
@@ -24,10 +22,12 @@ struct Hardware
     constexpr static hw::I2CBus i2c{hw::Handles::i2c3};
     constexpr static hw::SPIBus spi{hw::Handles::spi2};
 
-    hw::Button button;
-    hw::Led led;
+    hw::GPIOPin pinC13{GPIOC, GPIO_PIN_13};
+    hw::GPIOPin pinA5{GPIOA, GPIO_PIN_5};
+
+    hw::Button button{&pinC13};
+    hw::Led led{&pinA5};
     hw::Lcd lcd{4, 20, &i2c, constants::lcdSlaveAddress};
-    hw::WiFi wifi{hw::Handles::uart1};
     hw::Rtc rtc{&i2c, constants::rtcSlaveAddress};
     hw::Sensor sensor{&spi};
 public:

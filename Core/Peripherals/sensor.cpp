@@ -3,13 +3,13 @@
 //
 
 #include "sensor.h"
+#include "../Utils/bitwise_operations.h"
 #include "obc.h"
-#include "bitwise_operations.h"
 
 namespace hw
 {
 
-Sensor::Sensor(const SPIBus* spi) : spi_(spi) {}
+Sensor::Sensor(const SPIBus * spi) : spi_(spi) {}
 
 void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags & pressure_oversampling, const ConfigFlags & humidity_oversampling, const ConfigFlags & mode)
 {
@@ -43,11 +43,11 @@ void Sensor::configure(const ConfigFlags& standby_time, const ConfigFlags& filte
     write8(Address::Config, data);
 }
 
-void Sensor::readAll()
+void Sensor::readAll(Buffer& buffer)
 {
-    buffers_.temperature = readTemperature();
-    buffers_.pressure = readPressure();
-    buffers_.humidity = readHumidity();
+    buffer.temperature = readTemperature();
+    buffer.pressure = readPressure();
+    buffer.humidity = readHumidity();
 }
 
 float Sensor::readTemperature()
@@ -121,28 +121,6 @@ uint16_t Sensor::read16(const Address& address)
 uint32_t Sensor::read24(const Address& address)
 {
     return read24(static_cast<uint8_t>(address));
-}
-
-void Sensor::measureTaskFunction(void *args)
-{
-    (void)args;
-    Sensor& sensor = obc().hardware.sensor;
-
-    while(true)
-    {
-        sensor.readAll();
-        os::Task::delay(256);
-    }
-}
-
-const os::Task &Sensor::getMeasureTask() const
-{
-    return measureTask_;
-}
-
-const Sensor::Buffers &Sensor::getBuffers() const
-{
-    return buffers_;
 }
 
 float Sensor::convert_data_temperature(int32_t adc_T)

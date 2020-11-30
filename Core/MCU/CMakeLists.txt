@@ -1,4 +1,4 @@
-set(NAME Led)
+set(NAME MCU)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,5 +9,4 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        System
-        OBC)
+        )
