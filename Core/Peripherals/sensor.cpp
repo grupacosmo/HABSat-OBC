@@ -3,8 +3,8 @@
 //
 
 #include "sensor.h"
-#include "../OBC/obc.h"
-#include "../Utils/Bitwise_Operations/bitwise_operations.h"
+#include "obc.h"
+#include "bitwise_operations.h"
 
 namespace hw
 {
@@ -15,6 +15,7 @@ void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags 
 {
     spi_->clearCS(cs_);
     HAL_Delay(5);
+    spi_->setCS(cs_);
 
     for(size_t i = 0; i < t_.size(); ++i)
         t_[i] = bitwise::swapBytes(read16(digT_[i]));
@@ -34,24 +35,19 @@ void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags 
 
     write8(Address::HumControl, HumReg);
     write8(0xF4, (temperature_resolution << 5 ) | (pressure_oversampling << 2) | mode);
-    spi_->setCS(cs_);
 }
 
 void Sensor::configure(const ConfigFlags& standby_time, const ConfigFlags& filter)
 {
     const uint8_t data = ((standby_time & 0x07) << 5) | (((filter & 0x07) << 2) & 0xFC);
-    spi_->clearCS(cs_);
     write8(Address::Config, data);
-    spi_->setCS(cs_);
 }
 
 void Sensor::readAll()
 {
-    spi_->clearCS(cs_);
     buffers_.temperature = readTemperature();
     buffers_.pressure = readPressure();
     buffers_.humidity = readHumidity();
-    spi_->setCS(cs_);
 }
 
 float Sensor::readTemperature()
@@ -75,27 +71,35 @@ float Sensor::readHumidity()
 void Sensor::write8(const uint8_t address, const uint8_t data)
 {
     std::array<uint8_t, 2> bytes = {bitwise::clearBits<7>(address), data};
+    spi_->clearCS(cs_);
     spi_->transmit(bytes.data(), bytes.size());
+    spi_->setCS(cs_);
 }
 
 uint8_t Sensor::read8(const uint8_t address)
 {
     std::array<uint8_t, 2> bytes = {bitwise::setBits<7>(address)};
+    spi_->clearCS(cs_);
     spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
+    spi_->setCS(cs_);
     return bytes[1];
 }
 
 uint16_t Sensor::read16(const uint8_t address)
 {
     std::array<uint8_t, 3> bytes = {bitwise::setBits<7>(address)};
+    spi_->clearCS(cs_);
     spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
+    spi_->setCS(cs_);
     return (bytes[1] << 8) | (bytes[2]);
 }
 
 uint32_t Sensor::read24(const uint8_t address)
 {
     std::array<uint8_t, 4> bytes = {bitwise::setBits<7>(address)};
+    spi_->clearCS(cs_);
     spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
+    spi_->setCS(cs_);
     return (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
 }
 
@@ -118,9 +122,6 @@ uint32_t Sensor::read24(const Address& address)
 {
     return read24(static_cast<uint8_t>(address));
 }
-
-
-
 
 void Sensor::measureTaskFunction(void *args)
 {

@@ -39,7 +39,7 @@ namespace bitwise
     template<size_t... bits>
     [[nodiscard]] constexpr uint8_t setBits(uint8_t byte)
     {
-        return ((byte | (1 << bits)), ...);
+        return ((byte |= (1 << bits)), ...);
     }
 
     /**
@@ -51,7 +51,7 @@ namespace bitwise
     template<size_t... bits>
     [[nodiscard]] constexpr uint8_t clearBits(uint8_t byte)
     {
-        return ((byte & ~(1 << bits)), ...);
+        return ((byte &= ~(1 << bits)), ...);
     }
 
     /**
