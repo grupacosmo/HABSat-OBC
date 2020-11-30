@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 9/5/20.
 //
 
-#ifndef RCC_SYS_OS_QUEUE_H
-#define RCC_SYS_OS_QUEUE_H
+#ifndef RCC_SYS_QUEUE_H
+#define RCC_SYS_QUEUE_H
 
 #include "FreeRTOS.h"
 #include "queue.h"
@@ -58,4 +58,4 @@ namespace os
 
 }
 
-#endif//RCC_SYS_OS_QUEUE_H
+#endif//RCC_SYS_QUEUE_H

@@ -6,7 +6,7 @@
 #define RCC_SYS_RTC_H
 
 #include "I2CBus.h"
-#include "os_task.h"
+#include "Task.h"
 #include "stm32f4xx.h"
 #include <array>
 
@@ -52,12 +52,12 @@ public:
      *
      * @param timeAndDate
      */
-    void setTimeAndDate(const Buffer & timeAndDate) const;
+    void setTimeAndDate(const Buffer& timeAndDate) const;
 
     /**
      * Puts the date from RTC to object's date_time structure.
      */
-    void readTimeAndDate(Buffer & buffer);
+    void readTimeAndDate(Buffer& buffer);
 
 private:
 

@@ -5,8 +5,8 @@
 #ifndef RCC_SYS_MEASUREWEATHER_H
 #define RCC_SYS_MEASUREWEATHER_H
 
-#include "os_task.h"
-#include "sensor.h"
+#include "Sensor.h"
+#include "Task.h"
 
 namespace services {
 

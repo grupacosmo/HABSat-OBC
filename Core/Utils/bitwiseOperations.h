@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/7/20.
 //
 
-#ifndef RCC_SYS_BITWISE_OPERATIONS_H
-#define RCC_SYS_BITWISE_OPERATIONS_H
+#ifndef RCC_SYS_BITWISEOPERATIONS_H
+#define RCC_SYS_BITWISEOPERATIONS_H
 
 #include <cstddef>
 #include <cstdint>
@@ -66,4 +66,4 @@ namespace bitwise
 }
 
 
-#endif //RCC_SYS_BITWISE_OPERATIONS_H
+#endif//RCC_SYS_BITWISEOPERATIONS_H

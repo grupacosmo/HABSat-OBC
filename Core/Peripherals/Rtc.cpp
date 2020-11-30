@@ -2,8 +2,8 @@
 // Created by Natalia Bidzinska on 23.09.2020.
 //
 
-#include "rtc.h"
-#include "obc.h"
+#include "Rtc.h"
+#include "Obc.h"
 
 namespace hw {
 
@@ -40,7 +40,7 @@ uint8_t Rtc::convertDecToBcd(const uint8_t decData)
     return ((decData / 10) << 4) | (decData % 10);
 }
 
-void Rtc::setTimeAndDate(const Buffer & timeAndDate) const
+void Rtc::setTimeAndDate(const Buffer& timeAndDate) const
 {
     Buffer converted;
     for(size_t i = 0; i < converted.array.size(); ++i)
@@ -50,7 +50,7 @@ void Rtc::setTimeAndDate(const Buffer & timeAndDate) const
     i2c_->memoryWrite<0x00>(slaveAddress_, converted.array.data(), converted.array.size());
 }
 
-void Rtc::readTimeAndDate(Buffer & buffer)
+void Rtc::readTimeAndDate(Buffer& buffer)
 {
     if(i2c_->memoryRead<0x00>(slaveAddress_, buffer.array.data(), buffer.array.size()) == BusResult::Ok)
     {

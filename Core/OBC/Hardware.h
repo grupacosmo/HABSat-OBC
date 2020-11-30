@@ -5,14 +5,14 @@
 #ifndef RCC_SYS_HARDWARE_H
 #define RCC_SYS_HARDWARE_H
 
-#include "button.h"
-#include "led.h"
+#include "Button.h"
 #include "I2CBus.h"
+#include "Lcd.h"
+#include "Led.h"
+#include "Rtc.h"
+#include "Sensor.h"
 #include "constants.h"
 #include "handles.h"
-#include "lcd.h"
-#include "rtc.h"
-#include "sensor.h"
 
 /**
  * Holds all instances of the classes that represent peripherals

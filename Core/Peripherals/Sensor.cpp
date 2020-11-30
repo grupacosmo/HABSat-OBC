@@ -2,9 +2,9 @@
 // Created by Agnieszka Rejczak on 8/23/2020.
 //
 
-#include "sensor.h"
-#include "../Utils/bitwise_operations.h"
-#include "obc.h"
+#include "Sensor.h"
+#include "../Utils/bitwiseOperations.h"
+#include "Obc.h"
 
 namespace hw
 {

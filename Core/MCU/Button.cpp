@@ -2,7 +2,7 @@
 // Created by Wiktor Wieclaw on 8/20/20.
 //
 
-#include "button.h"
+#include "Button.h"
 
 namespace hw {
 

@@ -2,9 +2,9 @@
 // Created by Wiktor Wieclaw on 9/5/20.
 //
 
-#include "interrupt_handlers.h"
-#include "obc.h"
-#include "os_queue.h"
+#include "interruptHandlers.h"
+#include "Obc.h"
+#include "Queue.h"
 #include "handles.h"
 
 void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)

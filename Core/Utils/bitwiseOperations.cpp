@@ -2,7 +2,7 @@
 // Created by Wiktor Wieclaw on 8/7/20.
 //
 
-#include "bitwise_operations.h"
+#include "bitwiseOperations.h"
 
 namespace bitwise
 {

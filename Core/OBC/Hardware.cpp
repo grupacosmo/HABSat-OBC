@@ -1,7 +1,7 @@
 //
 // Created by Wiktor Wieclaw on 9/7/20.
 //
-#include "hardware.h"
+#include "Hardware.h"
 #include "hardware_config.h"
 
 void Hardware::init()

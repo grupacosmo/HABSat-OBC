@@ -2,9 +2,9 @@
 // Created by Wiktor Wieclaw on 8/7/20.
 //
 
-#include "lcd.h"
-#include "../Utils/bitwise_operations.h"
-#include "obc.h"
+#include "Lcd.h"
+#include "../Utils/bitwiseOperations.h"
+#include "Obc.h"
 #include <array>
 
 namespace hw

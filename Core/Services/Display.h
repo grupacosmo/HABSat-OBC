@@ -5,11 +5,11 @@
 #ifndef RCC_SYS_DISPLAY_H
 #define RCC_SYS_DISPLAY_H
 
+#include "Lcd.h"
+#include "Rtc.h"
+#include "Sensor.h"
+#include "Task.h"
 #include <array>
-#include "os_task.h"
-#include "lcd.h"
-#include "sensor.h"
-#include "rtc.h"
 
 namespace services {
 
