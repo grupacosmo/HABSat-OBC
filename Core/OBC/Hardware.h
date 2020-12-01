@@ -30,7 +30,7 @@ struct Hardware
     hw::Led led{&pinA5};
     hw::Lcd lcd{4, 20, &i2c, constants::lcdSlaveAddress};
     hw::Rtc rtc{&i2c, constants::rtcSlaveAddress};
-    hw::Sensor sensor{&spi, &sensorCS};
+    hw::Sensor sensor{spi, sensorCS};
 public:
     void init();
 };

@@ -17,19 +17,25 @@ class SPIBus : public Bus<SPIHandle>
 {
 public:
     constexpr explicit SPIBus(SPIHandle* handle) : Bus(handle) { };
-    inline BusResult transmit(uint8_t* data, uint16_t size, uint32_t timeout = defaultTimeout) const;
-    inline BusResult transmitAndReceive(uint8_t* txData, uint8_t* rxData, uint16_t size, uint32_t timeout = defaultTimeout) const;
+    inline BusResult transmit(ChipSelect& cs, uint8_t* data, uint16_t size, uint32_t timeout = defaultTimeout) const;
+    inline BusResult transmitAndReceive(ChipSelect& cs, uint8_t* txData, uint8_t* rxData, uint16_t size, uint32_t timeout = defaultTimeout) const;
 private:
     static constexpr uint32_t defaultTimeout = 100;
 };
 
-BusResult SPIBus::transmit(uint8_t *data, uint16_t size, uint32_t timeout) const
+BusResult SPIBus::transmit(ChipSelect& cs, uint8_t *data, uint16_t size, uint32_t timeout) const
 {
-    return static_cast<BusResult>(HAL_SPI_Transmit(handle_, data, size, timeout));
+    cs.reset();
+    auto result = static_cast<BusResult>(HAL_SPI_Transmit(handle_, data, size, timeout));
+    cs.set();
+    return result;
 }
-BusResult SPIBus::transmitAndReceive(uint8_t *txData, uint8_t *rxData, uint16_t size, uint32_t timeout) const
+BusResult SPIBus::transmitAndReceive(ChipSelect& cs, uint8_t *txData, uint8_t *rxData, uint16_t size, uint32_t timeout) const
 {
-    return static_cast<BusResult>(HAL_SPI_TransmitReceive(handle_, txData, rxData, size, timeout));
+    cs.reset();
+    auto result =  static_cast<BusResult>(HAL_SPI_TransmitReceive(handle_, txData, rxData, size, timeout));
+    cs.set();
+    return result;
 }
 
 }

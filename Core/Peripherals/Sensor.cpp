@@ -3,38 +3,61 @@
 //
 
 #include "Sensor.h"
-#include "../Utils/bitwiseOperations.h"
+#include "bitwiseOperations.h"
 #include "Obc.h"
 
 namespace hw
 {
 
-Sensor::Sensor(const SPIBus* spi, ChipSelect* cs) : spi_(spi), cs_(cs) {}
+Sensor::Sensor(const SPIBus& spi, ChipSelect& cs) : spi_(spi), cs_(cs) {}
 
 void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags & pressure_oversampling, const ConfigFlags & humidity_oversampling, const ConfigFlags & mode)
 {
-    cs_->reset();
-    HAL_Delay(5);
-    cs_->set();
+    getCalibrationData();
+    write8(Address::HumControl, humidity_oversampling);
+    write8(Address::CTRLmeasAddress, (temperature_resolution << 5 ) | (pressure_oversampling << 2) | mode);
+}
 
-    for(size_t i = 0; i < t_.size(); ++i)
-        t_[i] = bitwise::swapBytes(read16(digT_[i]));
+void Sensor::getCalibrationData()
+{
+    // BME280 documentation page 24 table 16
+    std::array<uint8_t, 1 + 26> calibData1{Address::Calib00 & AddressFlag::Read};
+    spi_.transmitAndReceive(cs_, calibData1.data(), calibData1.data(), calibData1.size());
+    parseFirstConversionData(calibData1);
 
-    for(size_t i = 0; i < p_.size(); ++i)
-        p_[i] = bitwise::swapBytes(read16(digP_[i]));
+    std::array<uint8_t, 1 + 7> calibData2{Address::Calib26 & AddressFlag::Read};
+    spi_.transmitAndReceive(cs_, calibData2.data(), calibData2.data(), calibData2.size());
+    parseSecondConversionData(calibData2);
+}
 
-    h_[0] = read8(digH_[0]);
-    h_[1] = ((uint16_t)read8(digH_[1] + 1) << 8) | (uint16_t)read8(digH_[1]);//bitwise::swapBytes(read16(DIG_H[1]));
-    h_[2] = read8(digH_[2]);
-    h_[3] = ((uint16_t)read8(digH_[3]) * 16 ) | (read8(digH_[3]+1) & 0x0F);
-    h_[4] = ((uint16_t)read8(digH_[4] + 1) * 16 ) | (read8(digH_[4]) >> 4);
-    h_[5] = read8(digH_[5]);
+void Sensor::parseFirstConversionData(const std::array<uint8_t, 1 + 26> &dataBlock)
+{
+    // BME280 documentation page 24 table 16
+    tempConvData_.digT1  = bitwise::concat2Bytes(dataBlock[2], dataBlock[1]);
+    tempConvData_.digT2  = bitwise::concat2Bytes(dataBlock[4], dataBlock[3]);
+    tempConvData_.digT3  = bitwise::concat2Bytes(dataBlock[6], dataBlock[5]);
 
+    pressConvData_.digP1 = bitwise::concat2Bytes(dataBlock[8], dataBlock[7]);
+    pressConvData_.digP2 = bitwise::concat2Bytes(dataBlock[10], dataBlock[9]);
+    pressConvData_.digP3 = bitwise::concat2Bytes(dataBlock[12], dataBlock[11]);
+    pressConvData_.digP4 = bitwise::concat2Bytes(dataBlock[14], dataBlock[13]);
+    pressConvData_.digP5 = bitwise::concat2Bytes(dataBlock[16], dataBlock[15]);
+    pressConvData_.digP6 = bitwise::concat2Bytes(dataBlock[18], dataBlock[17]);
+    pressConvData_.digP7 = bitwise::concat2Bytes(dataBlock[20], dataBlock[19]);
+    pressConvData_.digP8 = bitwise::concat2Bytes(dataBlock[22], dataBlock[21]);
+    pressConvData_.digP9 = bitwise::concat2Bytes(dataBlock[24], dataBlock[23]);
 
-    const uint8_t HumReg = (read8(Address::HumControl) & 0xF8 ) | humidity_oversampling;
+    humidConvData_.digH1 = dataBlock[26];
+}
 
-    write8(Address::HumControl, HumReg);
-    write8(0xF4, (temperature_resolution << 5 ) | (pressure_oversampling << 2) | mode);
+void Sensor::parseSecondConversionData(const std::array<uint8_t, 1 + 7>& dataBlock)
+{
+    // BME280 documentation page 24 table 16
+    humidConvData_.digH2 = bitwise::concat2Bytes(dataBlock[2], dataBlock[1]);
+    humidConvData_.digH3 = dataBlock[3];
+    humidConvData_.digH4 = (dataBlock[4] << 4) | bitwise::nibbleLow(dataBlock[5]);
+    humidConvData_.digH5 = (dataBlock[6] << 4) | (dataBlock[5] >> 4);
+    humidConvData_.digH6 = dataBlock[7];
 }
 
 void Sensor::configure(const ConfigFlags& standby_time, const ConfigFlags& filter)
@@ -45,142 +68,25 @@ void Sensor::configure(const ConfigFlags& standby_time, const ConfigFlags& filte
 
 void Sensor::readAll(Buffer& buffer)
 {
-    buffer.temperature = readTemperature();
-    buffer.pressure = readPressure();
-    buffer.humidity = readHumidity();
-}
+    // BME280 documentation page 31 table 29, 30, 31
+    uint8_t address = Address::MainDataBlock & AddressFlag::Read;
+    std::array<uint8_t, 9> bytes{address};
+    spi_.transmitAndReceive(cs_, bytes.data(), bytes.data(), bytes.size());
 
-float Sensor::readTemperature()
-{
-    auto adc_T = read24(Address::TempData);
-    return convert_data_temperature(adc_T);
-}
+    const auto rawPress = bitwise::concat3Bytes(bytes[1], bytes[2], bytes[3]) >> 4;
+    const auto rawTemp = bitwise::concat3Bytes(bytes[4], bytes[5], bytes[6]) >> 4;
+    const auto rawHumid = bitwise::concat2Bytes(bytes[7], bytes[8]);
 
-float Sensor::readPressure()
-{
-    auto adc_P = read24(Address::PressureData);
-    return convert_data_pressure(adc_P) / 100;
-}
-
-float Sensor::readHumidity()
-{
-    auto adc_H = read16(Address::HumidityData);
-    return convert_data_humidity(adc_H);
+    // BME280 documentation page 25 point 4.2.3
+    buffer.temperature = BME280_compensate_T(rawTemp, &tempConvData_) / 100.0;
+    buffer.pressure = BME280_compensate_P(rawPress, &pressConvData_) / 25600.0;
+    buffer.humidity = BME280_compensate_H(rawHumid, &humidConvData_) / 1024.0;
 }
 
 void Sensor::write8(const uint8_t address, const uint8_t data)
 {
-    std::array<uint8_t, 2> bytes = {bitwise::clearBits<7>(address), data};
-    cs_->reset();
-    spi_->transmit(bytes.data(), bytes.size());
-    cs_->set();
-}
-
-uint8_t Sensor::read8(const uint8_t address)
-{
-    std::array<uint8_t, 2> bytes = {bitwise::setBits<7>(address)};
-    cs_->reset();
-    spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
-    cs_->set();
-    return bytes[1];
-}
-
-uint16_t Sensor::read16(const uint8_t address)
-{
-    std::array<uint8_t, 3> bytes = {bitwise::setBits<7>(address)};
-    cs_->reset();
-    spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
-    cs_->set();
-    return (bytes[1] << 8) | (bytes[2]);
-}
-
-uint32_t Sensor::read24(const uint8_t address)
-{
-    std::array<uint8_t, 4> bytes = {bitwise::setBits<7>(address)};
-    cs_->reset();
-    spi_->transmitAndReceive(bytes.data(), bytes.data(), bytes.size());
-    cs_->set();
-    return (bytes[1] << 16) | (bytes[2] << 8) | (bytes[3]);
-}
-
-void Sensor::write8(const Address& address, const uint8_t data)
-{
-    write8(static_cast<uint8_t>(address), data);
-}
-
-uint8_t Sensor::read8(const Address& address)
-{
-    return read8(static_cast<uint8_t>(address));
-}
-
-uint16_t Sensor::read16(const Address& address)
-{
-    return read16(static_cast<uint8_t>(address));
-}
-
-uint32_t Sensor::read24(const Address& address)
-{
-    return read24(static_cast<uint8_t>(address));
-}
-
-float Sensor::convert_data_temperature(int32_t adc_T)
-{
-    // this is taken from the BME280 datasheet
-    adc_T >>= 4;
-
-    const int32_t var1 = ((((adc_T>>3) - ((int32_t) t_[0] << 1))) * ((int32_t) t_[1])) >> 11;
-    const int32_t var2 = (((((adc_T>>4) - ((int32_t) t_[0])) * ((adc_T >> 4) - ((int32_t) t_[0]))) >> 12) * ((int32_t) t_[2])) >> 14;
-    tFine_ = var1 + var2;
-    float T = (tFine_ * 5 + 128) >> 8;
-    return T / 100;
-}
-
-uint32_t Sensor::convert_data_pressure(int32_t adc_P){
-
-    adc_P >>= 4;
-    // this is taken from the BME280 datasheet
-    int64_t var1 = ((int64_t) tFine_) - 128000;
-    int64_t var2 = var1 * var1 * (int64_t) p_[5];
-    var2 = var2 + ((var1*(int64_t) p_[4]) << 17);
-    var2 = var2 + (((int64_t) p_[3]) << 35);
-    var1 = ((var1 * var1 * (int64_t) p_[2]) >> 8) + ((var1 * (int64_t) p_[1]) << 12);
-    var1 = (((((int64_t)1)<<47)+var1))*((int64_t) p_[0]) >> 33;
-    if (var1 == 0) return 0;
-    int64_t P = 1048576 - adc_P;
-    P = (((P << 31) - var2) * 3125) / var1;
-    var1 = (((int64_t) p_[8]) * (P >> 13) * (P >> 13)) >> 25;
-    var2 = (((int64_t) p_[7]) * P) >> 19;
-    P = ((P + var1 + var2) >> 8) + (((int64_t) p_[6]) << 4);
-    return (uint32_t)P / 256;
-
-}
-
-uint32_t Sensor::convert_data_humidity(int32_t adc_H)
-{
-    constexpr int32_t humidity_max = 102400;
-
-    int32_t var1 = tFine_ - ((int32_t)76800);
-    int32_t var2 = (int32_t)(adc_H * 16384);
-    int32_t var3 = (int32_t)(((int32_t) h_[3]) * 1048576);
-    int32_t var4 = ((int32_t) h_[4]) * var1;
-    int32_t var5 = (((var2 - var3) - var4) + (int32_t)16384) / 32768;
-    var2 = (var1 * ((int32_t) h_[5])) / 1024;
-    var3 = (var1 * ((int32_t) h_[2])) / 2048;
-    var4 = ((var2 * (var3 + (int32_t)32768)) / 1024) + (int32_t)2097152;
-    var2 = ((var4 * ((int32_t) h_[1])) + 8192) / 16384;
-    var3 = var5 * var2;
-    var4 = ((var3 / 32768) * (var3 / 32768)) / 128;
-    var5 = var3 - ((var4 * ((int32_t) h_[0])) / 16);
-    var5 = (var5 < 0 ? 0 : var5);
-    var5 = (var5 > 419430400 ? 419430400 : var5);
-    int32_t humidity = (uint32_t)(var5 / 4096);
-
-    if (humidity > humidity_max)
-    {
-        humidity = humidity_max;
-    }
-
-    return humidity / 1024;
+    std::array<uint8_t, 2> bytes = {address, data};
+    spi_.transmit(cs_, bytes.data(), bytes.size());
 }
 
 }

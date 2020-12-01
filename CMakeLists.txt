@@ -60,7 +60,7 @@ Building ${BIN_FILE}")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT}")
-add_compile_options(-O3 -Wall -Wextra)
+add_compile_options(-O2 -Wall -Wextra)
 
 include_directories(
         Drivers/CMSIS/Device/ST/STM32F4xx/Include

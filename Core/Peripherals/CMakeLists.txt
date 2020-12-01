@@ -12,4 +12,6 @@ target_link_libraries(${NAME}
         Include_Files
         OBC
         System
+        Utils
+        BME280_Compensation
         )

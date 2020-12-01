@@ -63,6 +63,16 @@ namespace bitwise
     {
         return (twoBytes >> 8) | (twoBytes << 8);
     }
+
+    [[nodiscard]] constexpr int16_t concat2Bytes(uint8_t byte1, uint8_t byte2)
+    {
+        return (byte1 << 8)  | (byte2);
+    }
+
+    [[nodiscard]] constexpr int32_t concat3Bytes(uint8_t byte1, uint8_t byte2, uint8_t byte3)
+    {
+        return (byte1 << 16) | (byte2 << 8)  | (byte3);
+    }
 }
 
 
