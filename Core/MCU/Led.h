@@ -9,37 +9,35 @@
 
 namespace hw {
 
-class Led : public Noncopyable
-{
-public:
+class Led : public Noncopyable {
+ public:
+  explicit Led(GPIOPin* pin);
 
-    explicit Led(GPIOPin* pin);
+  /**
+   * Turns the LED on.
+   */
+  void on();
 
-    /**
-     * Turns the LED on.
-     */
-    void on();
+  /**
+   * Turns the LED off.
+   */
+  void off();
 
-    /**
-     * Turns the LED off.
-     */
-    void off();
+  /**
+   * Toggles the LED.
+   */
+  void toggle();
 
-    /**
-     * Toggles the LED.
-     */
-    void toggle();
+  /**
+   * Checks whether the LED is on.
+   * @return
+   */
+  [[nodiscard]] auto isOn() const -> bool;
 
-    /**
-     * Checks whether the LED is on.
-     * @return
-     */
-    bool isOn() const;
-
-private:
-    GPIOPin *const pin_;
+ private:
+  GPIOPin* const pin_;
 };
 
-}
+}  // namespace hw
 
-#endif //FREERTOS_INTRO_LED_H
+#endif  // FREERTOS_INTRO_LED_H

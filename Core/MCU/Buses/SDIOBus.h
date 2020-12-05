@@ -7,16 +7,15 @@
 
 #include "Bus.h"
 
-namespace hw
-{
+namespace hw {
 
-class SDIOBus : public Bus<SDIOHandle>
-{
-public:
-    constexpr explicit SDIOBus(SDIOHandle* handle) : Bus(handle) { }
-private:
-    static constexpr uint32_t defaultTimeout_ = 100;
+class SDIOBus : public Bus<SDIOHandle> {
+ public:
+  constexpr explicit SDIOBus(SDIOHandle* handle) : Bus(handle) {}
+
+ private:
+  static constexpr uint32_t defaultTimeout_ = 100;
 };
 
-}
-#endif//RCC_SYS_SDIOBUS_H
+}  // namespace hw
+#endif  // RCC_SYS_SDIOBUS_H

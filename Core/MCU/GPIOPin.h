@@ -5,30 +5,26 @@
 #ifndef RCC_SYS_GPIOPIN_H
 #define RCC_SYS_GPIOPIN_H
 
-#include "stm32f4xx.h"
 #include "Noncopyable.h"
+#include "stm32f4xx.h"
 
 namespace hw {
 
-enum GPIOState
-{
-    Reset = GPIO_PIN_RESET,
-    Set   = GPIO_PIN_SET
+enum GPIOState { Reset, Set };
+
+class GPIOPin : public Noncopyable {
+ public:
+  GPIOPin(GPIO_TypeDef* pinType, uint16_t pinNumber);
+  void set();
+  void reset();
+  void toggle();
+  [[nodiscard]] auto read() const -> GPIOState;
+
+ private:
+  GPIO_TypeDef* const pinType_;
+  const uint16_t pinNumber_;
 };
 
-class GPIOPin : public Noncopyable
-{
-public:
-    GPIOPin(GPIO_TypeDef* pinType, uint16_t pinNumber);
-    void set();
-    void reset();
-    void toggle();
-    GPIOState read() const;
-private:
-    GPIO_TypeDef *const pinType_;
-    const uint16_t pinNumber_;
-};
+}  // namespace hw
 
-}
-
-#endif//RCC_SYS_GPIOPIN_H
+#endif  // RCC_SYS_GPIOPIN_H

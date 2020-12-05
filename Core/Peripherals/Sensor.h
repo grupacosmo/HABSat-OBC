@@ -5,105 +5,99 @@
 #ifndef RCC_SYS_SENSOR_H
 #define RCC_SYS_SENSOR_H
 
+#include <BME280_compensation.h>
+#include <SPIBus.h>
+
+#include <array>
 
 #include "osTask.h"
 #include "stm32f4xx.h"
-#include <BME280_compensation.h>
-#include <SPIBus.h>
-#include <array>
 
-namespace hw
-{
+namespace hw {
 
-class Sensor : public Noncopyable
-{
+class Sensor : public Noncopyable {
+ public:
+  struct Buffer {
+    std::array<float, 3> array{};
+    float& temperature = array[0];
+    float& pressure    = array[1];
+    float& humidity    = array[2];
+  };
 
-public:
-    struct Buffer
-    {
-        std::array<float, 3> array;
-        float& temperature = array[0];
-        float& pressure    = array[1];
-        float& humidity    = array[2];
-    };
+  enum ConfigFlags : uint8_t {
+    Temperature16Bit      = 0x01,
+    FilterOff             = 0x00,
+    NormalMode            = 0x03,
+    Standby10Ms           = 0x06,
+    PressureUltraLowPower = 0x01,
+    HumidityStandard      = 0x03,
+  };
 
-    enum ConfigFlags : uint8_t {
-        Temperature16Bit      = 0x01,
-        FilterOff             = 0x00,
-        NormalMode            = 0x03,
-        Standby10Ms           = 0x06,
-        PressureUltraLowPower =	0x01,
-        HumidityStandard      = 0x03,
-    };
+ public:
+  /**
+   * Sensor's constructor.
+   * @param spi_handler Pointer to SPI handle
+   */
 
-public:
-    /**
-     * Sensor's constructor.
-     * @param spi_handler Pointer to SPI handle
-     */
+  Sensor(const SPIBus& spi, ChipSelect& chipSelect);
 
-    Sensor(const SPIBus& spi, ChipSelect& chipSelect);
+  /**
+   * Initializes Sensor.
+   * Sets size for temperature, pressure and humidity resolution. Set choosen mode.
+   * @param temperature_resolution
+   * @param pressure_oversampling
+   * @param humidity_oversampling
+   * @param mode
+   */
+  void init(const ConfigFlags& temperature_resolution, const ConfigFlags& pressure_oversampling,
+            const ConfigFlags& humidity_oversampling, const ConfigFlags& mode);
 
-    /**
-     * Initializes Sensor.
-     * Sets size for temperature, pressure and humidity resolution. Set choosen mode.
-     * @param temperature_resolution
-     * @param pressure_oversampling
-     * @param humidity_oversampling
-     * @param mode
-     */
-    void init(const ConfigFlags & temperature_resolution, const ConfigFlags & pressure_oversampling, const ConfigFlags & humidity_oversampling, const ConfigFlags & mode);
+  /**
+   * Sets sensor's configuration.
+   * @param standby_time
+   * @param filter
+   */
+  void configure(const ConfigFlags& standby_time, const ConfigFlags& filter);
 
-    /**
-     * Sets sensor's configuration.
-     * @param standby_time
-     * @param filter
-     */
-    void configure(const ConfigFlags & standby_time, const ConfigFlags & filter);
+  /**
+   *Calls function for reading temperature, pressure and humidity
+   */
+  void readAll(Buffer& buffer);
 
-    /**
-     *Calls function for reading temperature, pressure and humidity
-     */
-    void readAll(Buffer& buffer);
+ private:
+  void getCalibrationData();
+  void parseFirstConversionData(const std::array<uint8_t, 1 + 26>& data);
+  void parseSecondConversionData(const std::array<uint8_t, 1 + 7>& data);
 
-private:
+  /**
+   * Writes data in 8-bit format to register - address
+   * @param address
+   * @param data
+   */
+  void write8(uint8_t address, uint8_t data);
 
-    void getCalibrationData();
-    void parseFirstConversionData(const std::array<uint8_t, 1 + 26>& dataBlock);
-    void parseSecondConversionData(const std::array<uint8_t, 1 + 7>& dataBlock);
+ private:
+  const SPIBus& spi_;
+  ChipSelect& cs_;
 
-    /**
-     * Writes data in 8-bit format to register - address
-     * @param address
-     * @param data
-     */
-    void write8(const uint8_t address, const uint8_t data);
+  enum Address : uint8_t {
 
-private:
-    const SPIBus& spi_;
-    ChipSelect& cs_;
+    Calib00       = 0x88,
+    Calib26       = 0xE1,
+    MainDataBlock = 0xF7,
 
-    enum Address : uint8_t {
+    HumControl      = 0xF2,
+    Config          = 0xF5,
+    CTRLmeasAddress = 0xF4
+  };
 
-        Calib00         = 0x88,
-        Calib26         = 0xE1,
-        MainDataBlock   = 0xF7,
+  enum AddressFlag : uint8_t { Write = 0b0111'1111, Read = 0b1111'1111 };
 
-        HumControl      = 0xF2,
-        Config          = 0xF5,
-        CTRLmeasAddress = 0xF4
-    };
-
-    enum AddressFlag : uint8_t {
-        Write = 0b0111'1111,
-        Read = 0b1111'1111
-    };
-
-    TempConversionData tempConvData_;
-    PressConversionData pressConvData_;
-    HumidCoversionData humidConvData_;
+  TempConversionData tempConvData_{};
+  PressConversionData pressConvData_{};
+  HumidCoversionData humidConvData_{};
 };
 
-}
+}  // namespace hw
 
-#endif //RCC_SYS_SENSOR_H
+#endif  // RCC_SYS_SENSOR_H

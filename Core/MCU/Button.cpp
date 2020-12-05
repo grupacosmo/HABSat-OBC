@@ -6,15 +6,8 @@
 
 namespace hw {
 
-Button::Button(GPIOPin* pin)
-        : pin_(pin)
-{
+Button::Button(GPIOPin* pin) : pin_(pin) {}
 
-}
+auto Button::isPressed() const -> bool { return pin_->read() == GPIOState::Reset; }
 
-bool Button::isPressed() const
-{
-    return pin_->read() == GPIOState::Reset;
-}
-
-}
+}  // namespace hw

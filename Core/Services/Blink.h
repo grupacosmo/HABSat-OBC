@@ -9,25 +9,27 @@
 #include "Led.h"
 #include "osTask.h"
 
-namespace services
-{
+namespace services {
 
-class Blink : public Noncopyable
-{
-public:
-    Blink(hw::Led *led);
-    void init();
-public:
-    static void inputInterruptHandler();
-private:
-    static void inputTaskFunction(void *args);
-    static void blinkTaskFunction(void *args);
-private:
-    static os::Task inputTask_;
-    static os::Task blinkTask_;
-private:
-    hw::Led *led_;
+class Blink : public Noncopyable {
+ public:
+  explicit Blink(hw::Led* led);
+  void init();
+
+ public:
+  static void inputInterruptHandler();
+
+ private:
+  [[noreturn]] static void inputTaskFunction(void* args);
+  [[noreturn]] static void blinkTaskFunction(void* args);
+
+ private:
+  static os::Task inputTask_;
+  static os::Task blinkTask_;
+
+ private:
+  hw::Led* led_;
 };
 
-}
-#endif//RCC_SYS_BLINK_H
+}  // namespace services
+#endif  // RCC_SYS_BLINK_H

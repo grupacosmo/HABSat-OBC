@@ -8,31 +8,19 @@ namespace services {
 
 os::Task MeasureWeather::measureTask_{"measure", 256, os::Priority::Idle, measureTaskFunction};
 
-MeasureWeather::MeasureWeather(hw::Sensor *sensor)
-    : params_(sensor)
-{
+MeasureWeather::MeasureWeather(hw::Sensor* sensor) : params_(sensor) {}
 
+void MeasureWeather::init() { measureTask_.addToScheduler(static_cast<void*>(&params_)); }
+
+[[noreturn]] void MeasureWeather::measureTaskFunction(void* args) {
+  auto params = static_cast<Params*>(args);
+
+  while (true) {
+    params->sensor_->readAll(params->buffer_);
+    os::Task::delay(256);
+  }
 }
 
-void MeasureWeather::init()
-{
-    measureTask_.addToScheduler(static_cast<void*>(&params_));
-}
+auto MeasureWeather::getBuffer() const -> const hw::Sensor::Buffer& { return params_.buffer_; }
 
-void MeasureWeather::measureTaskFunction(void *args)
-{
-    auto params = static_cast<Params*>(args);
-
-    while(true)
-    {
-        params->sensor_->readAll(params->buffer_);
-        os::Task::delay(256);
-    }
-}
-
-const hw::Sensor::Buffer &MeasureWeather::getBuffer() const
-{
-    return params_.buffer_;
-}
-
-}
+}  // namespace services

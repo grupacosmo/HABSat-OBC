@@ -4,7 +4,6 @@
 
 #include "bitwiseOperations.h"
 
-namespace bitwise
-{
+namespace bitwise {
 
 }

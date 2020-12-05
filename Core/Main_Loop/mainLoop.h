@@ -10,4 +10,4 @@ extern "C"
 #endif
 void mainLoop();
 
-#endif //FREERTOS_INTRO_MAIN_CPP_H
+#endif  // FREERTOS_INTRO_MAIN_CPP_H

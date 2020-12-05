@@ -11,12 +11,12 @@
 namespace constants {
 
 #if HW_LCD_I2C_CONVERTER_TYPE_A
-    constexpr uint8_t lcdSlaveAddress = 0x7E;
+constexpr uint8_t lcdSlaveAddress = 0x7E;
 #else
-    constexpr uint8_t lcdSlaveAddress = 0x4E;
+constexpr uint8_t lcdSlaveAddress = 0x4E;
 #endif
 
-    constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
-}
+constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
+}  // namespace constants
 
-#endif//RCC_SYS_CONSTANTS_H
+#endif  // RCC_SYS_CONSTANTS_H

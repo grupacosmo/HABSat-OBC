@@ -3,11 +3,11 @@
 //
 
 #include "mainLoop.h"
+
 #include "Obc.h"
 
-void mainLoop()
-{
-    static Obc obc;
-    obc.init();
-    os::Task::startScheduler();
+void mainLoop() {
+  static Obc obc;
+  obc.init();
+  os::Task::startScheduler();
 }

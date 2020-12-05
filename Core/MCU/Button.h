@@ -9,22 +9,20 @@
 
 namespace hw {
 
-class Button : public Noncopyable
-{
-public:
+class Button : public Noncopyable {
+ public:
+  explicit Button(GPIOPin* pin);
 
-    explicit Button(GPIOPin* pin);
+  /**
+   * Checks whether the button is pressed
+   * @return
+   */
+  [[nodiscard]] auto isPressed() const -> bool;
 
-    /**
-     * Checks whether the button is pressed
-     * @return
-     */
-    bool isPressed() const;
-
-private:
-    GPIOPin *const pin_;
+ private:
+  GPIOPin* const pin_;
 };
 
-}
+}  // namespace hw
 
-#endif //RCC_SYS_BUTTON_H
+#endif  // RCC_SYS_BUTTON_H

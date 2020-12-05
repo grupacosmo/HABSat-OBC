@@ -5,14 +5,14 @@
 #ifndef RCC_SYS_NONCOPYABLE_H
 #define RCC_SYS_NONCOPYABLE_H
 
-class Noncopyable
-{
-protected:
-    Noncopyable() = default;
-    ~Noncopyable() = default;
-public:
-    Noncopyable(const Noncopyable&) = delete;
-    Noncopyable& operator=(const Noncopyable&) = delete;
+class Noncopyable {
+ protected:
+  Noncopyable()  = default;
+  ~Noncopyable() = default;
+
+ public:
+  Noncopyable(const Noncopyable&) = delete;
+  auto operator=(const Noncopyable&) -> Noncopyable& = delete;
 };
 
-#endif//RCC_SYS_NONCOPYABLE_H
+#endif  // RCC_SYS_NONCOPYABLE_H
