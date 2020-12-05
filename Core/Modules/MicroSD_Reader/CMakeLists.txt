@@ -1,4 +1,4 @@
-set(NAME OBC)
+set(NAME MicroSD)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,11 +9,5 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        wifi
-        lcd
-        led
-        includes
-        button
-        rtc
-        MicroSD
-        sensor)
+        freertos_wrapper
+        OBC)

@@ -2,28 +2,28 @@
 // Created by Jakub Zygmunt on 02.11.2020.
 //
 
-#include "mmc_reader.h"
+#include "microsd_reader.h"
 #include "obc.h"
 
-MmcReader::MmcReader(SD_HandleTypeDef* sdHandle) : m_hsd(sdHandle){}
+MicroSDReader::MicroSDReader(SD_HandleTypeDef* sdHandle) : m_hsd(sdHandle){}
 
-void MmcReader::init(void){
+void MicroSDReader::init(void){
     BSP_SD_Init();
-    mmc_task.add_to_scheduler();
+    microsd_task.add_to_scheduler();
 
 }
 
-FRESULT MmcReader::mount(void){
+FRESULT MicroSDReader::mount(void){
     return f_mount(&SDFatFS, SDPath, 0);
     //TODO additional lcd or led comm
 }
 
-FRESULT MmcReader::unmount(void){
+FRESULT MicroSDReader::unmount(void){
     return f_mount(NULL, SDPath, 0);
     //TODO additional lcd or led comm
 }
 
-FRESULT MmcReader::write(std::array<char, 256> &path, std::array<char, 256> &text){
+FRESULT MicroSDReader::write(std::array<char, 256> &path, std::array<char, 256> &text){
     //TODO check if the file exist in order to not overwrite it
     FRESULT fresult;
 
@@ -41,7 +41,7 @@ FRESULT MmcReader::write(std::array<char, 256> &path, std::array<char, 256> &tex
     return fresult;
 }
 
-FRESULT MmcReader::update(std::array<char, 256> &path, std::array<char, 256> &text){
+FRESULT MicroSDReader::update(std::array<char, 256> &path, std::array<char, 256> &text){
     //TODO check if the file exist
     FRESULT fresult;
 
@@ -59,25 +59,25 @@ FRESULT MmcReader::update(std::array<char, 256> &path, std::array<char, 256> &te
     return fresult;
 }
 
-FRESULT MmcReader::make_directory(std::array<char, 256> &path){
+FRESULT MicroSDReader::make_directory(std::array<char, 256> &path){
     //TODO check if the dir exist
     return f_mkdir(path.data());
     //TODO additional lcd or led comm
 }
 
-FRESULT MmcReader::remove(std::array<char, 256> &path){
+FRESULT MicroSDReader::remove(std::array<char, 256> &path){
     //TODO check if the file exist
     return f_unlink(path.data());
 }
 
-void MmcReader::check_free_space(void){
+void MicroSDReader::check_free_space(void){
     f_getfree("", &free_clusters, &pfs);
     total_space = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
     free_space = static_cast<uint32_t>(free_clusters * pfs->csize * 0.5);
     //TODO comm
 }
 
-FRESULT MmcReader::format(void){
+FRESULT MicroSDReader::format(void){
 
     std::array<char, 2> path{"/"};
     FRESULT fresult;
@@ -105,22 +105,22 @@ FRESULT MmcReader::format(void){
     return fresult;
 }
 
-void MmcReader::mmc_task_function(void *args){
+void MicroSDReader::mmc_task_function(void *args){
 
-    MmcReader &mmcReader = obc.peripherals.mmcReader;
+    MicroSDReader &microsd_reader = obc.peripherals.microsd_reader;
     std::array<char, 256> test_data{"just a sample text"};
     std::array<char, 256> test_path{"test.txt"};
 
-    if(mmcReader.mount()!= FR_OK)
+    if(microsd_reader.mount()!= FR_OK)
     {
         os::Task::suspend_itself();
     }
-    //mmcReader.format();
-    mmcReader.write(test_path, test_data);
+    //microsd_reader.format();
+    microsd_reader.write(test_path, test_data);
 
     while (true)
     {
-        mmcReader.update(test_path, test_data);
+        microsd_reader.update(test_path, test_data);
         os::Task::delay(1000);
     }
 }
