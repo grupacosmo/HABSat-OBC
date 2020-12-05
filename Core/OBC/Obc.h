@@ -16,7 +16,7 @@
 /**
  * The main structure of the entire program, contains every part of the obc.
  */
-struct Obc
+struct Obc : public Noncopyable
 {
     Hardware h;
     services::Blink blink{&h.led};

@@ -7,6 +7,7 @@
 
 #include "FreeRTOS.h"
 #include "task.h"
+#include <Noncopyable.h>
 
 namespace os
 {
@@ -30,7 +31,7 @@ enum class TaskState
     Invalid   = eInvalid
 };
 
-class Task
+class Task : public Noncopyable
 {
 
 public:

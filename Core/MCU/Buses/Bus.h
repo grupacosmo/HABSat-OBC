@@ -6,6 +6,7 @@
 #define RCC_SYS_BUS_H
 
 #include "handles.h"
+#include "Noncopyable.h"
 
 namespace hw
 {
@@ -19,7 +20,7 @@ enum class BusResult
 };
 
 template<typename T>
-class Bus
+class Bus : public Noncopyable
 {
 protected:
     T *const handle_;

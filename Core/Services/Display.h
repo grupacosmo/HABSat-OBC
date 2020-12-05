@@ -13,7 +13,7 @@
 
 namespace services {
 
-class Display
+class Display : public Noncopyable
 {
 
 public:

@@ -9,7 +9,7 @@
 
 namespace hw {
 
-class Led
+class Led : public Noncopyable
 {
 public:
 

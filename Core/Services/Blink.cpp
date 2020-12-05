@@ -24,17 +24,7 @@ void Blink::init()
 
 void Blink::inputInterruptHandler()
 {
-    getInputTask().resumeFromISR();
-}
-
-os::Task &Blink::getBlinkTask()
-{
-    return blinkTask_;
-}
-
-os::Task &Blink::getInputTask()
-{
-    return inputTask_;
+    inputTask_.resumeFromISR();
 }
 
 void Blink::blinkTaskFunction(void *args)
@@ -52,10 +42,10 @@ void Blink::inputTaskFunction([[maybe_unused]] void *args)
     while (true)
     {
         os::Task::suspendItself();
-        if (Blink::getBlinkTask().getState() != os::TaskState::Suspended)
-            Blink::getBlinkTask().suspend();
+        if (blinkTask_.getState() != os::TaskState::Suspended)
+            blinkTask_.suspend();
         else
-            Blink::getBlinkTask().resume();
+            blinkTask_.resume();
         os::Task::delay(1000);
     }
 }

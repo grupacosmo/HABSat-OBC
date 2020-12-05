@@ -16,7 +16,7 @@ namespace hw
 /**
  * RTC DS1307 library for STM32F4xx.
  */
-class Rtc
+class Rtc : public Noncopyable
 {
 public:
     struct Buffer {

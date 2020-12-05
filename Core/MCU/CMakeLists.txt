@@ -9,6 +9,6 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        )
+        Utils)
 
 add_subdirectory(Buses)

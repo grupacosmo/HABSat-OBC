@@ -10,7 +10,7 @@
 
 namespace services {
 
-class MeasureTime
+class MeasureTime : public Noncopyable
 {
 public:
     explicit MeasureTime(hw::Rtc* rtc);

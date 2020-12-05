@@ -12,16 +12,13 @@
 namespace services
 {
 
-class Blink
+class Blink : public Noncopyable
 {
 public:
     Blink(hw::Led *led);
     void init();
 public:
     static void inputInterruptHandler();
-private:
-    static os::Task& getBlinkTask();
-    static os::Task& getInputTask();
 private:
     static void inputTaskFunction(void *args);
     static void blinkTaskFunction(void *args);

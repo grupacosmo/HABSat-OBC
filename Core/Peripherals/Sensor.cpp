@@ -14,8 +14,8 @@ Sensor::Sensor(const SPIBus& spi, ChipSelect& cs) : spi_(spi), cs_(cs) {}
 void Sensor::init(const ConfigFlags & temperature_resolution, const ConfigFlags & pressure_oversampling, const ConfigFlags & humidity_oversampling, const ConfigFlags & mode)
 {
     getCalibrationData();
-    write8(Address::HumControl, humidity_oversampling);
-    write8(Address::CTRLmeasAddress, (temperature_resolution << 5 ) | (pressure_oversampling << 2) | mode);
+    write8(Address::HumControl & AddressFlag::Write, humidity_oversampling);
+    write8(Address::CTRLmeasAddress & AddressFlag::Write, (temperature_resolution << 5 ) | (pressure_oversampling << 2) | mode);
 }
 
 void Sensor::getCalibrationData()

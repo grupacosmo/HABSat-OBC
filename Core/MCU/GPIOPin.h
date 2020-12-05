@@ -6,6 +6,7 @@
 #define RCC_SYS_GPIOPIN_H
 
 #include "stm32f4xx.h"
+#include "Noncopyable.h"
 
 namespace hw {
 
@@ -15,7 +16,7 @@ enum GPIOState
     Set   = GPIO_PIN_SET
 };
 
-class GPIOPin
+class GPIOPin : public Noncopyable
 {
 public:
     GPIOPin(GPIO_TypeDef* pinType, uint16_t pinNumber);

@@ -15,9 +15,10 @@
 namespace hw
 {
 
-class Sensor {
-public:
+class Sensor : public Noncopyable
+{
 
+public:
     struct Buffer
     {
         std::array<float, 3> array;

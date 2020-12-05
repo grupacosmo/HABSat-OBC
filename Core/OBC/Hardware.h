@@ -17,7 +17,7 @@
 /**
  * Holds all instances of the classes that represent peripherals
  */
-struct Hardware
+struct Hardware : public Noncopyable
 {
     constexpr static hw::I2CBus i2c{hw::Handles::i2c3};
     constexpr static hw::SPIBus spi{hw::Handles::spi2};

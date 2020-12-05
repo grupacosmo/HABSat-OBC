@@ -10,7 +10,7 @@
 
 namespace services {
 
-class MeasureWeather
+class MeasureWeather : public Noncopyable
 {
 public:
     MeasureWeather(hw::Sensor* sensor);

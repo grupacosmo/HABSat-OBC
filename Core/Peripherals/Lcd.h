@@ -15,7 +15,7 @@
 namespace hw
 {
 
-class Lcd
+class Lcd : public Noncopyable
 {
 
 public:

@@ -9,7 +9,7 @@
 
 namespace hw {
 
-class Button
+class Button : public Noncopyable
 {
 public:
 
