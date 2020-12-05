@@ -1,4 +1,4 @@
-set(NAME System)
+set(NAME Buses)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} FILES)
 
@@ -9,4 +9,5 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        INTERFACE FreeRTOS)
+        INTERFACE Include_Files
+        )

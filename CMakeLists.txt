@@ -28,7 +28,7 @@ SET(COMMON_FLAGS
     "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections \
     -g -fno-common -fmessage-length=0 ")
 
-SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++11")
+SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++17")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")
 SET(CMAKE_EXE_LINKER_FLAGS_INIT "-Wl,-gc-sections,--print-memory-usage -T ${LINKER_SCRIPT}")
 
@@ -58,7 +58,9 @@ Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
-add_compile_options(-O3 -Wall -Wextra)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
+SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT}")
+add_compile_options(-O2 -Wall -Wextra)
 
 include_directories(
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
@@ -69,5 +71,5 @@ include_directories(
 add_subdirectory(Core)
 
 target_link_libraries(rcc-sys.elf
-        main_cpp
-        led)
+        Main_Loop
+        )

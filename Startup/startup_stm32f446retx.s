@@ -7,8 +7,8 @@
   *                - Set the initial SP
   *                - Set the initial PC == Reset_Handler,
   *                - Set the vector table entries with the exceptions ISR address
-  *                - Branches to main_cpp in the C library (which eventually
-  *                  calls main_cpp()).
+  *                - Branches to main in the C library (which eventually
+  *                  calls main()).
   *            After Reset the Cortex-M4 processor is in Thread mode,
   *            priority is Privileged, and the Stack is set to Main.
   ******************************************************************************
@@ -50,7 +50,7 @@ defined in linker script */
  * @brief  This is the code that gets called when the processor first
  *          starts execution following a reset event. Only the absolutely
  *          necessary set is performed, after which the application
- *          supplied main_cpp() routine is called.
+ *          supplied main() routine is called.
  * @param  None
  * @retval : None
 */

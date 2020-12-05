@@ -1,4 +1,4 @@
-set(NAME OBC)
+set(NAME Services)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,8 +9,5 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        Include_Files
-        Peripherals
-        Buses
-        MCU
-        Services)
+        System
+        OBC)

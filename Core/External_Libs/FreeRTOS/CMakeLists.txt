@@ -1,4 +1,4 @@
-set(NAME freertos)
+set(NAME FreeRTOS)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
