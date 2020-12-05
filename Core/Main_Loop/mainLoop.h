@@ -2,12 +2,12 @@
 // Created by Wiktor Wieclaw on 8/6/20.
 //
 
-#ifndef FREERTOS_INTRO_MAIN_CPP_H
-#define FREERTOS_INTRO_MAIN_CPP_H
+#ifndef HABSAT_OBC_MAINLOOP_H
+#define HABSAT_OBC_MAINLOOP_H
 
 #ifdef __cplusplus
 extern "C"
 #endif
 void mainLoop();
 
-#endif  // FREERTOS_INTRO_MAIN_CPP_H
+#endif  // HABSAT_OBC_MAINLOOP_H

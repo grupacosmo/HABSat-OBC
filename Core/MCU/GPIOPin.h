@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/30/20.
 //
 
-#ifndef RCC_SYS_GPIOPIN_H
-#define RCC_SYS_GPIOPIN_H
+#ifndef HABSAT_OBC_GPIOPIN_H
+#define HABSAT_OBC_GPIOPIN_H
 
 #include "Noncopyable.h"
 #include "stm32f4xx.h"
@@ -27,4 +27,4 @@ class GPIOPin : public Noncopyable {
 
 }  // namespace hw
 
-#endif  // RCC_SYS_GPIOPIN_H
+#endif  // HABSAT_OBC_GPIOPIN_H

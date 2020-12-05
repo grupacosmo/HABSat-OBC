@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/16/20.
 //
 
-#ifndef RCC_SYS_UARTBUS_H
-#define RCC_SYS_UARTBUS_H
+#ifndef HABSAT_OBC_UARTBUS_H
+#define HABSAT_OBC_UARTBUS_H
 
 #include <Bus.h>
 
@@ -25,4 +25,4 @@ auto UARTBus::transmit(uint8_t* data, uint16_t size, uint32_t timeout) const -> 
 
 }  // namespace hw
 
-#endif  // RCC_SYS_UARTBUS_H
+#endif  // HABSAT_OBC_UARTBUS_H

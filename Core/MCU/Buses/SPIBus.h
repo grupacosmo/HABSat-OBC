@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/16/20.
 //
 
-#ifndef RCC_SYS_SPIBUS_H
-#define RCC_SYS_SPIBUS_H
+#ifndef HABSAT_OBC_SPIBUS_H
+#define HABSAT_OBC_SPIBUS_H
 
 #include <array>
 
@@ -73,4 +73,4 @@ auto SPIBus::transmitAndReceive(ChipSelect& cs, std::array<uint8_t, size>& data,
 
 }  // namespace hw
 
-#endif  // RCC_SYS_SPIBUS_H
+#endif  // HABSAT_OBC_SPIBUS_H

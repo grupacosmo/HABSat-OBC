@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 9/7/20.
 //
 
-#ifndef RCC_SYS_HANDLES_H
-#define RCC_SYS_HANDLES_H
+#ifndef HABSAT_OBC_HANDLES_H
+#define HABSAT_OBC_HANDLES_H
 
 #include <stm32f4xx.h>
 
@@ -28,4 +28,4 @@ struct Handles {
 
 }  // namespace hw
 
-#endif  // RCC_SYS_HANDLES_H
+#endif  // HABSAT_OBC_HANDLES_H

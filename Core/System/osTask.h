@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/20/20.
 //
 
-#ifndef RCC_SYS_OSTASK_H
-#define RCC_SYS_OSTASK_H
+#ifndef HABSAT_OBC_OSTASK_H
+#define HABSAT_OBC_OSTASK_H
 
 #include <Noncopyable.h>
 
@@ -161,4 +161,4 @@ void Task::startScheduler() { vTaskStartScheduler(); }
 
 }  // namespace os
 
-#endif  // RCC_SYS_OSTASK_H
+#endif  // HABSAT_OBC_OSTASK_H

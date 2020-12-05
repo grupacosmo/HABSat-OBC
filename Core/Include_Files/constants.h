@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 9/7/20.
 //
 
-#ifndef RCC_SYS_CONSTANTS_H
-#define RCC_SYS_CONSTANTS_H
+#ifndef HABSAT_OBC_CONSTANTS_H
+#define HABSAT_OBC_CONSTANTS_H
 
 #include "hardware_config.h"
 /* Numerical constants */
@@ -19,4 +19,4 @@ constexpr uint8_t lcdSlaveAddress = 0x4E;
 constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
 }  // namespace constants
 
-#endif  // RCC_SYS_CONSTANTS_H
+#endif  // HABSAT_OBC_CONSTANTS_H

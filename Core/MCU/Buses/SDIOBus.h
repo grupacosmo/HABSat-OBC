@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/16/20.
 //
 
-#ifndef RCC_SYS_SDIOBUS_H
-#define RCC_SYS_SDIOBUS_H
+#ifndef HABSAT_OBC_SDIOBUS_H
+#define HABSAT_OBC_SDIOBUS_H
 
 #include "Bus.h"
 
@@ -18,4 +18,4 @@ class SDIOBus : public Bus<SDIOHandle> {
 };
 
 }  // namespace hw
-#endif  // RCC_SYS_SDIOBUS_H
+#endif  // HABSAT_OBC_SDIOBUS_H

@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/7/20.
 //
 
-#ifndef RCC_SYS_BITWISEOPERATIONS_H
-#define RCC_SYS_BITWISEOPERATIONS_H
+#ifndef HABSAT_OBC_BITWISEOPERATIONS_H
+#define HABSAT_OBC_BITWISEOPERATIONS_H
 
 #include <cstddef>
 #include <cstdint>
@@ -64,4 +64,4 @@ template <size_t... bits>
 
 }  // namespace bitwise
 
-#endif  // RCC_SYS_BITWISEOPERATIONS_H
+#endif  // HABSAT_OBC_BITWISEOPERATIONS_H

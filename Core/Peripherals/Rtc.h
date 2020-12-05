@@ -2,8 +2,8 @@
 // Created by Natalia Bidzinska on 23.09.2020.
 //
 
-#ifndef RCC_SYS_RTC_H
-#define RCC_SYS_RTC_H
+#ifndef HABSAT_OBC_RTC_H
+#define HABSAT_OBC_RTC_H
 
 #include <array>
 
@@ -88,4 +88,4 @@ class Rtc : public Noncopyable {
 
 }  // namespace hw
 
-#endif  // RCC_SYS_RTC_H
+#endif  // HABSAT_OBC_RTC_H

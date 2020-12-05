@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/7/20.
 //
 
-#ifndef RCC_SYS_LCD_H
-#define RCC_SYS_LCD_H
+#ifndef HABSAT_OBC_LCD_H
+#define HABSAT_OBC_LCD_H
 
 #include <array>
 #include <string>
@@ -182,4 +182,4 @@ class Lcd : public Noncopyable {
 
 }  // namespace hw
 
-#endif  // RCC_SYS_LCD_H
+#endif  // HABSAT_OBC_LCD_H

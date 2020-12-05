@@ -32,7 +32,7 @@ SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++17")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")
 SET(CMAKE_EXE_LINKER_FLAGS_INIT "-Wl,-gc-sections,--print-memory-usage -T ${LINKER_SCRIPT}")
 
-PROJECT(rcc-sys C CXX ASM)
+PROJECT(HABSat-OBC C CXX ASM)
 set(CMAKE_CXX_STANDARD 17)
 
 #add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
@@ -60,7 +60,7 @@ Building ${BIN_FILE}")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT}")
-add_compile_options(-O2 -Wall -Wextra)
+add_compile_options(-O3 -Wall -Wextra)
 
 include_directories(
         Drivers/CMSIS/Device/ST/STM32F4xx/Include
@@ -70,6 +70,6 @@ include_directories(
 
 add_subdirectory(Core)
 
-target_link_libraries(rcc-sys.elf
+target_link_libraries(HABSat-OBC.elf
         Main_Loop
         )

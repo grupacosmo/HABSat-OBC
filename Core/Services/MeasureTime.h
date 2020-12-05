@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/30/20.
 //
 
-#ifndef RCC_SYS_MEASURETIME_H
-#define RCC_SYS_MEASURETIME_H
+#ifndef HABSAT_OBC_MEASURETIME_H
+#define HABSAT_OBC_MEASURETIME_H
 
 #include <Rtc.h>
 #include <osTask.h>
@@ -30,4 +30,4 @@ class MeasureTime : public Noncopyable {
 
 }  // namespace services
 
-#endif  // RCC_SYS_MEASURETIME_H
+#endif  // HABSAT_OBC_MEASURETIME_H

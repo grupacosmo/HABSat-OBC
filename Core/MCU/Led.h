@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/7/20.
 //
 
-#ifndef FREERTOS_INTRO_LED_H
-#define FREERTOS_INTRO_LED_H
+#ifndef HABSAT_OBC_LED_H
+#define HABSAT_OBC_LED_H
 
 #include "GPIOPin.h"
 
@@ -40,4 +40,4 @@ class Led : public Noncopyable {
 
 }  // namespace hw
 
-#endif  // FREERTOS_INTRO_LED_H
+#endif  // HABSAT_OBC_LED_H

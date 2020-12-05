@@ -2,8 +2,8 @@
 // Created by Agnieszka Rejczak on 8/23/2020.
 //
 
-#ifndef RCC_SYS_SENSOR_H
-#define RCC_SYS_SENSOR_H
+#ifndef HABSAT_OBC_SENSOR_H
+#define HABSAT_OBC_SENSOR_H
 
 #include <BME280_compensation.h>
 #include <SPIBus.h>
@@ -96,4 +96,4 @@ class Sensor : public Noncopyable {
 
 }  // namespace hw
 
-#endif  // RCC_SYS_SENSOR_H
+#endif  // HABSAT_OBC_SENSOR_H

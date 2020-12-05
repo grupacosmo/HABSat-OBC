@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 10/1/20.
 //
 
-#ifndef RCC_SYS_OBC_H
-#define RCC_SYS_OBC_H
+#ifndef HABSAT_OBC_OBC_H
+#define HABSAT_OBC_OBC_H
 
 #include "Blink.h"
 #include "Display.h"
@@ -25,4 +25,4 @@ struct Obc : public Noncopyable {
   void init();
 };
 
-#endif  // RCC_SYS_OBC_H
+#endif  // HABSAT_OBC_OBC_H

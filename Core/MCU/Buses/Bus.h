@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/16/20.
 //
 
-#ifndef RCC_SYS_BUS_H
-#define RCC_SYS_BUS_H
+#ifndef HABSAT_OBC_BUS_H
+#define HABSAT_OBC_BUS_H
 
 #include "Noncopyable.h"
 #include "handles.h"
@@ -31,4 +31,4 @@ constexpr auto Bus<T>::getHandle() const -> T* {
 }
 
 }  // namespace hw
-#endif  // RCC_SYS_BUS_H
+#endif  // HABSAT_OBC_BUS_H

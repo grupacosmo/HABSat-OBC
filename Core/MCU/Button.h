@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 8/20/20.
 //
 
-#ifndef RCC_SYS_BUTTON_H
-#define RCC_SYS_BUTTON_H
+#ifndef HABSAT_OBC_BUTTON_H
+#define HABSAT_OBC_BUTTON_H
 
 #include "GPIOPin.h"
 
@@ -25,4 +25,4 @@ class Button : public Noncopyable {
 
 }  // namespace hw
 
-#endif  // RCC_SYS_BUTTON_H
+#endif  // HABSAT_OBC_BUTTON_H

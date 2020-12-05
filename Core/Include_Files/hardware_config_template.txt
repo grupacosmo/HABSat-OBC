@@ -4,8 +4,8 @@
     Copy and paste the content of this file and configure according to your hardware.
 */
 
-#ifndef RCC_SYS_HARDWARE_CONFIG_H
-#define RCC_SYS_HARDWARE_CONFIG_H
+#ifndef HABSAT_OBC_HARDWARE_CONFIG
+#define HABSAT_OBC_HARDWARE_CONFIG
 
 #define HW_LCD    1  // 1 if LCD connected
 #define HW_SENSOR 1  // 1 if SENSOR connected
@@ -25,4 +25,4 @@
 #define HW_RTC_MONTH   12
 #define HW_RTC_YEAR    20
 
-#endif  // RCC_SYS_HARDWARE_CONFIG_H
+#endif  // HABSAT_OBC_HARDWARE_CONFIG

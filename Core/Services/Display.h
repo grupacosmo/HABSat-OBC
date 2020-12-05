@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/30/20.
 //
 
-#ifndef RCC_SYS_DISPLAY_H
-#define RCC_SYS_DISPLAY_H
+#ifndef HABSAT_OBC_DISPLAY_H
+#define HABSAT_OBC_DISPLAY_H
 
 #include <array>
 
@@ -39,4 +39,4 @@ class Display : public Noncopyable {
 
 }  // namespace services
 
-#endif  // RCC_SYS_DISPLAY_H
+#endif  // HABSAT_OBC_DISPLAY_H

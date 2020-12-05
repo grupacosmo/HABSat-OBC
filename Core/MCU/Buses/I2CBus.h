@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/16/20.
 //
 
-#ifndef RCC_SYS_I2CBUS_H
-#define RCC_SYS_I2CBUS_H
+#ifndef HABSAT_OBC_I2CBUS_H
+#define HABSAT_OBC_I2CBUS_H
 
 #include <array>
 
@@ -78,4 +78,4 @@ constexpr auto I2CBus::addressSizeOption(uint16_t memoryAddress) -> uint16_t {
 }
 
 }  // namespace hw
-#endif  // RCC_SYS_I2CBUS_H
+#endif  // HABSAT_OBC_I2CBUS_H

@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 9/7/20.
 //
 
-#ifndef RCC_SYS_HARDWARE_H
-#define RCC_SYS_HARDWARE_H
+#ifndef HABSAT_OBC_HARDWARE_H
+#define HABSAT_OBC_HARDWARE_H
 
 #include "Button.h"
 #include "I2CBus.h"
@@ -35,4 +35,4 @@ struct Hardware : public Noncopyable {
   void init();
 };
 
-#endif  // RCC_SYS_HARDWARE_H
+#endif  // HABSAT_OBC_HARDWARE_H

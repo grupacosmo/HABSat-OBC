@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 9/5/20.
 //
 
-#ifndef RCC_SYS_OSQUEUE_H
-#define RCC_SYS_OSQUEUE_H
+#ifndef HABSAT_OBC_OSQUEUE_H
+#define HABSAT_OBC_OSQUEUE_H
 
 #include "FreeRTOS.h"
 #include "queue.h"
@@ -52,4 +52,4 @@ auto Queue<Type, size>::receive(Type& objectHolder, TickType_t ticksToWait) -> b
 
 }  // namespace os
 
-#endif  // RCC_SYS_OSQUEUE_H
+#endif  // HABSAT_OBC_OSQUEUE_H

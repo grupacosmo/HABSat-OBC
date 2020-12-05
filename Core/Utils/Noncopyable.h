@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 12/1/20.
 //
 
-#ifndef RCC_SYS_NONCOPYABLE_H
-#define RCC_SYS_NONCOPYABLE_H
+#ifndef HABSAT_OBC_NONCOPYABLE_H
+#define HABSAT_OBC_NONCOPYABLE_H
 
 class Noncopyable {
  protected:
@@ -15,4 +15,4 @@ class Noncopyable {
   auto operator=(const Noncopyable&) -> Noncopyable& = delete;
 };
 
-#endif  // RCC_SYS_NONCOPYABLE_H
+#endif  // HABSAT_OBC_NONCOPYABLE_H

@@ -2,8 +2,8 @@
 // Created by Wiktor Wieclaw on 11/30/20.
 //
 
-#ifndef RCC_SYS_MEASUREWEATHER_H
-#define RCC_SYS_MEASUREWEATHER_H
+#ifndef HABSAT_OBC_MEASUREWEATHER_H
+#define HABSAT_OBC_MEASUREWEATHER_H
 
 #include "Sensor.h"
 #include "osTask.h"
@@ -30,4 +30,4 @@ class MeasureWeather : public Noncopyable {
 
 }  // namespace services
 
-#endif  // RCC_SYS_MEASUREWEATHER_H
+#endif  // HABSAT_OBC_MEASUREWEATHER_H
