@@ -17,17 +17,15 @@ namespace hw {
 class Lcd : public Noncopyable {
  public:
   /**
-   * Constructs LCD.
-   *
-   * @param lines         Number of lines on an LCD screen.
-   * @param lineLength   Number of possible characters per line.
-   * @param hi2cx         I2C handle.
-   * @param slaveAddress Slave address of an LCD.
+   * @param lines        number of lines
+   * @param lineLength   number of chars per line
+   * @param i2c
+   * @param slaveAddress
    */
   Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress);
 
   /**
-   * Initializes LCD hardware and adds tasks to scheduler
+   * Initializes LCD hardware
    */
   void init() const;
 
@@ -149,7 +147,6 @@ class Lcd : public Noncopyable {
 
   // Flags that are appended to the data
   // therefore the lower nibble of data has to be equal 0x00
-  // TODO provide explanations for those flags
   enum DataSendingFlag : uint8_t {
     Register  = 0x01,
     ReadWrite = 0x02,

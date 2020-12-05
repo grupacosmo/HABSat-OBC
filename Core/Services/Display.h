@@ -24,7 +24,7 @@ class Display : public Noncopyable {
   static void prepareTimeData(std::array<char, 20>& lineBuffer, const hw::Rtc::Buffer* buf);
   static void prepareDateData(std::array<char, 20>& lineBuffer, const hw::Rtc::Buffer* buf);
   static void prepareSensorData(std::array<char, 20>& lineBuffer, const hw::Sensor::Buffer* buf);
-  static void displayTaskFunction(void* args);
+  [[noreturn]] static void displayTaskFunction(void* args);
 
  private:
   static os::Task displayTask_;

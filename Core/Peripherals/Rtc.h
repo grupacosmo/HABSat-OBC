@@ -13,11 +13,18 @@
 
 namespace hw {
 
-/**
- * RTC DS1307 library for STM32F4xx.
- */
+
 class Rtc : public Noncopyable {
  public:
+  /**
+   * second 0-59
+   * minute 0-59
+   * hour 0-23
+   * weekday 0-6 (sun, mon ... sat)
+   * day 1-31
+   * month 1-12
+   * year (two last digits of a year)
+   */
   struct Buffer {
     std::array<uint8_t, 7> array{};
     uint8_t& second  = array[0];
@@ -32,8 +39,8 @@ class Rtc : public Noncopyable {
  public:
   /**
    * RTC's constructor.
-   * @param i2cHandle  Pointer to an I2C handle.
-   * @param address     RTC address
+   * @param i2c
+   * @param address    RTC address
    */
   Rtc(const I2CBus* i2c, uint8_t address);
 
@@ -55,7 +62,7 @@ class Rtc : public Noncopyable {
   void setTimeAndDate(const Buffer& timeAndDate) const;
 
   /**
-   * Puts the date from RTC to object's date_time structure.
+   * Puts the date from RTC to buffer structure.
    */
   void readTimeAndDate(Buffer& buffer);
 

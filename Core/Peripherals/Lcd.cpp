@@ -11,11 +11,6 @@
 
 namespace hw {
 
-// TODO:
-// SWAP HAL_Delay() FUNCTION FOR A DELAY FUNCTION THAT ACCEPTS MICROSECONDS AS AN ARGUMENT
-// FIND MISSING DELAYS
-// CHECK DATASHEET AND ARDUINO I2C LIQUID CRYSTAL LIB FOR ACCURATE DELAY USAGE
-
 Lcd::Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress)
     : i2c_(i2c),
       lines_(lines),
@@ -76,7 +71,6 @@ void Lcd::setCursorPosition(uint16_t line, const uint16_t column) const {
 
 void Lcd::clear() const {
   sendCmd(Command::ClearDisplay);
-  // TODO DELAY
   HAL_Delay(1);
 }
 
@@ -127,11 +121,9 @@ void Lcd::transmitNibble(uint8_t nibble) const {
   // first time with PULSE flag, second time without it
   uint8_t data = nibble | DataSendingFlag::Pulse;
   i2c_->transmit(slaveAddress_, data);
-  // TODO DELAY > 450 ns
 
   data = nibble & ~DataSendingFlag::Pulse;
   i2c_->transmit(slaveAddress_, data);
-  // TODO DELAY > 37 us
 }
 
 }  // namespace hw

@@ -11,13 +11,13 @@ namespace hw {
 
 Sensor::Sensor(const SPIBus& spi, ChipSelect& cs) : spi_(spi), cs_(cs) {}
 
-void Sensor::init(const ConfigFlags& temperature_resolution,
-                  const ConfigFlags& pressure_oversampling,
-                  const ConfigFlags& humidity_oversampling, const ConfigFlags& mode) {
+void Sensor::init(const ConfigFlags& temperatureResolution,
+                  const ConfigFlags& pressureOversampling,
+                  const ConfigFlags& humidityOversampling, const ConfigFlags& mode) {
   getCalibrationData();
-  write8(Address::HumControl & AddressFlag::Write, humidity_oversampling);
+  write8(Address::HumControl & AddressFlag::Write, humidityOversampling);
   write8(Address::CTRLmeasAddress & AddressFlag::Write,
-         (temperature_resolution << 5) | (pressure_oversampling << 2) | mode);
+         (temperatureResolution << 5) | (pressureOversampling << 2) | mode);
 }
 
 void Sensor::getCalibrationData() {
@@ -59,8 +59,8 @@ void Sensor::parseSecondConversionData(const std::array<uint8_t, 1 + 7>& data) {
   humidConvData_.digH6 = data[7];
 }
 
-void Sensor::configure(const ConfigFlags& standby_time, const ConfigFlags& filter) {
-  const uint8_t data = ((standby_time & 0x07) << 5) | (((filter & 0x07) << 2) & 0xFC);
+void Sensor::configure(const ConfigFlags& standbyTime, const ConfigFlags& filter) {
+  const uint8_t data = ((standbyTime & 0x07) << 5) | (((filter & 0x07) << 2) & 0xFC);
   write8(Address::Config, data);
 }
 

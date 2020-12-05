@@ -34,30 +34,26 @@ class Sensor : public Noncopyable {
   };
 
  public:
-  /**
-   * Sensor's constructor.
-   * @param spi_handler Pointer to SPI handle
-   */
 
   Sensor(const SPIBus& spi, ChipSelect& chipSelect);
 
   /**
    * Initializes Sensor.
-   * Sets size for temperature, pressure and humidity resolution. Set choosen mode.
-   * @param temperature_resolution
-   * @param pressure_oversampling
-   * @param humidity_oversampling
+   * Sets size for temperature, pressure and humidity resolution and chosen mode.
+   * @param temperatureResolution
+   * @param pressureOversampling
+   * @param humidityOversampling
    * @param mode
    */
-  void init(const ConfigFlags& temperature_resolution, const ConfigFlags& pressure_oversampling,
-            const ConfigFlags& humidity_oversampling, const ConfigFlags& mode);
+  void init(const ConfigFlags& temperatureResolution, const ConfigFlags& pressureOversampling,
+            const ConfigFlags& humidityOversampling, const ConfigFlags& mode);
 
   /**
    * Sets sensor's configuration.
-   * @param standby_time
+   * @param standbyTime
    * @param filter
    */
-  void configure(const ConfigFlags& standby_time, const ConfigFlags& filter);
+  void configure(const ConfigFlags& standbyTime, const ConfigFlags& filter);
 
   /**
    *Calls function for reading temperature, pressure and humidity
@@ -70,8 +66,8 @@ class Sensor : public Noncopyable {
   void parseSecondConversionData(const std::array<uint8_t, 1 + 7>& data);
 
   /**
-   * Writes data in 8-bit format to register - address
-   * @param address
+   * Writes data in 8-bit format to register
+   * @param address register's address
    * @param data
    */
   void write8(uint8_t address, uint8_t data);

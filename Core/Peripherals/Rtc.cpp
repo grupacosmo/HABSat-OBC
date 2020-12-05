@@ -12,7 +12,7 @@ Rtc::Rtc(const I2CBus* i2c, uint8_t address) : i2c_(i2c), slaveAddress_(address)
 
 void Rtc::init() const {
 #if HW_RTC_SET_TIME
-  TimeAndDate data;
+  Buffer data;
   data.second  = HW_RTC_SECOND;
   data.minute  = HW_RTC_MINUTE;
   data.hour    = HW_RTC_HOUR;
