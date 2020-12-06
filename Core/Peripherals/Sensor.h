@@ -6,7 +6,8 @@
 #define HABSAT_OBC_SENSOR_H
 
 #include <BME280_compensation.h>
-#include <SPIBus.h>
+#include "Noncopyable.h"
+#include "SPIBus.h"
 
 #include <array>
 

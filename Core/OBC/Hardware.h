@@ -7,10 +7,12 @@
 
 #include "Button.h"
 #include "I2CBus.h"
+#include "SPIBus.h"
 #include "Lcd.h"
 #include "Led.h"
 #include "Rtc.h"
 #include "Sensor.h"
+#include "SDReader.h"
 #include "constants.h"
 #include "handles.h"
 
@@ -30,6 +32,7 @@ struct Hardware : public Noncopyable {
   hw::Lcd lcd{4, 20, &i2c, constants::lcdSlaveAddress};
   hw::Rtc rtc{&i2c, constants::rtcSlaveAddress};
   hw::Sensor sensor{spi, sensorCS};
+  hw::SDReader sdReader; // TODO work it out
 
  public:
   void init();

@@ -18,4 +18,7 @@ void Hardware::init() {
               hw::Sensor::ConfigFlags::HumidityStandard, hw::Sensor::ConfigFlags::NormalMode);
   sensor.configure(hw::Sensor::ConfigFlags::Standby10Ms, hw::Sensor::ConfigFlags::FilterOff);
 #endif
+#if HW_SDREADER == 1
+  sdReader.init();
+#endif
 }
