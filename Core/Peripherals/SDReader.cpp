@@ -4,15 +4,12 @@
 
 #include "SDReader.h"
 
-#include "Obc.h"
-
 namespace hw {
 
-SDReader::SDReader(SD_HandleTypeDef* sdHandle) : m_hsd(sdHandle) {}
+SDReader::SDReader(const SDIOBus* sdio) : sdio_(sdio) {}
 
 void SDReader::init() {
   BSP_SD_Init();
-  sdReaderTask.addToScheduler();
 }
 
 auto SDReader::mount() -> FRESULT {
@@ -82,7 +79,7 @@ auto SDReader::update(std::array<char, 256>& path, std::array<char, 256>& text) 
   // TODO make void and send comm to console
 }
 
-auto SDReader::make_directory(std::array<char, 256>& path) -> FRESULT {
+auto SDReader::makeDirectory(std::array<char, 256>& path) -> FRESULT {
   FRESULT fresult;
 
   fresult = f_mkdir(path.data());
@@ -110,16 +107,21 @@ auto SDReader::remove(std::array<char, 256>& path) -> FRESULT {
   // TODO make void and send comm to console
 }
 
-void SDReader::check_free_space() {
-  f_getfree("", &free_clusters, &pfs);
-  total_space = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
-  free_space  = static_cast<uint32_t>(free_clusters * pfs->csize * 0.5);
+void SDReader::checkFreeSpace() {
+  static DWORD freeClusters;
+  static uint32_t totalSpace, freeSpace;
+  static FATFS* pfs;
+
+  f_getfree("", &freeClusters, &pfs);
+  totalSpace = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
+  freeSpace  = static_cast<uint32_t>(freeClusters * pfs->csize * 0.5);
   // TODO send comm to console
 }
 
 auto SDReader::format() -> FRESULT {
   FRESULT fresult;
   FILINFO fileInfo;
+  DIR directory;
 
   fresult = f_opendir(&directory, "/");
   if (fresult == FR_OK) {
@@ -141,21 +143,25 @@ auto SDReader::format() -> FRESULT {
   // TODO make void and send comm to console
 }
 
-void SDReader::mmc_task_function(void* args) {
-  //SDReader& microsd_reader = Obc.peripherals.microsd_reader;
-  std::array<char, 256> test_data{"just a sample text"};
-  std::array<char, 256> test_path{"test.txt"};
+auto SDReader::makeFile(std::array<char, 256>& path) -> FRESULT {
+  FRESULT fresult;
+  SmartFile file{};
 
-  if (microsd_reader.mount() != FR_OK) {
-    os::Task::suspendItself();
+  fresult = fileStatus(path);
+  if(fresult == FR_OK){
+    //file exist
+    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
+    return fresult;
   }
-  // microsd_reader.format();
-  microsd_reader.write(test_path, test_data);
 
-  while (true) {
-    microsd_reader.update(test_path, test_data);
-    os::Task::delay(1000);
+  fresult = file.open(path.data(), FA_CREATE_ALWAYS|FA_READ|FA_WRITE);
+  if(fresult != FR_OK){
+    // TODO send comm to console
+    return fresult;
   }
+
+  return fresult;
+  // TODO make void and send comm to console
 }
 
-}
+}  // namespace hw

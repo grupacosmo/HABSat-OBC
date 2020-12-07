@@ -7,6 +7,7 @@
 
 #include "fatfs.h"
 #include "osTask.h"
+#include "SDIOBus.h"
 #include <array>
 
 //TODO docsies
@@ -36,33 +37,26 @@ class SmartFile {
 
 class SDReader : public Noncopyable{
  public:
-  // not sure if handle is needed here
-  explicit SDReader(SD_HandleTypeDef* sdHandle);
-  void init();
+  explicit SDReader(const SDIOBus* sdio);
+  static void init();
 
   static auto mount() -> FRESULT;
   static auto unmount() -> FRESULT;
-  auto format() -> FRESULT;
-  auto fileStatus(std::array<char, 256>& path) ->FRESULT;
+  static auto format() -> FRESULT;
+  static auto fileStatus(std::array<char, 256>& path) ->FRESULT;
   auto write(std::array<char, 256>& path, std::array<char, 256>& text) -> FRESULT;
   auto update(std::array<char, 256>& path, std::array<char, 256>& text) -> FRESULT;
-  auto remove(std::array<char, 256>& path) -> FRESULT;
-  auto make_directory(std::array<char, 256>& path) -> FRESULT;
+  static auto remove(std::array<char, 256>& path) -> FRESULT;
+  static auto makeDirectory(std::array<char, 256>& path) -> FRESULT;
+  static auto makeFile(std::array<char, 256>& path) -> FRESULT;
 
-  void check_free_space();
-  static void mmc_task_function(void* args);
+  static void checkFreeSpace();
 
  private:
-  const os::Task sdReaderTask{"mmc_task", 512, os::Priority::Idle, mmc_task_function};
-  SD_HandleTypeDef* m_hsd;
+  const SDIOBus* sdio_;
 
   UINT bytes_written, bytes_read;
-
-  uint32_t total_space, free_space;
-  FATFS* pfs;
-  DWORD free_clusters;
-
-  DIR directory;
 };
-}
+
+}  // namespace hw
 #endif  // RCC_SYS_MICROSD_READER_H
