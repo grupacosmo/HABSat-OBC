@@ -20,42 +20,44 @@ class SmartFile {
   SmartFile() = default;
 
   auto open(char* path, BYTE mode) {
-    return f_open(&sdFile_, path, mode);
+    return f_open(sdFile_, path, mode);
+  }
+
+  auto close(){
+    return f_close(sdFile_);
   }
 
   auto file() -> FIL* {
-    return &sdFile_;
+    return sdFile_;
   }
 
   ~SmartFile() {
-    f_close(&sdFile_);
+    f_close(sdFile_);
   }
 
  private:
-  FIL sdFile_;
+  FIL* sdFile_ = &SDFile;
 };
 
 class SDReader : public Noncopyable{
  public:
   explicit SDReader(const SDIOBus* sdio);
-  static void init();
+  void init();
 
   static auto mount() -> FRESULT;
   static auto unmount() -> FRESULT;
   static auto format() -> FRESULT;
   static auto fileStatus(std::array<char, 256>& path) ->FRESULT;
-  auto write(std::array<char, 256>& path, std::array<char, 256>& text) -> FRESULT;
-  auto update(std::array<char, 256>& path, std::array<char, 256>& text) -> FRESULT;
+  auto write(std::array<char, 256>& path, char* content) -> FRESULT;
+  auto update(std::array<char, 256>& path, char* content) -> FRESULT;
   static auto remove(std::array<char, 256>& path) -> FRESULT;
   static auto makeDirectory(std::array<char, 256>& path) -> FRESULT;
-  static auto makeFile(std::array<char, 256>& path) -> FRESULT;
+  auto makeFile(std::array<char, 256>& path) -> FRESULT;
 
   static void checkFreeSpace();
 
  private:
   const SDIOBus* sdio_;
-
-  UINT bytes_written, bytes_read;
 };
 
 }  // namespace hw

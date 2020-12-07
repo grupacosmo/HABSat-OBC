@@ -4,6 +4,8 @@
 
 #include "SDReader.h"
 
+#include <cstring>
+
 namespace hw {
 
 SDReader::SDReader(const SDIOBus* sdio) : sdio_(sdio) {}
@@ -27,7 +29,7 @@ auto SDReader::fileStatus(std::array<char, 256>& path) -> FRESULT {
   return f_stat(path.data(), &fileInfo);
 }
 
-auto SDReader::write(std::array<char, 256>& path, std::array<char, 256>& text) -> FRESULT {
+auto SDReader::write(std::array<char, 256>& path, char* content) -> FRESULT {
   FRESULT fresult;
   SmartFile file{};
 
@@ -40,7 +42,7 @@ auto SDReader::write(std::array<char, 256>& path, std::array<char, 256>& text) -
   fresult = file.open(path.data(),FA_CREATE_ALWAYS | FA_WRITE);
 
   if (fresult == FR_OK) {
-    fresult = f_write(file.file(), text.data(), text.size(), &bytes_written);
+    fresult = f_write(file.file(), content, strlen(content), nullptr);
     if (fresult != FR_OK) {
       // TODO send comm to console
     }
@@ -53,7 +55,7 @@ auto SDReader::write(std::array<char, 256>& path, std::array<char, 256>& text) -
   // TODO make void and send comm to console
 }
 
-auto SDReader::update(std::array<char, 256>& path, std::array<char, 256>& text) -> FRESULT {
+auto SDReader::update(std::array<char, 256>& path, char* content) -> FRESULT {
   FRESULT fresult;
   SmartFile file{};
 
@@ -66,7 +68,7 @@ auto SDReader::update(std::array<char, 256>& path, std::array<char, 256>& text) 
   fresult = file.open(path.data(),FA_OPEN_APPEND | FA_WRITE);
 
   if (fresult == FR_OK) {
-    fresult = f_write(file.file(), text.data(), text.size(), &bytes_written);
+    fresult = f_write(file.file(), content, strlen(content), nullptr);
     if (fresult != FR_OK) {
       // TODO send comm to console
     }
@@ -154,11 +156,14 @@ auto SDReader::makeFile(std::array<char, 256>& path) -> FRESULT {
     return fresult;
   }
 
-  fresult = file.open(path.data(), FA_CREATE_ALWAYS|FA_READ|FA_WRITE);
+  fresult = file.open(path.data(), FA_CREATE_ALWAYS|FA_WRITE|FA_READ);
+  //fresult = f_open(&SDFile, path.data(), FA_CREATE_ALWAYS|FA_WRITE|FA_READ);
   if(fresult != FR_OK){
     // TODO send comm to console
     return fresult;
   }
+
+  file.close();
 
   return fresult;
   // TODO make void and send comm to console

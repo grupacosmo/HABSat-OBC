@@ -9,4 +9,5 @@ void Obc::init() {
   display.init();
   measureTime.init();
   measureWeather.init();
+  sdSave.init();
 }

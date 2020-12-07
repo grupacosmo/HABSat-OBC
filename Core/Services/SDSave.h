@@ -23,7 +23,7 @@ class SDSave : public Noncopyable {
   static void prepareFileHeader(std::array<char, 100>&buffer);
   static void prepareRTCData(std::array<char, 100>&buffer, const hw::Rtc::Buffer* buf);
   static void prepareSensorData(std::array<char, 20>&buffer, const hw::Sensor::Buffer* buf);
-  [[noreturn]] static void displayTaskFunction(void* args);
+  [[noreturn]] static void sdSaveTaskFunction(void* args);
 
  private:
   static os::Task sdSaveTask_;
