@@ -5,7 +5,7 @@
 #ifndef HABSAT_OBC_INTERRUPTHANDLERS_H
 #define HABSAT_OBC_INTERRUPTHANDLERS_H
 
-#include "stm32f4xx.h"
+#include <stdint.h>
 
 #ifdef __cplusplus
 #define EXTERN_C extern "C"
