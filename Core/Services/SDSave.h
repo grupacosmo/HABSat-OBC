@@ -20,9 +20,14 @@ class SDSave : public Noncopyable {
   void init();
 
  private:
-  static void prepareFileHeader(std::array<char, 100>&buffer);
-  static void prepareRTCData(std::array<char, 100>&buffer, const hw::Rtc::Buffer* buf);
-  static void prepareSensorData(std::array<char, 20>&buffer, const hw::Sensor::Buffer* buf);
+  template<size_t PathLength>
+  static void prepareFileHeader(std::array<char, PathLength>&buffer);
+
+  template<size_t PathLength>
+  static void prepareRTCData(std::array<char, PathLength>&buffer, const hw::Rtc::Buffer* buf);
+
+  template<size_t PathLength>
+  static void prepareSensorData(std::array<char, PathLength>&buffer, const hw::Sensor::Buffer* buf);
   [[noreturn]] static void sdSaveTaskFunction(void* args);
 
  private:
@@ -35,6 +40,8 @@ class SDSave : public Noncopyable {
         : sdReader_(sdReader), sensorBuffer_(sensorBuffer), rtcBuffer_(rtcBuffer) {}
   } params_;
 };
+
+#include "SDSave.ipp"
 
 }  // namespace services
 #endif  // HABSAT_OBC_SDSAVE_H

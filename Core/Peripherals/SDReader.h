@@ -8,6 +8,9 @@
 #include "fatfs.h"
 #include "osTask.h"
 #include "SDIOBus.h"
+#include "Terminal.h"
+
+#include <cstring>
 #include <array>
 
 //TODO docsies
@@ -42,23 +45,35 @@ class SmartFile {
 class SDReader : public Noncopyable{
  public:
   explicit SDReader(const SDIOBus* sdio);
-  void init();
-
+  static void init();
   static auto mount() -> FRESULT;
   static auto unmount() -> FRESULT;
   static auto format() -> FRESULT;
-  static auto fileStatus(std::array<char, 256>& path) ->FRESULT;
-  auto write(std::array<char, 256>& path, char* content) -> FRESULT;
-  auto update(std::array<char, 256>& path, char* content) -> FRESULT;
-  static auto remove(std::array<char, 256>& path) -> FRESULT;
-  static auto makeDirectory(std::array<char, 256>& path) -> FRESULT;
-  auto makeFile(std::array<char, 256>& path) -> FRESULT;
-
   static void checkFreeSpace();
 
+  template<size_t PathLength>
+  static auto fileStatus(std::array<char, PathLength>& path) ->FRESULT;
+
+  template<size_t PathLength>
+  auto write(std::array<char, PathLength>& path, char* content) -> FRESULT;
+
+  template<size_t PathLength>
+  auto update(std::array<char, PathLength>& path, char* content) -> FRESULT;
+
+  template<size_t PathLength>
+  static auto remove(std::array<char, PathLength>& path) -> FRESULT;
+
+  template<size_t PathLength>
+  static auto makeDirectory(std::array<char, PathLength>& path) -> FRESULT;
+
+  template<size_t PathLength>
+  auto makeFile(std::array<char, PathLength>& path) -> FRESULT;
+
  private:
-  const SDIOBus* sdio_;
+  const SDIOBus* sdio_{};
 };
+
+#include "SDReader.ipp"
 
 }  // namespace hw
 #endif  // RCC_SYS_MICROSD_READER_H

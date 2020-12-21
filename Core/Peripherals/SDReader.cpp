@@ -4,11 +4,9 @@
 
 #include "SDReader.h"
 
-#include <cstring>
-
 namespace hw {
 
-SDReader::SDReader(const SDIOBus* sdio) : sdio_(sdio) {}
+SDReader::SDReader(const SDIOBus* sdio) {}
 
 void SDReader::init() {
   BSP_SD_Init();
@@ -16,108 +14,12 @@ void SDReader::init() {
 
 auto SDReader::mount() -> FRESULT {
   return f_mount(&SDFatFS, SDPath, 0);
-  // TODO make void and send comm to console
+  // TODO make void and send comm to console ?
 }
 
 auto SDReader::unmount() -> FRESULT {
   return f_mount(nullptr, SDPath, 0);
-  // TODO make void and send comm to console
-}
-
-auto SDReader::fileStatus(std::array<char, 256>& path) -> FRESULT {
-  FILINFO fileInfo;
-  return f_stat(path.data(), &fileInfo);
-}
-
-auto SDReader::write(std::array<char, 256>& path, char* content) -> FRESULT {
-  FRESULT fresult;
-  SmartFile file{};
-
-  fresult = fileStatus(path);
-  if(fresult != FR_OK){
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
-    return fresult;
-  }
-
-  fresult = file.open(path.data(),FA_CREATE_ALWAYS | FA_WRITE);
-
-  if (fresult == FR_OK) {
-    fresult = f_write(file.file(), content, strlen(content), nullptr);
-    if (fresult != FR_OK) {
-      // TODO send comm to console
-    }
-  }
-  else{
-    // TODO send comm to console
-  }
-
-  return fresult;
-  // TODO make void and send comm to console
-}
-
-auto SDReader::update(std::array<char, 256>& path, char* content) -> FRESULT {
-  FRESULT fresult;
-  SmartFile file{};
-
-  fresult = fileStatus(path);
-  if(fresult != FR_OK){
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
-    return fresult;
-  }
-
-  fresult = file.open(path.data(),FA_OPEN_APPEND | FA_WRITE);
-
-  if (fresult == FR_OK) {
-    fresult = f_write(file.file(), content, strlen(content), nullptr);
-    if (fresult != FR_OK) {
-      // TODO send comm to console
-    }
-  }
-  else{
-    // TODO send comm to console
-  }
-
-  return fresult;
-  // TODO make void and send comm to console
-}
-
-auto SDReader::makeDirectory(std::array<char, 256>& path) -> FRESULT {
-  FRESULT fresult;
-
-  fresult = f_mkdir(path.data());
-
-  if(fresult != FR_OK){
-    // TODO send comm to console
-    return fresult;
-  }
-
-  return fresult;
-  // TODO make void and send comm to console
-}
-
-auto SDReader::remove(std::array<char, 256>& path) -> FRESULT {
-  FRESULT fresult;
-
-  fresult = fileStatus(path);
-
-  if(fresult != FR_OK){
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
-    return fresult;
-  }
-
-  return f_unlink(path.data());
-  // TODO make void and send comm to console
-}
-
-void SDReader::checkFreeSpace() {
-  static DWORD freeClusters;
-  static uint32_t totalSpace, freeSpace;
-  static FATFS* pfs;
-
-  f_getfree("", &freeClusters, &pfs);
-  totalSpace = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
-  freeSpace  = static_cast<uint32_t>(freeClusters * pfs->csize * 0.5);
-  // TODO send comm to console
+  // TODO make void and send comm to console ?
 }
 
 auto SDReader::format() -> FRESULT {
@@ -131,7 +33,7 @@ auto SDReader::format() -> FRESULT {
       fresult = f_readdir(&directory, &fileInfo);
       if (fresult != FR_OK || fileInfo.fname[0] == 0) break;
 
-      if (fileInfo.fattrib & AM_DIR && "SYSTEM~1" != fileInfo.fname) {
+      if (fileInfo.fattrib & AM_DIR && strcmp("SYSTEM~1", fileInfo.fname) != 0) {
         if (f_unlink(fileInfo.fname) == FR_DENIED) continue;
       }
 
@@ -140,30 +42,6 @@ auto SDReader::format() -> FRESULT {
     }
     f_closedir(&directory);
   }
-
-  return fresult;
-  // TODO make void and send comm to console
-}
-
-auto SDReader::makeFile(std::array<char, 256>& path) -> FRESULT {
-  FRESULT fresult;
-  SmartFile file{};
-
-  fresult = fileStatus(path);
-  if(fresult == FR_OK){
-    //file exist
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
-    return fresult;
-  }
-
-  fresult = file.open(path.data(), FA_CREATE_ALWAYS|FA_WRITE|FA_READ);
-  //fresult = f_open(&SDFile, path.data(), FA_CREATE_ALWAYS|FA_WRITE|FA_READ);
-  if(fresult != FR_OK){
-    // TODO send comm to console
-    return fresult;
-  }
-
-  file.close();
 
   return fresult;
   // TODO make void and send comm to console
