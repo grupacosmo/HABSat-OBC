@@ -6,43 +6,19 @@
 
 #include <cstdio>
 #include <cstring>
+#include<array>
 
-struct gps_state gps_init(UART_HandleTypeDef * uart) {
-  struct gps_state state;
+//TODO: stworzyc parser NMEA
 
-  state.uart = uart;
-  for(uint8_t i=0; i<100; i++) state.line_buffer[i] = '\0';
-  state.writer_position = 0;
-  state.reader_position = 0;
-  for(uint8_t i=0; i<30; i++) state.field_buffer[i] = '\0';
-  state.field_position = 0;
-
-  state.date_day = 0;
-  state.date_mounth = 0;
-  state.date_year = 0;
-  state.time_hour = 0;
-  state.time_min = 0;
-  state.time_sec = 0;
-
-  state.latitude = 0.0;
-  state.latitude_direction = '?';
-  state.longitude = 0.0;
-  state.longitude_direction = '?';
-  state.altitude = 0.0;
-
-  state.speed_knots = 0.0;
-  state.speed_kilometers = 0.0;
-
-  state.satelites_number = 0;
-  state.quality = '?';
-  state.dop = 0.0;
-  state.hdop = 0.0;
-  state.vdop = 0.0;
+gps_state gps_init(UART_HandleTypeDef* uart) {
+  gps_state state = {.uart = uart};
+  //for(uint8_t& i : state.line_buffer) i = '\0';
+  //for(uint8_t& i : state.field_buffer) i = '\0';
 
   return state;
 }
 
-void gps_recv_char(struct gps_state * state, uint8_t recv_char) {
+void gps_recv_char(gps_state * state, uint8_t recv_char) {
   if (state->writer_position == 0 && recv_char == '$') {
     state->writer_position++;
   } else if (state->writer_position >= 1 && state->writer_position < 99) {
@@ -114,7 +90,7 @@ void gps_process_gprmc(struct gps_state * state)
     uint32_t tmp;
     sscanf(reinterpret_cast<const char*>(state->field_buffer), "%d", &tmp);
     state->date_year = tmp % 100;
-    state->date_mounth = (tmp / 100) % 100;
+    state->date_month = (tmp / 100) % 100;
     state->date_day = (tmp / 10000) % 100;
   }
 }

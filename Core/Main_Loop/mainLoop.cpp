@@ -22,7 +22,6 @@ void mainLoop() {
   static Obc obc;
   obc.init();
 
-
   gps_handle = gps_init(&huart1);
   HAL_UART_Receive_IT(&huart1, &recv_char, 1);
 
