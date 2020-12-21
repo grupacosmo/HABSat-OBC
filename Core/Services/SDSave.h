@@ -5,6 +5,7 @@
 #ifndef HABSAT_OBC_SDSAVE_H
 #define HABSAT_OBC_SDSAVE_H
 
+#include <cstdio>
 #include <array>
 
 #include "SDReader.h"
@@ -28,6 +29,7 @@ class SDSave : public Noncopyable {
 
   template<size_t PathLength>
   static void prepareSensorData(std::array<char, PathLength>&buffer, const hw::Sensor::Buffer* buf);
+
   [[noreturn]] static void sdSaveTaskFunction(void* args);
 
  private:

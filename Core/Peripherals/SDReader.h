@@ -11,7 +11,7 @@
 #include "Terminal.h"
 
 #include <cstring>
-#include <array>
+#include <string_view>
 
 //TODO docsies
 //TODO change some bsp_driver_sd functions
@@ -22,8 +22,8 @@ class SmartFile {
  public:
   SmartFile() = default;
 
-  auto open(char* path, BYTE mode) {
-    return f_open(sdFile_, path, mode);
+  auto open(std::string_view path, BYTE mode) {
+    return f_open(sdFile_, path.data(), mode);
   }
 
   auto close(){
@@ -50,24 +50,12 @@ class SDReader : public Noncopyable{
   static auto unmount() -> FRESULT;
   static auto format() -> FRESULT;
   static void checkFreeSpace();
-
-  template<size_t PathLength>
-  static auto fileStatus(std::array<char, PathLength>& path) ->FRESULT;
-
-  template<size_t PathLength>
-  auto write(std::array<char, PathLength>& path, char* content) -> FRESULT;
-
-  template<size_t PathLength>
-  auto update(std::array<char, PathLength>& path, char* content) -> FRESULT;
-
-  template<size_t PathLength>
-  static auto remove(std::array<char, PathLength>& path) -> FRESULT;
-
-  template<size_t PathLength>
-  static auto makeDirectory(std::array<char, PathLength>& path) -> FRESULT;
-
-  template<size_t PathLength>
-  auto makeFile(std::array<char, PathLength>& path) -> FRESULT;
+  static auto fileStatus(std::string_view path) ->FRESULT;
+  auto write(std::string_view path, std::string_view content) -> FRESULT;
+  auto update(std::string_view path, std::string_view content) -> FRESULT;
+  static auto remove(std::string_view path) -> FRESULT;
+  static auto makeDirectory(std::string_view path) -> FRESULT;
+  auto makeFile(std::string_view path) -> FRESULT;
 
  private:
   const SDIOBus* sdio_{};

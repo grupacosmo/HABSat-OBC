@@ -4,12 +4,12 @@
 
 #include "Terminal.h"
 
-void Terminal::pcTransmit(char* message) {
-  uart_.transmit(reinterpret_cast<uint8_t*>(message), strlen(message));
+void Terminal::pcTransmit(std::string_view message) {
+  uart_.transmit(reinterpret_cast<uint8_t*>(const_cast<char*>(message.data())), message.size());
 }
 
-void Terminal::pcTransmitDMA(char* message){
-  uart_.transmitDMA(reinterpret_cast<uint8_t*>(message), strlen(message));
+void Terminal::pcTransmitDMA(std::string_view message){
+  uart_.transmitDMA(reinterpret_cast<uint8_t*>(const_cast<char*>(message.data())), message.size());
 }
 void Terminal::pcReceiveDma(char* message) {
   //todo

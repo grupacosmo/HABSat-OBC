@@ -6,13 +6,14 @@
 #define HABSAT_OBC_TERMINAL_H
 
 #include <cstring>
+#include <string_view>
 
 #include "UARTBus.h"
 
 class Terminal : public Noncopyable{
  public:
-  static void pcTransmit(char* message);
-  static void pcTransmitDMA(char* message);
+  static void pcTransmit(std::string_view message);
+  static void pcTransmitDMA(std::string_view message);
   static void pcReceiveDma(char* message);
 
  private:
