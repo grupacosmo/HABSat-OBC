@@ -61,7 +61,5 @@ class SDReader : public Noncopyable{
   const SDIOBus* sdio_{};
 };
 
-#include "SDReader.ipp"
-
 }  // namespace hw
 #endif  // RCC_SYS_MICROSD_READER_H

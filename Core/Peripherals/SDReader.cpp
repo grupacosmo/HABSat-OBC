@@ -157,4 +157,16 @@ auto SDReader::makeFile(std::string_view  path) -> FRESULT {
   // TODO make void and send comm to console ?
 }
 
+void SDReader::checkFreeSpace() {
+  static DWORD freeClusters;
+  static uint32_t totalSpace, freeSpace;
+  static FATFS* pfs;
+
+  f_getfree("", &freeClusters, &pfs);
+  totalSpace = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
+  freeSpace  = static_cast<uint32_t>(freeClusters * pfs->csize * 0.5);
+  // TODO send comm to console
+  // TODO make void and send comm to console ?
+}
+
 }  // namespace hw

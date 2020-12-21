@@ -1,10 +1,7 @@
-//
-// Created by Jakub Zygmunt on 21.12.2020.
-//
 
 template<size_t PathLength>
 void SDSave::prepareFileHeader(std::array<char, PathLength>&buffer) {
-  std::sprintf(buffer.data(),"DD/MM/YY hh:mm:ss Temp(\u2103) Press(hPa) Hum(%%RH)\n");
+  std::sprintf(buffer.data(),"DD/MM/YY hh:mm:ss Temp(\u2103) Press(hPa) Hum(%%RH)\r\n");
 }
 
 template<size_t PathLength>
@@ -15,5 +12,5 @@ void SDSave::prepareRTCData(std::array<char, PathLength>&buffer, const hw::Rtc::
 
 template<size_t PathLength>
 void SDSave::prepareSensorData(std::array<char, PathLength>&buffer, const hw::Sensor::Buffer* buf) {
-  std::sprintf(buffer.data(), "  %.2lf  %.2lf  %.2lf\n", buf->temperature, buf->pressure, buf->humidity);
+  std::sprintf(buffer.data(), "  %.2lf  %.2lf  %.2lf\r\n", buf->temperature, buf->pressure, buf->humidity);
 }
