@@ -12,8 +12,23 @@
 
 class Terminal : public Noncopyable{
  public:
+
+  /**
+   * Sends the message to the terminal in normal mode
+   * @param message
+   */
   static void pcTransmit(std::string_view message);
+
+  /**
+    * Sends the message to the terminal in DMA mode
+    * @param message
+    */
   static void pcTransmitDMA(std::string_view message);
+
+  /**
+   * TODO if someone needs it
+   * @param message
+   */
   static void pcReceiveDma(char* message);
 
  private:

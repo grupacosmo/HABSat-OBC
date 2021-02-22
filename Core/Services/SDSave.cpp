@@ -17,8 +17,7 @@ void SDSave::init() { sdSaveTask_.addToScheduler(static_cast<void*>(&params_)); 
 
 [[noreturn]] void SDSave::sdSaveTaskFunction(void* args) {
   auto params = static_cast<Params*>(args);
-  std::array<std::array<char, 100>, 2> buffer{};
-  std::array<char, 20> buffer1{};
+  std::array<std::array<char, 100>, 3> buffer{};
   const char* path{"test2.txt"};
 
   if(params->sdReader_->mount() != FR_OK)
@@ -34,10 +33,10 @@ void SDSave::init() { sdSaveTask_.addToScheduler(static_cast<void*>(&params_)); 
 
   while (true) {
     prepareRTCData(buffer[1], params->rtcBuffer_);
-    prepareSensorData(buffer1, params->sensorBuffer_);
+    prepareSensorData(buffer[2], params->sensorBuffer_);
 
     params->sdReader_->update(path, buffer[1].data());
-    params->sdReader_->update(path, buffer1.data());
+    params->sdReader_->update(path, buffer[2].data());
 
     os::Task::delay(1000);
   }

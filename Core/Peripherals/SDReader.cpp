@@ -4,6 +4,8 @@
 
 #include "SDReader.h"
 
+#include <array>
+
 namespace hw {
 
 SDReader::SDReader(const SDIOBus* sdio) {}
@@ -14,12 +16,10 @@ void SDReader::init() {
 
 auto SDReader::mount() -> FRESULT {
   return f_mount(&SDFatFS, SDPath, 0);
-  // TODO make void and send comm to console ?
 }
 
 auto SDReader::unmount() -> FRESULT {
   return f_mount(nullptr, SDPath, 0);
-  // TODO make void and send comm to console ?
 }
 
 auto SDReader::format() -> FRESULT {
@@ -44,7 +44,6 @@ auto SDReader::format() -> FRESULT {
   }
 
   return fresult;
-  // TODO make void and send comm to console
 }
 
 auto SDReader::fileStatus(std::string_view  path) -> FRESULT {
@@ -57,7 +56,6 @@ auto SDReader::write(std::string_view path, std::string_view content) -> FRESULT
 
   fresult = fileStatus(path);
   if(fresult != FR_OK){
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
     return fresult;
   }
 
@@ -75,7 +73,6 @@ auto SDReader::write(std::string_view path, std::string_view content) -> FRESULT
     // TODO send comm to console
   }
   return fresult;
-  // TODO make void and send comm to console ?
 }
 
 auto SDReader::update(std::string_view path, std::string_view content) -> FRESULT {
@@ -84,7 +81,6 @@ auto SDReader::update(std::string_view path, std::string_view content) -> FRESUL
 
   fresult = fileStatus(path);
   if(fresult != FR_OK){
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
     return fresult;
   }
 
@@ -117,21 +113,17 @@ auto SDReader::makeDirectory(std::string_view path) -> FRESULT {
   }
 
   return fresult;
-  // TODO make void and send comm to console ?
 }
 
 auto SDReader::remove(std::string_view path) -> FRESULT {
   FRESULT fresult;
 
   fresult = fileStatus(path);
-
   if(fresult != FR_OK){
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
     return fresult;
   }
 
   return f_unlink(path.data());
-  // TODO make void and send comm to console ?
 }
 
 auto SDReader::makeFile(std::string_view  path) -> FRESULT {
@@ -141,7 +133,6 @@ auto SDReader::makeFile(std::string_view  path) -> FRESULT {
   fresult = fileStatus(path);
   if(fresult == FR_OK){
     //file exist
-    // TODO send comm to console (determine if comm should be sent here or in fileStatus)
     return fresult;
   }
 
@@ -154,19 +145,19 @@ auto SDReader::makeFile(std::string_view  path) -> FRESULT {
   file.close();
 
   return fresult;
-  // TODO make void and send comm to console ?
 }
 
 void SDReader::checkFreeSpace() {
   static DWORD freeClusters;
   static uint32_t totalSpace, freeSpace;
   static FATFS* pfs;
+  std::array<char, 100> buffer{};
 
   f_getfree("", &freeClusters, &pfs);
   totalSpace = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
   freeSpace  = static_cast<uint32_t>(freeClusters * pfs->csize * 0.5);
-  // TODO send comm to console
-  // TODO make void and send comm to console ?
+  std::sprintf(buffer.data(), "SDCard memory usage: %lu/%lu\n", totalSpace, freeSpace);
+  Terminal::pcTransmitDMA(buffer.data());
 }
 
 }  // namespace hw
