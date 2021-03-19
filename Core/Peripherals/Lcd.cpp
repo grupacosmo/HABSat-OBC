@@ -9,9 +9,65 @@
 #include "../Utils/bitwiseOperations.h"
 #include "Obc.h"
 
-namespace hw {
+namespace lcd {
 
-Lcd::Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress)
+/**
+   * You can find detailed explanations of all commands here:
+   * https://mil.ufl.edu/3744/docs/lcdmanual/commands.html
+   */
+enum Command : uint8_t {
+  ClearDisplay = 0x01,  // has no flags, clears display
+  CursorHome   = 0x02,  // has no flags, sets cursor to line, 0 char 0
+  EntryMode    = 0x04,  // has flags, changes the mode of entering new characters
+  DisplayCtrl  = 0x08,  // has flags, changes the mode of displaying
+  Shift        = 0x10,  // has flags, shifts cursor or entire display
+  FunctionSet  = 0x20,  // has flags, changes the function set
+  CGRAMaddress = 0x40,  //
+  DDRAMaddress = 0x80,  //
+};
+
+// Below are the flags of all the commands that have them
+
+enum EntryModeFlag : uint8_t {
+  ShiftType      = 0x01,
+  ShiftDirection = 0x02,
+};
+
+enum DisplayCtrlFlag : uint8_t {
+  CursorBlink  = 0x01,
+  CursorState  = 0x02,
+  DisplayState = 0x04,
+};
+
+enum ShiftFlag : uint8_t {
+  Direction = 0x04,
+  Type      = 0x08,
+};
+
+enum FunctionSetFlag : uint8_t {
+  Font            = 0x04,
+  DisplayLines    = 0x08,  // flag not set - 1 line function set, flag set - 2 line function set
+  InterfaceLength = 0x10,  // flag not set - 4 bit interface, flag set - 8 bit interface
+};
+
+// Flags that are appended to the data
+// therefore the lower nibble of data has to be equal 0x00
+enum DataSendingFlag : uint8_t {
+  Register  = 0x01,
+  ReadWrite = 0x02,
+  Pulse     = 0x04,
+  Backlight = 0x08,
+};
+
+// Line start addresses
+enum LineOffset : uint8_t {
+  Line0 = 0x00,
+  Line1 = 0xC0,
+  Line2 = 0x94,
+  Line3 = 0x54,
+};
+
+Lcd::Lcd(uint16_t lines, uint16_t lineLength, const hw::I2CBus* i2c, uint8_t slaveAddress)
     : i2c_(i2c),
       lines_(lines),
       lineLength_(lineLength),

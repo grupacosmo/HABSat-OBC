@@ -15,13 +15,14 @@
 /**
  * The main structure of the entire program, contains every part of the obc.
  */
-struct Obc : public Noncopyable {
-  Hardware hware;
-  services::Blink blink{&hware.led};
-  services::MeasureTime measureTime{&hware.rtc};
-  services::MeasureWeather measureWeather{&hware.sensor};
-  services::Display display{&hware.lcd, &measureWeather.getBuffer(), &measureTime.getBuffer()};
+struct Obc : public Noncopyable{
+  Hardware hardware;
+  services::Blink blink;
+  services::MeasureTime measureTime;
+  services::MeasureWeather measureWeather;
+  services::Display display;
 
+  Obc();
   void init();
 };
 

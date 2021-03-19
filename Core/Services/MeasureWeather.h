@@ -12,9 +12,9 @@ namespace services {
 
 class MeasureWeather : public Noncopyable {
  public:
-  explicit MeasureWeather(hw::Sensor* sensor);
+  explicit MeasureWeather(sensor::Sensor* sensor);
   void init();
-  [[nodiscard]] auto getBuffer() const -> const hw::Sensor::Buffer&;
+  [[nodiscard]] auto getBuffer() const -> const sensor::SensorBuffer&;
 
  private:
   [[noreturn]] static void measureTaskFunction(void* args);
@@ -22,9 +22,8 @@ class MeasureWeather : public Noncopyable {
 
  private:
   struct Params {
-    hw::Sensor* sensor_;
-    hw::Sensor::Buffer buffer_;
-    explicit Params(hw::Sensor* sensor) : sensor_(sensor) {}
+    sensor::Sensor* sensor;
+    sensor::SensorBuffer buffer;
   } params_;
 };
 

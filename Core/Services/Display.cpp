@@ -8,9 +8,9 @@ namespace services {
 
 os::Task Display::displayTask_{"display_task", 256, os::Priority::Idle, displayTaskFunction};
 
-Display::Display(hw::Lcd* lcd, const hw::Sensor::Buffer* sensorBuffer,
-                 const hw::Rtc::Buffer* timeAndDate)
-    : params_(lcd, sensorBuffer, timeAndDate) {}
+Display::Display(lcd::Lcd* lcd, const sensor::SensorBuffer* sensorBuffer,
+                 const rtc::RtcBuffer* timeAndDate)
+    : params_{.lcd = lcd, .sensorBuffer = sensorBuffer, .timeAndDate = timeAndDate} {}
 
 void Display::init() { displayTask_.addToScheduler(static_cast<void*>(&params_)); }
 
@@ -22,19 +22,19 @@ void Display::prepareHeaderData(std::array<char, 20>& lineBuffer) {
   index = (index + 1) % options.size();
 }
 
-void Display::prepareTimeData(std::array<char, 20>& lineBuffer, const hw::Rtc::Buffer* buf) {
+void Display::prepareTimeData(std::array<char, 20>& lineBuffer, const rtc::RtcBuffer* buf) {
   std::sprintf(lineBuffer.data(), "      %'.02d:%'.02d:%'.02d", buf->hour, buf->minute,
                buf->second);
 }
 
-void Display::prepareDateData(std::array<char, 20>& lineBuffer, const hw::Rtc::Buffer* buf) {
+void Display::prepareDateData(std::array<char, 20>& lineBuffer, const rtc::RtcBuffer* buf) {
   static const std::array dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
   std::sprintf(lineBuffer.data(), "    %s %'.02d/%'.02d/%'.02d", dayNames[buf->weekday], buf->day,
                buf->month, buf->year);
 }
 
-void Display::prepareSensorData(std::array<char, 20>& lineBuffer, const hw::Sensor::Buffer* buf) {
+void Display::prepareSensorData(std::array<char, 20>& lineBuffer, const sensor::SensorBuffer* buf) {
   static const std::array bufferArray{&buf->temperature, &buf->pressure, &buf->humidity};
 
   static constexpr std::array options{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};
@@ -50,11 +50,11 @@ void Display::prepareSensorData(std::array<char, 20>& lineBuffer, const hw::Sens
 
   while (true) {
     prepareHeaderData(lineBuffers[0]);
-    prepareTimeData(lineBuffers[1], params->timeAndDate_);
-    prepareDateData(lineBuffers[2], params->timeAndDate_);
-    prepareSensorData(lineBuffers[3], params->sensorBuffer_);
+    prepareTimeData(lineBuffers[1], params->timeAndDate);
+    prepareDateData(lineBuffers[2], params->timeAndDate);
+    prepareSensorData(lineBuffers[3], params->sensorBuffer);
 
-    for (std::size_t i = 0; i < 4; ++i) params->lcd_->printLine(i, lineBuffers[i].data());
+    for (std::size_t i = 0; i < 4; ++i) params->lcd->printLine(i, lineBuffers[i].data());
 
     os::Task::delay(980);
   }

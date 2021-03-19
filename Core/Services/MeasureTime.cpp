@@ -8,8 +8,8 @@ namespace services {
 
 os::Task MeasureTime::measureTask_{"rtc_task", 128, os::Priority::Idle, measureTimeFunction};
 
-MeasureTime::MeasureTime(hw::Rtc *rtc)
-    : params_(rtc)
+MeasureTime::MeasureTime(rtc::Rtc *rtc)
+    : params_{.rtc = rtc, .buffer{}}
 {
 
 }
@@ -24,13 +24,13 @@ void MeasureTime::measureTimeFunction(void *args)
     auto params = static_cast<MeasureTime::Params*>(args);
     while(true)
     {
-        params->rtc_->readTimeAndDate(params->buffer_);
+        params->rtc->readTimeAndDate(params->buffer);
         os::Task::delay(500);
     }
 }
-const hw::Rtc::Buffer &MeasureTime::getBuffer() const
+auto MeasureTime::getBuffer() const -> const rtc::RtcBuffer &
 {
-    return params_.buffer_;
+    return params_.buffer;
 }
 
 }

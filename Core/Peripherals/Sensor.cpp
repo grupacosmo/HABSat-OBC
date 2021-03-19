@@ -7,9 +7,11 @@
 #include "Obc.h"
 #include "bitwiseOperations.h"
 
-namespace hw {
+namespace sensor {
 
-Sensor::Sensor(const SPIBus& spi, ChipSelect& cs) : spi_(spi), cs_(cs) {}
+using namespace impl;
+
+Sensor::Sensor(const hw::SPIBus& spi, hw::ChipSelect& cs) : spi_(spi), cs_(cs) {}
 
 void Sensor::init(const ConfigFlags& temperatureResolution,
                   const ConfigFlags& pressureOversampling,
@@ -64,7 +66,7 @@ void Sensor::configure(const ConfigFlags& standbyTime, const ConfigFlags& filter
   write8(Address::Config, data);
 }
 
-void Sensor::readAll(Buffer& buffer) {
+void Sensor::readAll(SensorBuffer& buffer) {
   // BME280 documentation page 31 table 29, 30, 31
   uint8_t address = Address::MainDataBlock & AddressFlag::Read;
   std::array<uint8_t, 9> bytes{address};

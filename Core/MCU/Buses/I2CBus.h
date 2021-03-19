@@ -11,9 +11,9 @@
 
 namespace hw {
 
-class I2CBus : public Bus<I2CHandle> {
+class I2CBus : public Bus<I2C_HandleTypeDef> {
  public:
-  constexpr explicit I2CBus(I2CHandle* handle) : Bus(handle) {}
+  constexpr explicit I2CBus(I2C_HandleTypeDef* handle) : Bus(handle) {}
 
   inline auto transmit(uint16_t slaveAddress, uint8_t data,
                        uint32_t timeout = defaultTimeout_) const -> BusResult;

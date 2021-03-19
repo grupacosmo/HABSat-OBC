@@ -12,19 +12,18 @@ namespace services {
 
 class MeasureTime : public Noncopyable {
  public:
-  explicit MeasureTime(hw::Rtc* rtc);
+  explicit MeasureTime(rtc::Rtc* rtc);
   void init();
-  [[nodiscard]] auto getBuffer() const -> const hw::Rtc::Buffer&;
+  [[nodiscard]] auto getBuffer() const -> const rtc::RtcBuffer&;
 
  private:
-  static void measureTimeFunction(void* args);
+  [[noreturn]] static void measureTimeFunction(void* args);
 
  private:
   static os::Task measureTask_;
   struct Params {
-    hw::Rtc* rtc_;
-    hw::Rtc::Buffer buffer_;
-    explicit Params(hw::Rtc* rtc) : rtc_(rtc) {}
+    rtc::Rtc* rtc;
+    rtc::RtcBuffer buffer;
   } params_;
 };
 

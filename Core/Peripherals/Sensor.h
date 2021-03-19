@@ -13,17 +13,36 @@
 #include "osTask.h"
 #include "stm32f4xx.h"
 
-namespace hw {
+namespace sensor::impl {
+
+enum Address : uint8_t {
+  Calib00       = 0x88,
+  Calib26       = 0xE1,
+  MainDataBlock = 0xF7,
+
+  HumControl      = 0xF2,
+  Config          = 0xF5,
+  CTRLmeasAddress = 0xF4
+};
+
+enum AddressFlag : uint8_t {
+  Write = 0b0111'1111,
+  Read  = 0b1111'1111,
+};
+
+}  // namespace sensor::impl
+
+namespace sensor {
+
+struct SensorBuffer {
+  std::array<float, 3> array{};
+  float& temperature = array[0];
+  float& pressure    = array[1];
+  float& humidity    = array[2];
+};
 
 class Sensor : public Noncopyable {
  public:
-  struct Buffer {
-    std::array<float, 3> array{};
-    float& temperature = array[0];
-    float& pressure    = array[1];
-    float& humidity    = array[2];
-  };
-
   enum ConfigFlags : uint8_t {
     Temperature16Bit      = 0x01,
     FilterOff             = 0x00,
@@ -34,8 +53,7 @@ class Sensor : public Noncopyable {
   };
 
  public:
-
-  Sensor(const SPIBus& spi, ChipSelect& chipSelect);
+  Sensor(const hw::SPIBus& spi, hw::ChipSelect& chipSelect);
 
   /**
    * Initializes Sensor.
@@ -58,7 +76,7 @@ class Sensor : public Noncopyable {
   /**
    *Calls function for reading temperature, pressure and humidity
    */
-  void readAll(Buffer& buffer);
+  void readAll(SensorBuffer& buffer);
 
  private:
   void getCalibrationData();
@@ -73,27 +91,14 @@ class Sensor : public Noncopyable {
   void write8(uint8_t address, uint8_t data);
 
  private:
-  const SPIBus& spi_;
-  ChipSelect& cs_;
-
-  enum Address : uint8_t {
-
-    Calib00       = 0x88,
-    Calib26       = 0xE1,
-    MainDataBlock = 0xF7,
-
-    HumControl      = 0xF2,
-    Config          = 0xF5,
-    CTRLmeasAddress = 0xF4
-  };
-
-  enum AddressFlag : uint8_t { Write = 0b0111'1111, Read = 0b1111'1111 };
+  const hw::SPIBus& spi_;
+  hw::ChipSelect& cs_;
 
   TempConversionData tempConvData_{};
   PressConversionData pressConvData_{};
   HumidCoversionData humidConvData_{};
 };
 
-}  // namespace hw
+}  // namespace sensor
 
 #endif  // HABSAT_OBC_SENSOR_H

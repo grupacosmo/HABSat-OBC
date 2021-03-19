@@ -6,9 +6,9 @@
 
 #include "Obc.h"
 
-namespace hw {
+namespace rtc {
 
-Rtc::Rtc(const I2CBus* i2c, uint8_t address) : i2c_(i2c), slaveAddress_(address) {}
+Rtc::Rtc(const hw::I2CBus* i2c, uint8_t address) : i2c_(i2c), slaveAddress_(address) {}
 
 void Rtc::init() const {
 #if HW_RTC_SET_TIME
@@ -25,24 +25,24 @@ void Rtc::init() const {
 #endif
 }
 
-auto Rtc::convertBcdToDec(const uint8_t bcdData) -> uint8_t {
+auto convertBcdToDec(const uint8_t bcdData) -> uint8_t {
   return ((bcdData >> 4) * 10) + (bcdData & 0x0F);
 }
 
-auto Rtc::convertDecToBcd(const uint8_t decData) -> uint8_t {
+auto convertDecToBcd(const uint8_t decData) -> uint8_t {
   return ((decData / 10) << 4) | (decData % 10);
 }
 
-void Rtc::setTimeAndDate(const Buffer& timeAndDate) const {
-  Buffer converted;
+void Rtc::setTimeAndDate(const RtcBuffer& timeAndDate) const {
+  RtcBuffer converted;
   for (size_t i = 0; i < converted.array.size(); ++i) {
     converted.array[i] = convertDecToBcd(timeAndDate.array[i]);
   }
   i2c_->memoryWrite<0x00>(slaveAddress_, converted.array);
 }
 
-void Rtc::readTimeAndDate(Buffer& buffer) {
-  if (i2c_->memoryRead<0x00>(slaveAddress_, buffer.array) == BusResult::Ok) {
+void Rtc::readTimeAndDate(RtcBuffer& buffer) {
+  if (i2c_->memoryRead<0x00>(slaveAddress_, buffer.array) == hw::BusResult::Ok) {
     for (auto& elem : buffer.array) {
       elem = convertBcdToDec(elem);
     }

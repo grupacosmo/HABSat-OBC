@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "mainLoop.h"
+#include "../Core/mainLoop.h"
 
 /* USER CODE END Includes */
 

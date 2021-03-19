@@ -14,9 +14,9 @@ namespace hw {
 
 using ChipSelect = GPIOPin;
 
-class SPIBus : public Bus<SPIHandle> {
+class SPIBus : public Bus<SPI_HandleTypeDef> {
  public:
-  constexpr explicit SPIBus(SPIHandle* handle) : Bus(handle){};
+  constexpr explicit SPIBus(SPI_HandleTypeDef* handle) : Bus(handle){};
 
   inline auto transmit(ChipSelect& cs, uint8_t data, uint32_t timeout = defaultTimeout_) const
       -> BusResult;

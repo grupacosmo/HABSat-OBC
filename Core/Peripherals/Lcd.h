@@ -12,7 +12,7 @@
 #include "osTask.h"
 #include "stm32f4xx.h"
 
-namespace hw {
+namespace lcd {
 
 class Lcd : public Noncopyable {
  public:
@@ -22,7 +22,7 @@ class Lcd : public Noncopyable {
    * @param i2c
    * @param slaveAddress
    */
-  Lcd(uint16_t lines, uint16_t lineLength, const I2CBus* i2c, uint8_t slaveAddress);
+  Lcd(uint16_t lines, uint16_t lineLength, const hw::I2CBus* i2c, uint8_t slaveAddress);
 
   /**
    * Initializes LCD hardware
@@ -106,63 +106,6 @@ class Lcd : public Noncopyable {
   void shiftDirectionRight();
 
  private:
-  /**
-   * You can find detailed explanations of all commands here:
-   * https://mil.ufl.edu/3744/docs/lcdmanual/commands.html
-   */
-  enum Command : uint8_t {
-    ClearDisplay = 0x01,  // has no flags, clears display
-    CursorHome   = 0x02,  // has no flags, sets cursor to line, 0 char 0
-    EntryMode    = 0x04,  // has flags, changes the mode of entering new characters
-    DisplayCtrl  = 0x08,  // has flags, changes the mode of displaying
-    Shift        = 0x10,  // has flags, shifts cursor or entire display
-    FunctionSet  = 0x20,  // has flags, changes the function set
-    CGRAMaddress = 0x40,  //
-    DDRAMaddress = 0x80,  //
-  };
-
-  // Below are the flags of all the commands that have them
-
-  enum EntryModeFlag : uint8_t {
-    ShiftType      = 0x01,
-    ShiftDirection = 0x02,
-  };
-
-  enum DisplayCtrlFlag : uint8_t {
-    CursorBlink  = 0x01,
-    CursorState  = 0x02,
-    DisplayState = 0x04,
-  };
-
-  enum ShiftFlag : uint8_t {
-    Direction = 0x04,
-    Type      = 0x08,
-  };
-
-  enum FunctionSetFlag : uint8_t {
-    Font            = 0x04,
-    DisplayLines    = 0x08,  // flag not set - 1 line function set, flag set - 2 line function set
-    InterfaceLength = 0x10,  // flag not set - 4 bit interface, flag set - 8 bit interface
-  };
-
-  // Flags that are appended to the data
-  // therefore the lower nibble of data has to be equal 0x00
-  enum DataSendingFlag : uint8_t {
-    Register  = 0x01,
-    ReadWrite = 0x02,
-    Pulse     = 0x04,
-    Backlight = 0x08,
-  };
-
-  // Line start addresses
-  enum LineOffset : uint8_t {
-    Line0 = 0x00,
-    Line1 = 0xC0,
-    Line2 = 0x94,
-    Line3 = 0x54,
-  };
-
- private:
   void setFlag(uint8_t& config, uint8_t flag);
   void unsetFlag(uint8_t& config, uint8_t flag);
   void sendCmd(uint8_t byte) const;
@@ -171,7 +114,7 @@ class Lcd : public Noncopyable {
   void transmitNibble(uint8_t nibble) const;
 
  private:
-  const I2CBus* const i2c_;
+  const hw::I2CBus* const i2c_;
   const uint16_t lines_;
   const uint16_t lineLength_;
   const uint16_t slaveAddress_;
@@ -180,6 +123,6 @@ class Lcd : public Noncopyable {
   uint8_t entryModeConfig_;
 };
 
-}  // namespace hw
+}  // namespace lcd
 
 #endif  // HABSAT_OBC_LCD_H
