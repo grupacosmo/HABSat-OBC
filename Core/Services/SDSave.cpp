@@ -18,7 +18,7 @@ void SDSave::init() { sdSaveTask_.addToScheduler(static_cast<void*>(&params_)); 
 [[noreturn]] void SDSave::sdSaveTaskFunction(void* args) {
   auto params = static_cast<Params*>(args);
   std::array<std::array<char, 100>, 3> buffer{};
-  const char* path{"test2.txt"};
+  const char* path{"test.txt"};
 
   if(params->sdReader_->mount() != FR_OK)
   {

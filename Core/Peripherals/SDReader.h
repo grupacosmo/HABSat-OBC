@@ -86,7 +86,7 @@ class SDReader : public Noncopyable{
    * @param path        file path
    * @return File function return code (FRESULT).
    */
-  static auto fileStatus(std::string_view path) ->FRESULT;
+  static auto fileStatus(std::string_view path) -> FRESULT;
 
   /**
    * Creates new file and writes the data (content) to the file.

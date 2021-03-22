@@ -1,7 +1,7 @@
 
 template<size_t PathLength>
 void SDSave::prepareFileHeader(std::array<char, PathLength>&buffer) {
-  std::sprintf(buffer.data(),"DD/MM/YY hh:mm:ss Temp(\u2103) Press(hPa) Hum(%%RH)\r\n");
+  std::sprintf(buffer.data(), "DD/MM/YY hh:mm:ss Temp(\u2103) Press(hPa) Hum(%%RH)\r\n");
 }
 
 template<size_t PathLength>

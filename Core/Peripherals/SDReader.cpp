@@ -62,7 +62,6 @@ auto SDReader::write(std::string_view path, std::string_view content) -> FRESULT
   fresult = file.open(path.data(), FA_CREATE_ALWAYS | FA_WRITE);
 
   if (fresult == FR_OK) {
-    Terminal::pcTransmitDMA("File successfully created");
     fresult = f_write(file.file(), content.data(), content.size(), nullptr);
     if (fresult != FR_OK) {
       return fresult;
@@ -99,7 +98,6 @@ auto SDReader::update(std::string_view path, std::string_view content) -> FRESUL
   }
 
   return fresult;
-  // TODO make void and send comm to console ?
 }
 
 auto SDReader::makeDirectory(std::string_view path) -> FRESULT {
