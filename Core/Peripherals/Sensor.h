@@ -94,9 +94,9 @@ class Sensor : public Noncopyable {
   const hw::SPIBus& spi_;
   hw::ChipSelect& cs_;
 
-  TempConversionData tempConvData_{};
-  PressConversionData pressConvData_{};
-  HumidCoversionData humidConvData_{};
+  bme280::TempConversionData tempConvData_{};
+  bme280::PressConversionData pressConvData_{};
+  bme280::HumidCoversionData humidConvData_{};
 };
 
 }  // namespace sensor

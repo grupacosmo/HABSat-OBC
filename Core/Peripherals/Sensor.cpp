@@ -77,9 +77,9 @@ void Sensor::readAll(SensorBuffer& buffer) {
   const auto rawHumid = bitwise::concat2Bytes(bytes[7], bytes[8]);
 
   // BME280 documentation page 25 point 4.2.3
-  buffer.temperature = BME280_compensate_T(rawTemp, &tempConvData_) / 100.0f;
-  buffer.pressure    = BME280_compensate_P(rawPress, &pressConvData_) / 25600.0f;
-  buffer.humidity    = BME280_compensate_H(rawHumid, &humidConvData_) / 1024.0f;
+  buffer.temperature = bme280::compensateTemp(rawTemp, &tempConvData_) / 100.0f;
+  buffer.pressure    = bme280::compensatePressure(rawPress, &pressConvData_) / 25600.0f;
+  buffer.humidity    = bme280::compensateHumidity(rawHumid, &humidConvData_) / 1024.0f;
 }
 
 void Sensor::write8(const uint8_t address, const uint8_t data) {
