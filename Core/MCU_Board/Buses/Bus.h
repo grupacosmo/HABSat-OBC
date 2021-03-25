@@ -6,7 +6,7 @@
 #define HABSAT_OBC_BUS_H
 
 #include "Noncopyable.h"
-#include "handles.h"
+#include "extern_handles.h"
 
 namespace hw {
 

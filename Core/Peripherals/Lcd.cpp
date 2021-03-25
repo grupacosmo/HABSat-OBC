@@ -7,7 +7,6 @@
 #include <array>
 
 #include "../Utils/bitwiseOperations.h"
-#include "Obc.h"
 
 namespace lcd {
 

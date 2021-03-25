@@ -4,8 +4,6 @@
 
 #include "Blink.h"
 
-#include "Obc.h"
-
 namespace services {
 
 os::Task Blink::inputTask_{"input", 128, os::Priority::Interrupt, inputTaskFunction};

@@ -9,9 +9,7 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        Include_Files
-        OBC
-        System
-        Utils
+        Buses
         BME280_Compensation
+        System
         )

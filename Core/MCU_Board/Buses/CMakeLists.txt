@@ -9,5 +9,7 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        INTERFACE Include_Files
+        INTERFACE Utils
+        Include_Files
+        MCU_Board
         )

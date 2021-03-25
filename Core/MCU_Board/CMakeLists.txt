@@ -1,4 +1,4 @@
-set(NAME Interrupt_Handlers)
+set(NAME MCU_Board)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -9,5 +9,7 @@ target_include_directories(${NAME}
         )
 
 target_link_libraries(${NAME}
-        Include_Files
-        OBC)
+        Utils
+        )
+
+add_subdirectory(Buses)

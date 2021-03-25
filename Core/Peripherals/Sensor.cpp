@@ -4,7 +4,6 @@
 
 #include "Sensor.h"
 
-#include "Obc.h"
 #include "bitwiseOperations.h"
 
 namespace sensor {

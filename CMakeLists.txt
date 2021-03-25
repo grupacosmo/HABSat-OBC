@@ -71,5 +71,5 @@ include_directories(
 add_subdirectory(Core)
 
 target_link_libraries(HABSat-OBC.elf
-        Main_Loop
+        Core
         )

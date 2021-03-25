@@ -4,8 +4,6 @@
 
 #include "Rtc.h"
 
-#include "Obc.h"
-
 namespace rtc {
 
 Rtc::Rtc(const hw::I2CBus* i2c, uint8_t address) : i2c_(i2c), slaveAddress_(address) {}

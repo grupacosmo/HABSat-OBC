@@ -1,11 +1,9 @@
 //
-// Created by Wiktor Wieclaw on 9/7/20.
+// Created by Wiktor Wieclaw on 10/1/20.
 //
-#include "Hardware.h"
+#include "Obc.h"
 
-#include "hardware_config.h"
-
-Hardware::Hardware()
+Obc::Obc()
     : i2c{&hi2c3},
       spi{&hspi2},
       pinC13{GPIOC, GPIO_PIN_13},
@@ -15,9 +13,13 @@ Hardware::Hardware()
       led{&pinA5},
       lcd{4, 20, &i2c, constants::lcdSlaveAddress},
       rtc{&i2c, constants::rtcSlaveAddress},
-      sensor{spi, sensorCS} {}
+      sensor{spi, sensorCS},
+      blink{&led},
+      measureTime{&rtc},
+      measureWeather{&sensor},
+      display{&lcd, &measureWeather.getBuffer(), &measureTime.getBuffer()} {}
 
-void Hardware::init() {
+void Obc::init() {
 #if HW_LCD == 1
   lcd.init();
 #endif
@@ -32,4 +34,8 @@ void Hardware::init() {
   sensor.configure(sensor::Sensor::ConfigFlags::Standby10Ms,
                    sensor::Sensor::ConfigFlags::FilterOff);
 #endif
+  blink.init();
+  display.init();
+  measureTime.init();
+  measureWeather.init();
 }
