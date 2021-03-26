@@ -7,9 +7,10 @@
 #ifndef HABSAT_OBC_HARDWARE_CONFIG
 #define HABSAT_OBC_HARDWARE_CONFIG
 
-#define HW_LCD    1  // 1 if LCD connected
-#define HW_SENSOR 1  // 1 if SENSOR connected
-#define HW_RTC    1  // 1 if RTC connected
+#define HW_LCD      1  // 1 if LCD connected
+#define HW_SENSOR   1  // 1 if SENSOR connected
+#define HW_RTC      1  // 1 if RTC connected
+#define HW_SDREADER 1  // 1 if SDREADER connected
 
 /* 1 if you have PCF8574A (instead of PCF8574) I2C converter in your LCD */
 #define HW_LCD_I2C_CONVERTER_TYPE_A 0

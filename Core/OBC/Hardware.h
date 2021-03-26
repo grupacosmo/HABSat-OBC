@@ -7,10 +7,12 @@
 
 #include "Button.h"
 #include "I2CBus.h"
+#include "SPIBus.h"
 #include "Lcd.h"
 #include "Led.h"
 #include "Rtc.h"
 #include "Sensor.h"
+#include "SDReader.h"
 #include "constants.h"
 #include "handles.h"
 
@@ -20,6 +22,7 @@
 struct Hardware : public Noncopyable {
   constexpr static hw::I2CBus i2c{hw::Handles::i2c3};
   constexpr static hw::SPIBus spi{hw::Handles::spi2};
+  constexpr static hw::SDIOBus sdio{hw::Handles::sdio};
 
   hw::GPIOPin pinC13{GPIOC, GPIO_PIN_13};
   hw::GPIOPin pinA5{GPIOA, GPIO_PIN_5};
@@ -30,6 +33,7 @@ struct Hardware : public Noncopyable {
   hw::Lcd lcd{4, 20, &i2c, constants::lcdSlaveAddress};
   hw::Rtc rtc{&i2c, constants::rtcSlaveAddress};
   hw::Sensor sensor{spi, sensorCS};
+  hw::SDReader sdReader{&sdio};
 
  public:
   void init();

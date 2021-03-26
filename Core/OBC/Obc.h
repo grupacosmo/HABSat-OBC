@@ -11,6 +11,7 @@
 #include "I2CBus.h"
 #include "MeasureTime.h"
 #include "MeasureWeather.h"
+#include "SDSave.h"
 
 /**
  * The main structure of the entire program, contains every part of the obc.
@@ -21,6 +22,7 @@ struct Obc : public Noncopyable {
   services::MeasureTime measureTime{&hware.rtc};
   services::MeasureWeather measureWeather{&hware.sensor};
   services::Display display{&hware.lcd, &measureWeather.getBuffer(), &measureTime.getBuffer()};
+  services::SDSave sdSave{&hware.sdReader, &measureWeather.getBuffer(), &measureTime.getBuffer()};
 
   void init();
 };
