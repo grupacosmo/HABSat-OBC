@@ -7,7 +7,7 @@
 #include "Obc.h"
 
 void mainLoop() {
-  static Obc obc;
-  obc.init();
-  os::Task::startScheduler();
+    obc().init();
+
+    os::startScheduler();
 }

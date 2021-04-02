@@ -5,28 +5,12 @@
 #ifndef HABSAT_OBC_MEASURETIME_H
 #define HABSAT_OBC_MEASURETIME_H
 
-#include <Rtc.h>
-#include <osTask.h>
+#include "Rtc.h"
 
-namespace services {
+namespace measureTime {
 
-class MeasureTime : public Noncopyable {
- public:
-  explicit MeasureTime(rtc::Rtc* rtc);
-  void init();
-  [[nodiscard]] auto getBuffer() const -> const rtc::RtcBuffer&;
+[[noreturn]] void taskFn(void* args);
 
- private:
-  [[noreturn]] static void measureTimeFunction(void* args);
-
- private:
-  static os::Task measureTask_;
-  struct Params {
-    rtc::Rtc* rtc;
-    rtc::RtcBuffer buffer;
-  } params_;
-};
-
-}  // namespace services
+}  // namespace measureTime
 
 #endif  // HABSAT_OBC_MEASURETIME_H

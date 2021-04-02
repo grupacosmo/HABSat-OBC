@@ -342,18 +342,18 @@ PRIVILEGED_DATA static List_t xDelayedTaskList1 = { 0 };						/*< Delayed tasks.
 PRIVILEGED_DATA static List_t xDelayedTaskList2 = { 0 };						/*< Delayed tasks (two lists are used - one for delays that have overflowed the current tick count. */
 PRIVILEGED_DATA static List_t * volatile pxDelayedTaskList = NULL;				/*< Points to the delayed task list currently being used. */
 PRIVILEGED_DATA static List_t * volatile pxOverflowDelayedTaskList = NULL;		/*< Points to the delayed task list currently being used to hold tasks that have overflowed the current tick count. */
-PRIVILEGED_DATA static List_t xPendingReadyList = { 0 };						/*< Tasks that have been readied while the scheduler was suspended.  They will be moved to the ready list when the scheduler is resumed. */
+PRIVILEGED_DATA static List_t xPendingReadyList = { 0 };						/*< Services that have been readied while the scheduler was suspended.  They will be moved to the ready list when the scheduler is resumed. */
 
 #if( INCLUDE_vTaskDelete == 1 )
 
-PRIVILEGED_DATA static List_t xTasksWaitingTermination = { 0 };				/*< Tasks that have been deleted - but their memory not yet freed. */
+PRIVILEGED_DATA static List_t xTasksWaitingTermination = { 0 };				/*< Services that have been deleted - but their memory not yet freed. */
 	PRIVILEGED_DATA static volatile UBaseType_t uxDeletedTasksWaitingCleanUp = ( UBaseType_t ) 0U;
 
 #endif
 
 #if ( INCLUDE_vTaskSuspend == 1 )
 
-	PRIVILEGED_DATA static List_t xSuspendedTaskList = { 0 };					/*< Tasks that are currently suspended. */
+	PRIVILEGED_DATA static List_t xSuspendedTaskList = { 0 };					/*< Services that are currently suspended. */
 
 #endif
 
@@ -610,7 +610,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 
 			#if( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 ) /*lint !e731 !e9029 Macro has been consolidated for readability reasons. */
 			{
-				/* Tasks can be created statically or dynamically, so note this
+				/* Services can be created statically or dynamically, so note this
 				task was created statically in case the task is later deleted. */
 				pxNewTCB->ucStaticallyAllocated = tskSTATICALLY_ALLOCATED_STACK_AND_TCB;
 			}
@@ -652,7 +652,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 
 			#if( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 )
 			{
-				/* Tasks can be created statically or dynamically, so note this
+				/* Services can be created statically or dynamically, so note this
 				task was created statically in case the task is later deleted. */
 				pxNewTCB->ucStaticallyAllocated = tskSTATICALLY_ALLOCATED_STACK_AND_TCB;
 			}
@@ -699,7 +699,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 
 				#if( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 )
 				{
-					/* Tasks can be created statically or dynamically, so note
+					/* Services can be created statically or dynamically, so note
 					this task had a statically allocated stack in case it is
 					later deleted.  The TCB was allocated dynamically. */
 					pxNewTCB->ucStaticallyAllocated = tskSTATICALLY_ALLOCATED_STACK_ONLY;
@@ -797,7 +797,7 @@ static void prvAddNewTaskToReadyList( TCB_t *pxNewTCB ) PRIVILEGED_FUNCTION;
 		{
 			#if( tskSTATIC_AND_DYNAMIC_ALLOCATION_POSSIBLE != 0 ) /*lint !e9029 !e731 Macro has been consolidated for readability reasons. */
 			{
-				/* Tasks can be created statically or dynamically, so note this
+				/* Services can be created statically or dynamically, so note this
 				task was created dynamically in case it is later deleted. */
 				pxNewTCB->ucStaticallyAllocated = tskDYNAMICALLY_ALLOCATED_STACK_AND_TCB;
 			}
@@ -2691,7 +2691,7 @@ BaseType_t xSwitchRequired = pdFALSE;
 			mtCOVERAGE_TEST_MARKER();
 		}
 
-		/* See if this tick has made a timeout expire.  Tasks are stored in
+		/* See if this tick has made a timeout expire.  Services are stored in
 		the	queue in the order of their wake time - meaning once one task
 		has been found whose block time has not expired there is no need to
 		look any further down the list. */
@@ -2773,7 +2773,7 @@ BaseType_t xSwitchRequired = pdFALSE;
 			}
 		}
 
-		/* Tasks of equal priority to the currently running task will share
+		/* Services of equal priority to the currently running task will share
 		processing time (time slice) if preemption is on, and the application
 		writer has not explicitly turned time slicing off. */
 		#if ( ( configUSE_PREEMPTION == 1 ) && ( configUSE_TIME_SLICING == 1 ) )

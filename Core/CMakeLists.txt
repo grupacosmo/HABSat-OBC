@@ -17,4 +17,5 @@ target_include_directories(${NAME}
 target_link_libraries(${NAME}
         Peripherals
         Services
+        System
         )

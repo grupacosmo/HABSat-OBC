@@ -5,44 +5,51 @@
 #ifndef HABSAT_OBC_OBC_H
 #define HABSAT_OBC_OBC_H
 
+#include "Blink.h"
 #include "Button.h"
+#include "Display.h"
 #include "I2CBus.h"
-#include "SPIBus.h"
 #include "Lcd.h"
 #include "Led.h"
+#include "MeasureTime.h"
+#include "MeasureWeather.h"
+#include "Noncopyable.h"
 #include "Rtc.h"
+#include "SPIBus.h"
 #include "Sensor.h"
 #include "constants.h"
 #include "extern_handles.h"
-#include "Blink.h"
-#include "Display.h"
-#include "MeasureTime.h"
-#include "MeasureWeather.h"
-#include "Button.h"
-#include "Noncopyable.h"
+#include "osMutex.h"  // unused
+#include "osQueue.h"  // unused
+#include "osTask.h"
 
-class Obc : public Noncopyable {
-  hw::I2CBus i2c;
-  hw::SPIBus spi;
+struct Obc : public Noncopyable {
+    mcuBoard::I2CBus i2c;
+    mcuBoard::SPIBus spi;
 
-  hw::GPIOPin pinC13;
-  hw::GPIOPin pinA5;
-  hw::ChipSelect sensorCS;
+    mcuBoard::GPIOPin pinC13;
+    mcuBoard::GPIOPin pinA5;
+    mcuBoard::ChipSelect sensorCS;
+    mcuBoard::Button button;
+    mcuBoard::Led led;
 
-  hw::Button button;
-  hw::Led led;
-  lcd::Lcd lcd;
-  rtc::Rtc rtc;
-  sensor::Sensor sensor;
+    lcd::Lcd lcd;
+    rtc::Rtc rtc;
+    sensor::Sensor sensor;
 
-  services::Blink blink;
-  services::MeasureTime measureTime;
-  services::MeasureWeather measureWeather;
-  services::Display display;
+    rtc::Buffer rtcBuffer;
+    sensor::Buffer sensorBuffer;
 
- public:
-  Obc();
-  void init();
+    os::Task inputTask;
+    os::Task blinkTask;
+    os::Task displayTask;
+    os::Task measureTimeTask;
+    os::Task measureWeatherTask;
+
+    Obc();
+    void init();
 };
+
+auto obc() -> Obc&;
 
 #endif  // HABSAT_OBC_OBC_H

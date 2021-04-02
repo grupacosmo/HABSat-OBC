@@ -2199,7 +2199,7 @@ static void prvUnlockQueue( Queue_t * const pxQueue )
 				}
 				else
 				{
-					/* Tasks that are removed from the event list will get
+					/* Services that are removed from the event list will get
 					added to the pending ready list as the scheduler is still
 					suspended. */
 					if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
@@ -2223,7 +2223,7 @@ static void prvUnlockQueue( Queue_t * const pxQueue )
 			}
 			#else /* configUSE_QUEUE_SETS */
 			{
-				/* Tasks that are removed from the event list will get added to
+				/* Services that are removed from the event list will get added to
 				the pending ready list as the scheduler is still suspended. */
 				if( listLIST_IS_EMPTY( &( pxQueue->xTasksWaitingToReceive ) ) == pdFALSE )
 				{

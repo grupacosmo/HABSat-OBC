@@ -2,7 +2,7 @@ set(NAME Services)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
-add_library(${NAME} STATIC ${SOURCE})
+add_library(${NAME} STATIC ${SOURCE} Blink.cpp)
 
 target_include_directories(${NAME}
         PUBLIC ${CMAKE_CURRENT_LIST_DIR}
@@ -10,4 +10,5 @@ target_include_directories(${NAME}
 
 target_link_libraries(${NAME}
         Peripherals
+        System
        )

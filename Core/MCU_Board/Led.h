@@ -7,35 +7,35 @@
 
 #include "GPIOPin.h"
 
-namespace hw {
+namespace mcuBoard {
 
 class Led : public Noncopyable {
  public:
-  explicit Led(GPIOPin* pin);
+  explicit Led(GPIOPin& pin) : pin_(pin) {}
 
   /**
    * Turns the LED on.
    */
-  void on();
+  void on() { pin_.set(); }
 
   /**
    * Turns the LED off.
    */
-  void off();
+  void off() { pin_.reset(); }
 
   /**
    * Toggles the LED.
    */
-  void toggle();
+  void toggle() { pin_.toggle(); }
 
   /**
    * Checks whether the LED is on.
    * @return
    */
-  [[nodiscard]] auto isOn() const -> bool;
+  [[nodiscard]] auto isOn() const -> bool { return pin_.read() == GPIOState::Set; }
 
  private:
-  GPIOPin* const pin_;
+  GPIOPin& pin_;
 };
 
 }  // namespace hw

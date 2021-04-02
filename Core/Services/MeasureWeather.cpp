@@ -2,25 +2,19 @@
 // Created by Wiktor Wieclaw on 11/30/20.
 //
 
-#include "MeasureWeather.h"
+#include "measureWeather.h"
 
-namespace services {
+#include "../Obc.h"
 
-os::Task MeasureWeather::measureTask_{"measure", 256, os::Priority::Idle, measureTaskFunction};
+namespace measureWeather {
 
-MeasureWeather::MeasureWeather(sensor::Sensor* sensor) : params_{.sensor = sensor, .buffer{}} {}
+[[noreturn]] void taskFn(void* args) {
+    auto obc = static_cast<Obc*>(args);
 
-void MeasureWeather::init() { measureTask_.addToScheduler(static_cast<void*>(&params_)); }
-
-[[noreturn]] void MeasureWeather::measureTaskFunction(void* args) {
-  auto params = static_cast<Params*>(args);
-
-  while (true) {
-    params->sensor->readAll(params->buffer);
-    os::Task::delay(256);
-  }
+    while (true) {
+        obc->sensor.readAll(obc->sensorBuffer);
+        os::thisTask::delay(256);
+    }
 }
 
-auto MeasureWeather::getBuffer() const -> const sensor::SensorBuffer& { return params_.buffer; }
-
-}  // namespace services
+}  // namespace measureWeather

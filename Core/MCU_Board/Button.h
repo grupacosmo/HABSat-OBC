@@ -7,17 +7,17 @@
 
 #include "GPIOPin.h"
 
-namespace hw {
+namespace mcuBoard {
 
 class Button : public Noncopyable {
  public:
-  explicit Button(GPIOPin* pin);
+  explicit Button(GPIOPin* pin) : pin_(pin) {}
 
   /**
    * Checks whether the button is pressed
    * @return
    */
-  [[nodiscard]] auto isPressed() const -> bool;
+  [[nodiscard]] auto isPressed() const -> bool { return pin_->read() == GPIOState::Reset; }
 
  private:
   GPIOPin* const pin_;

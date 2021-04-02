@@ -731,7 +731,7 @@ EventBits_t xEventGroupGetBitsFromISR( EventGroupHandle_t xEventGroup ) PRIVILEG
  </pre>
  *
  * Delete an event group that was previously created by a call to
- * xEventGroupCreate().  Tasks that are blocked on the event group will be
+ * xEventGroupCreate().  Services that are blocked on the event group will be
  * unblocked and obtain 0 as the event group's value.
  *
  * @param xEventGroup The event group being deleted.

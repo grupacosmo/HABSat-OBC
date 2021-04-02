@@ -2,35 +2,19 @@
 // Created by Wiktor Wieclaw on 11/30/20.
 //
 
-#include "MeasureTime.h"
+#include "measureTime.h"
 
-namespace services {
+#include "../Obc.h"
 
-os::Task MeasureTime::measureTask_{"rtc_task", 128, os::Priority::Idle, measureTimeFunction};
+namespace measureTime {
 
-MeasureTime::MeasureTime(rtc::Rtc *rtc)
-    : params_{.rtc = rtc, .buffer{}}
-{
+void taskFn(void* args) {
+    auto obc = static_cast<Obc*>(args);
 
-}
-
-void MeasureTime::init()
-{
-    measureTask_.addToScheduler(static_cast<void*>(&params_));
-}
-
-void MeasureTime::measureTimeFunction(void *args)
-{
-    auto params = static_cast<MeasureTime::Params*>(args);
-    while(true)
-    {
-        params->rtc->readTimeAndDate(params->buffer);
-        os::Task::delay(500);
+    while (true) {
+        obc->rtc.readTimeAndDate(obc->rtcBuffer);
+        os::thisTask::delay(500);
     }
 }
-auto MeasureTime::getBuffer() const -> const rtc::RtcBuffer &
-{
-    return params_.buffer;
-}
 
-}
+}  // namespace measureTime

@@ -259,7 +259,7 @@ size_t xMessageBufferSend( MessageBufferHandle_t xMessageBuffer,
  * pdMS_TO_TICKS() can be used to convert a time specified in milliseconds into
  * a time specified in ticks.  Setting xTicksToWait to portMAX_DELAY will cause
  * the task to wait indefinitely (without timing out), provided
- * INCLUDE_vTaskSuspend is set to 1 in FreeRTOSConfig.h.  Tasks do not use any
+ * INCLUDE_vTaskSuspend is set to 1 in FreeRTOSConfig.h.  Services do not use any
  * CPU time when they are in the Blocked state.
  *
  * @return The number of bytes written to the message buffer.  If the call to
@@ -457,7 +457,7 @@ size_t xMessageBufferReceive( MessageBufferHandle_t xMessageBuffer,
  * macro pdMS_TO_TICKS() can be used to convert a time specified in milliseconds
  * into a time specified in ticks.  Setting xTicksToWait to portMAX_DELAY will
  * cause the task to wait indefinitely (without timing out), provided
- * INCLUDE_vTaskSuspend is set to 1 in FreeRTOSConfig.h.  Tasks do not use any
+ * INCLUDE_vTaskSuspend is set to 1 in FreeRTOSConfig.h.  Services do not use any
  * CPU time when they are in the Blocked state.
  *
  * @return The length, in bytes, of the message read from the message buffer, if

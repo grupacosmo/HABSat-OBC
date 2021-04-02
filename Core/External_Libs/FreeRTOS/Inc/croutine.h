@@ -126,7 +126,7 @@ typedef struct corCoRoutineControlBlock
  }
    </pre>
  * \defgroup xCoRoutineCreate xCoRoutineCreate
- * \ingroup Tasks
+ * \ingroup Services
  */
 BaseType_t xCoRoutineCreate( crCOROUTINE_CODE pxCoRoutineCode, UBaseType_t uxPriority, UBaseType_t uxIndex );
 
@@ -168,7 +168,7 @@ BaseType_t xCoRoutineCreate( crCOROUTINE_CODE pxCoRoutineCode, UBaseType_t uxPri
  }
  </pre>
  * \defgroup vCoRoutineSchedule vCoRoutineSchedule
- * \ingroup Tasks
+ * \ingroup Services
  */
 void vCoRoutineSchedule( void );
 
@@ -199,7 +199,7 @@ void vCoRoutineSchedule( void );
      crEND();
  }</pre>
  * \defgroup crSTART crSTART
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crSTART( pxCRCB ) switch( ( ( CRCB_t * )( pxCRCB ) )->uxState ) { case 0:
 
@@ -230,7 +230,7 @@ void vCoRoutineSchedule( void );
      crEND();
  }</pre>
  * \defgroup crSTART crSTART
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crEND() }
 
@@ -285,7 +285,7 @@ void vCoRoutineSchedule( void );
      crEND();
  }</pre>
  * \defgroup crDELAY crDELAY
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crDELAY( xHandle, xTicksToDelay )												\
 	if( ( xTicksToDelay ) > 0 )															\
@@ -375,7 +375,7 @@ void vCoRoutineSchedule( void );
     crEND();
  }</pre>
  * \defgroup crQUEUE_SEND crQUEUE_SEND
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crQUEUE_SEND( xHandle, pxQueue, pvItemToQueue, xTicksToWait, pxResult )			\
 {																						\
@@ -467,7 +467,7 @@ void vCoRoutineSchedule( void );
     crEND();
  }</pre>
  * \defgroup crQUEUE_RECEIVE crQUEUE_RECEIVE
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crQUEUE_RECEIVE( xHandle, pxQueue, pvBuffer, xTicksToWait, pxResult )			\
 {																						\
@@ -576,7 +576,7 @@ void vCoRoutineSchedule( void );
      }
  }</pre>
  * \defgroup crQUEUE_SEND_FROM_ISR crQUEUE_SEND_FROM_ISR
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crQUEUE_SEND_FROM_ISR( pxQueue, pvItemToQueue, xCoRoutinePreviouslyWoken ) xQueueCRSendFromISR( ( pxQueue ), ( pvItemToQueue ), ( xCoRoutinePreviouslyWoken ) )
 
@@ -689,7 +689,7 @@ void vCoRoutineSchedule( void );
      }
  }</pre>
  * \defgroup crQUEUE_RECEIVE_FROM_ISR crQUEUE_RECEIVE_FROM_ISR
- * \ingroup Tasks
+ * \ingroup Services
  */
 #define crQUEUE_RECEIVE_FROM_ISR( pxQueue, pvBuffer, pxCoRoutineWoken ) xQueueCRReceiveFromISR( ( pxQueue ), ( pvBuffer ), ( pxCoRoutineWoken ) )
 

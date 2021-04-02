@@ -6,16 +6,18 @@
 #define HABSAT_OBC_SDIOBUS_H
 
 #include "Bus.h"
+#include "extern_handles.h"
 
-namespace hw {
+namespace mcuBoard {
 
-class SDIOBus : public Bus<SDIOHandle> {
- public:
-  constexpr explicit SDIOBus(SDIOHandle* handle) : Bus(handle) {}
+class SDIOBus {
+   public:
+    explicit SDIOBus(SD_HandleTypeDef* handle) : handle_(handle) {}
 
- private:
-  static constexpr uint32_t defaultTimeout_ = 100;
+   private:
+    static constexpr uint32_t defaultTimeout_ = 100;
+    SD_HandleTypeDef* handle_;
 };
 
-}  // namespace hw
+}  // namespace mcuBoard
 #endif  // HABSAT_OBC_SDIOBUS_H

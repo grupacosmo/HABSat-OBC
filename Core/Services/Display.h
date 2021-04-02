@@ -10,31 +10,20 @@
 #include "Lcd.h"
 #include "Rtc.h"
 #include "Sensor.h"
-#include "osTask.h"
 
-namespace services {
+namespace display::impl {
 
-class Display : public Noncopyable {
- public:
-  Display(lcd::Lcd* lcd, const sensor::SensorBuffer* sensorBuffer, const rtc::RtcBuffer* timeAndDate);
-  void init();
+void formatHeaderData(std::array<char, 20>& lineBuffer);
+void formatTimeData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf);
+void formatDateData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf);
+void formatSensorData(std::array<char, 20>& lineBuffer, const sensor::Buffer& buf);
 
- private:
-  static void prepareHeaderData(std::array<char, 20>& lineBuffer);
-  static void prepareTimeData(std::array<char, 20>& lineBuffer, const rtc::RtcBuffer* buf);
-  static void prepareDateData(std::array<char, 20>& lineBuffer, const rtc::RtcBuffer* buf);
-  static void prepareSensorData(std::array<char, 20>& lineBuffer, const sensor::SensorBuffer* buf);
-  [[noreturn]] static void displayTaskFunction(void* args);
+}  // namespace display::impl
 
- private:
-  static os::Task displayTask_;
-  struct Params {
-    lcd::Lcd* lcd;
-    const sensor::SensorBuffer* sensorBuffer;
-    const rtc::RtcBuffer* timeAndDate;
-  } params_;
-};
+namespace display {
 
-}  // namespace services
+[[noreturn]] void taskFn(void* args);
+
+}  // namespace display
 
 #endif  // HABSAT_OBC_DISPLAY_H

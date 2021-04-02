@@ -4,37 +4,33 @@
 
 #include "Blink.h"
 
-namespace services {
+#include "../Obc.h"
+#include "osTask.h"
 
-os::Task Blink::inputTask_{"input", 128, os::Priority::Interrupt, inputTaskFunction};
-os::Task Blink::blinkTask_{"blink", 128, os::Priority::Idle, blinkTaskFunction};
+namespace blink {
 
-Blink::Blink(hw::Led* led) : led_(led) {}
+void inputInterruptHandler() { obc().inputTask.resumeFromISR(); }
 
-void Blink::init() {
-  blinkTask_.addToScheduler(static_cast<void*>(led_));
-  inputTask_.addToScheduler();
+[[noreturn]] void blinkTaskFn(void* args) {
+    auto obc = static_cast<Obc*>(args);
+
+    while (true) {
+        obc->led.toggle();
+        os::thisTask::delay(1000);
+    }
 }
 
-void Blink::inputInterruptHandler() { inputTask_.resumeFromISR(); }
+[[noreturn]] void inputTaskFn([[maybe_unused]] void* args) {
+    auto obc = static_cast<Obc*>(args);
 
-[[noreturn]] void Blink::blinkTaskFunction(void* args) {
-  auto led = static_cast<hw::Led*>(args);
-  while (true) {
-    led->toggle();
-    os::Task::delay(1000);
-  }
+    while (true) {
+        os::thisTask::suspend();
+        if (obc->blinkTask.getState() != os::TaskState::Suspended)
+            obc->blinkTask.suspend();
+        else
+            obc->blinkTask.resume();
+        os::thisTask::delay(1000);
+    }
 }
 
-[[noreturn]] void Blink::inputTaskFunction([[maybe_unused]] void* args) {
-  while (true) {
-    os::Task::suspendItself();
-    if (blinkTask_.getState() != os::TaskState::Suspended)
-      blinkTask_.suspend();
-    else
-      blinkTask_.resume();
-    os::Task::delay(1000);
-  }
-}
-
-}  // namespace services
+}  // namespace blink

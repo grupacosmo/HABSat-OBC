@@ -11,5 +11,5 @@ target_include_directories(${NAME}
 target_link_libraries(${NAME}
         Buses
         BME280_Compensation
-        System
+        Utils
         )

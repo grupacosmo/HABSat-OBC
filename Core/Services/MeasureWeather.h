@@ -6,27 +6,11 @@
 #define HABSAT_OBC_MEASUREWEATHER_H
 
 #include "Sensor.h"
-#include "osTask.h"
 
-namespace services {
+namespace measureWeather {
 
-class MeasureWeather : public Noncopyable {
- public:
-  explicit MeasureWeather(sensor::Sensor* sensor);
-  void init();
-  [[nodiscard]] auto getBuffer() const -> const sensor::SensorBuffer&;
+[[noreturn]] void taskFn(void* args);
 
- private:
-  [[noreturn]] static void measureTaskFunction(void* args);
-  static os::Task measureTask_;
-
- private:
-  struct Params {
-    sensor::Sensor* sensor;
-    sensor::SensorBuffer buffer;
-  } params_;
-};
-
-}  // namespace services
+}  // namespace measureWeather
 
 #endif  // HABSAT_OBC_MEASUREWEATHER_H

@@ -6,8 +6,8 @@
 #define HABSAT_OBC_CONSTANTS_H
 
 #include "hardware_config.h"
-/* Numerical constants */
 
+/* Numerical constants */
 namespace constants {
 
 #if HW_LCD_I2C_CONVERTER_TYPE_A

@@ -64,7 +64,7 @@ extern "C" {
  * be used as a parameter to vTaskDelete to delete the task.
  *
  * \defgroup TaskHandle_t TaskHandle_t
- * \ingroup Tasks
+ * \ingroup Services
  */
 struct tskTaskControlBlock; /* The old naming convention is used to prevent breaking kernel aware debuggers. */
 typedef struct tskTaskControlBlock* TaskHandle_t;
@@ -265,7 +265,7 @@ is used in assert() statements. */
  * support can alternatively create an MPU constrained task using
  * xTaskCreateRestricted().
  *
- * @param pvTaskCode Pointer to the task entry function.  Tasks
+ * @param pvTaskCode Pointer to the task entry function.  Services
  * must be implemented to never return (i.e. continuous loop).
  *
  * @param pcName A descriptive name for the task.  This is mainly used to
@@ -324,7 +324,7 @@ is used in assert() statements. */
  }
    </pre>
  * \defgroup xTaskCreate xTaskCreate
- * \ingroup Tasks
+ * \ingroup Services
  */
 #if( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
 	BaseType_t xTaskCreate(	TaskFunction_t pxTaskCode,
@@ -358,7 +358,7 @@ is used in assert() statements. */
  * memory.  xTaskCreateStatic() therefore allows a task to be created without
  * using any dynamic memory allocation.
  *
- * @param pvTaskCode Pointer to the task entry function.  Tasks
+ * @param pvTaskCode Pointer to the task entry function.  Services
  * must be implemented to never return (i.e. continuous loop).
  *
  * @param pcName A descriptive name for the task.  This is mainly used to
@@ -440,7 +440,7 @@ is used in assert() statements. */
     }
    </pre>
  * \defgroup xTaskCreateStatic xTaskCreateStatic
- * \ingroup Tasks
+ * \ingroup Services
  */
 #if( configSUPPORT_STATIC_ALLOCATION == 1 )
 	TaskHandle_t xTaskCreateStatic(	TaskFunction_t pxTaskCode,
@@ -522,7 +522,7 @@ TaskHandle_t xHandle;
 }
    </pre>
  * \defgroup xTaskCreateRestricted xTaskCreateRestricted
- * \ingroup Tasks
+ * \ingroup Services
  */
 #if( portUSING_MPU_WRAPPERS == 1 )
 	BaseType_t xTaskCreateRestricted( const TaskParameters_t * const pxTaskDefinition, TaskHandle_t *pxCreatedTask ) PRIVILEGED_FUNCTION;
@@ -610,7 +610,7 @@ TaskHandle_t xHandle;
 }
    </pre>
  * \defgroup xTaskCreateRestrictedStatic xTaskCreateRestrictedStatic
- * \ingroup Tasks
+ * \ingroup Services
  */
 #if( ( portUSING_MPU_WRAPPERS == 1 ) && ( configSUPPORT_STATIC_ALLOCATION == 1 ) )
 	BaseType_t xTaskCreateRestrictedStatic( const TaskParameters_t * const pxTaskDefinition, TaskHandle_t *pxCreatedTask ) PRIVILEGED_FUNCTION;
@@ -660,7 +660,7 @@ void vATask( void *pvParameters )
 }
    </pre>
  * \defgroup xTaskCreateRestricted xTaskCreateRestricted
- * \ingroup Tasks
+ * \ingroup Services
  */
 void vTaskAllocateMPURegions( TaskHandle_t xTask, const MemoryRegion_t * const pxRegions ) PRIVILEGED_FUNCTION;
 
@@ -701,7 +701,7 @@ void vTaskAllocateMPURegions( TaskHandle_t xTask, const MemoryRegion_t * const p
  }
    </pre>
  * \defgroup vTaskDelete vTaskDelete
- * \ingroup Tasks
+ * \ingroup Services
  */
 void vTaskDelete( TaskHandle_t xTaskToDelete ) PRIVILEGED_FUNCTION;
 
@@ -1649,7 +1649,7 @@ UBaseType_t uxTaskGetSystemState( TaskStatus_t * const pxTaskStatusArray, const 
  * Lists all the current tasks, along with their current state and stack
  * usage high water mark.
  *
- * Tasks are reported as blocked ('B'), ready ('R'), deleted ('D') or
+ * Services are reported as blocked ('B'), ready ('R'), deleted ('D') or
  * suspended ('S').
  *
  * PLEASE NOTE:

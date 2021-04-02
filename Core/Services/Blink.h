@@ -7,29 +7,14 @@
 
 #include "Button.h"
 #include "Led.h"
-#include "osTask.h"
 
-namespace services {
+namespace blink {
 
-class Blink : public Noncopyable {
- public:
-  explicit Blink(hw::Led* led);
-  void init();
+void inputInterruptHandler();
 
- public:
-  static void inputInterruptHandler();
+[[noreturn]] void inputTaskFn(void* args);
+[[noreturn]] void blinkTaskFn(void* args);
 
- private:
-  [[noreturn]] static void inputTaskFunction(void* args);
-  [[noreturn]] static void blinkTaskFunction(void* args);
+}  // namespace blink
 
- private:
-  static os::Task inputTask_;
-  static os::Task blinkTask_;
-
- private:
-  hw::Led* led_;
-};
-
-}  // namespace services
 #endif  // HABSAT_OBC_BLINK_H
