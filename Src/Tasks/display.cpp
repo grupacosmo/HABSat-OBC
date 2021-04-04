@@ -48,18 +48,18 @@ void formatSensorData(std::array<char, 20>& lineBuffer, const sensor::Buffer& bu
 
 using namespace impl;
 
-[[noreturn]] void taskFn(void* args) {
-    auto obc = static_cast<Obc*>(args);
+void taskFn([[maybe_unused]] void* args) {
     std::array<std::array<char, 20>, 4> lineBuffers{};
+    auto& obc = getObc();
 
     while (true) {
         formatHeaderData(lineBuffers[0]);
-        formatTimeData(lineBuffers[1], obc->rtcBuffer);
-        formatDateData(lineBuffers[2], obc->rtcBuffer);
-        formatSensorData(lineBuffers[3], obc->sensorBuffer);
+        formatTimeData(lineBuffers[1], obc.rtcBuffer);
+        formatDateData(lineBuffers[2], obc.rtcBuffer);
+        formatSensorData(lineBuffers[3], obc.sensorBuffer);
 
         for (std::size_t i = 0; i < 4; ++i) {
-            obc->lcd.printLine(i, lineBuffers[i].data());
+            obc.lcd.printLine(i, lineBuffers[i].data());
         }
 
         system::thisTask::delay(980);

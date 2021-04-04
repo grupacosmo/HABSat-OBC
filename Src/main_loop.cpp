@@ -5,7 +5,7 @@
 void mainLoop() {
     using namespace habsat;
 
-    obc().init();
+    getObc().init();
 
     system::startScheduler();
 }

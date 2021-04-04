@@ -3,6 +3,8 @@
 //
 #include "obc.hpp"
 
+using habsat::system::Priority;
+
 habsat::Obc::Obc()
     : i2c{hi2c3},
       spi{hspi2},
@@ -15,12 +17,12 @@ habsat::Obc::Obc()
       lcd{4, 20, i2c, constants::lcdSlaveAddress},
       rtc{i2c, constants::rtcSlaveAddress},
       sensor{spi, sensorCS},
-      inputTask{"input", 128, system::Priority::Interrupt, blink::inputTaskFn},
-      blinkTask{"blink", 128, system::Priority::Idle, blink::blinkTaskFn},
-      displayTask{"display", 256, system::Priority::Idle, display::taskFn},
-      measureTimeTask{"measure_time", 128, system::Priority::Idle, measureTime::taskFn},
-      measureWeatherTask{"measure_weather", 256, system::Priority::Idle, measureWeather::taskFn},
-      sdSaveTask{"sd_save", 1024, system::Priority::Idle, sdSave::taskFn} {}
+      inputTask{"input", 128, Priority::Interrupt, blink::inputTaskFn},
+      blinkTask{"blink", 128, Priority::Idle, blink::blinkTaskFn},
+      displayTask{"display", 256, Priority::Idle, display::taskFn},
+      measureTimeTask{"measure_time", 128, Priority::Idle, measureTime::taskFn},
+      measureWeatherTask{"measure_weather", 256, Priority::Idle, measureWeather::taskFn},
+      sdSaveTask{"sd_save", 1024, Priority::Idle, sdSave::taskFn} {}
 
 void habsat::Obc::init() {
 #if HW_LCD == 1
@@ -31,26 +33,24 @@ void habsat::Obc::init() {
 #endif
 #if HW_SENSOR == 1
     sensor.init(
-          sensor::Sensor::ConfigFlags::Temperature16Bit,
-          sensor::Sensor::ConfigFlags::PressureUltraLowPower,
-          sensor::Sensor::ConfigFlags::HumidityStandard,
-          sensor::Sensor::ConfigFlags::NormalMode);
+          sensor::ConfigFlags::Temperature16Bit,
+          sensor::ConfigFlags::PressureUltraLowPower,
+          sensor::ConfigFlags::HumidityStandard,
+          sensor::ConfigFlags::NormalMode);
     sensor.configure(
-          sensor::Sensor::ConfigFlags::Standby10Ms,
-          sensor::Sensor::ConfigFlags::FilterOff);
+          sensor::ConfigFlags::Standby10Ms,
+          sensor::ConfigFlags::FilterOff);
 #endif
 
-    void* obcParam = static_cast<void*>(this);
-
-    inputTask.addToScheduler(obcParam);
-    blinkTask.addToScheduler(obcParam);
-    displayTask.addToScheduler(obcParam);
-    measureTimeTask.addToScheduler(obcParam);
-    measureWeatherTask.addToScheduler(obcParam);
-    sdSaveTask.addToScheduler(obcParam);
+    inputTask.addToScheduler();
+    blinkTask.addToScheduler();
+    displayTask.addToScheduler();
+    measureTimeTask.addToScheduler();
+    measureWeatherTask.addToScheduler();
+    sdSaveTask.addToScheduler();
 }
 
-auto habsat::obc() -> Obc& {
+auto habsat::getObc() -> Obc& {
     static Obc obc;
     return obc;
 }

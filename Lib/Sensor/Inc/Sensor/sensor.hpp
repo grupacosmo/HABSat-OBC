@@ -32,6 +32,15 @@ enum AddressFlag : uint8_t {
 
 namespace habsat::sensor {
 
+enum ConfigFlags : uint8_t {
+    Temperature16Bit      = 0x01,
+    FilterOff             = 0x00,
+    NormalMode            = 0x03,
+    Standby10Ms           = 0x06,
+    PressureUltraLowPower = 0x01,
+    HumidityStandard      = 0x03,
+};
+
 struct Buffer {
     std::array<float, 3> array{};
     float& temperature = array[0];
@@ -40,16 +49,6 @@ struct Buffer {
 };
 
 class Sensor : public utils::Noncopyable {
-   public:
-    enum ConfigFlags : uint8_t {
-        Temperature16Bit      = 0x01,
-        FilterOff             = 0x00,
-        NormalMode            = 0x03,
-        Standby10Ms           = 0x06,
-        PressureUltraLowPower = 0x01,
-        HumidityStandard      = 0x03,
-    };
-
    public:
     Sensor(const buses::SPI& spi, mcuBoard::GPIOPin& chipSelect);
 

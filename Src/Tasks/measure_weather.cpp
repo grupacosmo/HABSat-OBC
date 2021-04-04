@@ -8,11 +8,11 @@
 
 namespace habsat::measureWeather {
 
-[[noreturn]] void taskFn(void* args) {
-    auto obc = static_cast<Obc*>(args);
+void taskFn([[maybe_unused]] void* args) {
+    auto& obc = getObc();
 
     while (true) {
-        obc->sensor.readAll(obc->sensorBuffer);
+        obc.sensor.readAll(obc.sensorBuffer);
         system::thisTask::delay(256);
     }
 }

@@ -8,11 +8,11 @@
 
 namespace habsat::measureTime {
 
-void taskFn(void* args) {
-    auto obc = static_cast<Obc*>(args);
+void taskFn([[maybe_unused]] void* args) {
+    auto& obc = getObc();
 
     while (true) {
-        obc->rtc.readTimeAndDate(obc->rtcBuffer);
+        obc.rtc.readTimeAndDate(obc.rtcBuffer);
         system::thisTask::delay(500);
     }
 }

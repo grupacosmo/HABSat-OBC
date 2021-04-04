@@ -58,7 +58,7 @@ struct Obc : public utils::Noncopyable {
     void init();
 };
 
-auto obc() -> Obc&;
+auto getObc() -> Obc&;
 
 }  // namespace habsat
 #endif  // HABSAT_OBC_OBC_HPP

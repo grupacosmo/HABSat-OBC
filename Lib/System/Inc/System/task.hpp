@@ -75,7 +75,7 @@ class Task : public utils::Noncopyable {
     /**
      * Allocates memory and adds the task to the scheduler.
      */
-    void addToScheduler(void* params) const {
+    void addToScheduler(void* params = nullptr) const {
         xTaskCreate(
               taskCode_,
               name_,
