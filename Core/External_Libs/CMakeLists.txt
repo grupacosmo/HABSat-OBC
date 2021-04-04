@@ -1,2 +1,0 @@
-add_subdirectory(FreeRTOS)
-add_subdirectory(BME280_Compensation)

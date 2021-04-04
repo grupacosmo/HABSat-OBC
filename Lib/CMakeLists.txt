@@ -1,0 +1,8 @@
+add_subdirectory(Buses)
+add_subdirectory(MCU_Board)
+add_subdirectory(Lcd)
+add_subdirectory(Rtc)
+add_subdirectory(Sensor)
+add_subdirectory(SDReader)
+add_subdirectory(System)
+add_subdirectory(Utils)
