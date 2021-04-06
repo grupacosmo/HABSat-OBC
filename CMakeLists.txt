@@ -58,6 +58,8 @@ Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
+include(CMake/dependencies.cmake)
+
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT}")
 add_compile_options(-Og -Wall -Wextra)
@@ -81,4 +83,5 @@ target_link_libraries(${PROJECT_NAME}.elf
         Rtc
         Sensor
         SDReader
+        GSL
         )

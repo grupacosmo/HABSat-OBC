@@ -6,7 +6,7 @@
 
 #include "obc.hpp"
 
-namespace habsat::sdSave {
+namespace habsat::tasks::sdSave {
 
 void taskFn([[maybe_unused]] void* args) {
     auto& obc = getObc();

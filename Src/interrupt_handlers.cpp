@@ -12,7 +12,7 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin) {
 
         switch (GPIO_Pin) {
             case GPIO_PIN_13:
-                habsat::blink::inputInterruptHandler();
+                habsat::tasks::blink::inputInterruptHandler();
                 break;
             case GPIO_PIN_14:
                 asm("nop");

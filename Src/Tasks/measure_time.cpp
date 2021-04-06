@@ -6,7 +6,7 @@
 
 #include "obc.hpp"
 
-namespace habsat::measureTime {
+namespace habsat::tasks::measureTime {
 
 void taskFn([[maybe_unused]] void* args) {
     auto& obc = getObc();

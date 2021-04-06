@@ -9,6 +9,12 @@ namespace habsat::buses {
 
 enum class Result { Ok, Error, Busy, Timeout };
 
+namespace details {
+    [[nodiscard]] inline auto toResult(HAL_StatusTypeDef status) -> Result {
+        return static_cast<Result>(status);
+    }
+}
+
 }  // namespace habsat::buses
 
 #endif  // HABSAT_OBC_BUSES_RESULT_HPP

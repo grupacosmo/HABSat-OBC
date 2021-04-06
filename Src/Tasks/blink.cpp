@@ -7,7 +7,7 @@
 #include "System/task.hpp"
 #include "obc.hpp"
 
-namespace habsat::blink {
+namespace habsat::tasks::blink {
 
 void inputInterruptHandler() { getObc().inputTask.resumeFromISR(); }
 
