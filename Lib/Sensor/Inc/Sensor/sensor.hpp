@@ -11,7 +11,9 @@
 
 #include "Buses/spi.hpp"
 
-namespace habsat::sensor::impl {
+namespace habsat::sensor {
+
+namespace details {
 
 enum Address : uint8_t {
     Calib00       = 0x88,
@@ -28,17 +30,28 @@ enum AddressFlag : uint8_t {
     Read  = 0b1111'1111,
 };
 
-}  // namespace sensor::impl
+}  // namespace details
 
-namespace habsat::sensor {
+// TODO add missing options to enums
+enum class TemperatureResolution : uint8_t { SixteenBit = 0x01 };
 
-enum ConfigFlags : uint8_t {
-    Temperature16Bit      = 0x01,
-    FilterOff             = 0x00,
-    NormalMode            = 0x03,
-    Standby10Ms           = 0x06,
-    PressureUltraLowPower = 0x01,
-    HumidityStandard      = 0x03,
+enum class PressureOversampling : uint8_t { UltraLowPower = 0x01 };
+
+enum class HumidityOversampling : uint8_t { Standard = 0x03 };
+
+enum class Mode : uint8_t { Normal = 0x03 };
+
+enum class StandbyTime : uint8_t { TenMs = 0x06 };
+
+enum class Filter : uint8_t { Off = 0x00 };
+
+struct Settings {
+    TemperatureResolution temperatureResolution;
+    PressureOversampling pressureOversampling;
+    HumidityOversampling humidityOversampling;
+    Mode mode;
+    StandbyTime standbyTime;
+    Filter filter;
 };
 
 struct Buffer {
@@ -59,19 +72,10 @@ class Sensor : public utils::Noncopyable {
      * @param pressureOversampling
      * @param humidityOversampling
      * @param mode
-     */
-    void init(
-          const ConfigFlags& temperatureResolution,
-          const ConfigFlags& pressureOversampling,
-          const ConfigFlags& humidityOversampling,
-          const ConfigFlags& mode);
-
-    /**
-     * Sets sensor's configuration.
      * @param standbyTime
      * @param filter
      */
-    void configure(const ConfigFlags& standbyTime, const ConfigFlags& filter);
+    void init(const Settings& settings);
 
     /**
      *Calls function for reading temperature, pressure and humidity
@@ -99,6 +103,6 @@ class Sensor : public utils::Noncopyable {
     bme280::HumidCoversionData humidConvData_{};
 };
 
-}  // namespace sensor
+}  // namespace habsat::sensor
 
 #endif  // HABSAT_OBC_SENSOR_H

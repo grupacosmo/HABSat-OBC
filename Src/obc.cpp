@@ -2,6 +2,7 @@
 // Created by Wiktor Wieclaw on 10/1/20.
 //
 #include "obc.hpp"
+
 #include "hardware_config.h"
 
 using habsat::system::Priority;
@@ -35,10 +36,7 @@ habsat::Obc::Obc()
       blinkTask{128, Priority::Idle, tasks::blink::blinkTaskFn},
       displayTask{256, Priority::Idle, tasks::display::taskFn},
       measureTimeTask{128, Priority::Idle, tasks::measureTime::taskFn},
-      measureWeatherTask{
-            256,
-            system::Priority::Idle,
-            tasks::measureWeather::taskFn},
+      measureWeatherTask{256, system::Priority::Idle, tasks::measureWeather::taskFn},
       sdSaveTask{1024, Priority::Idle, tasks::sdSave::taskFn} {}
 
 void habsat::Obc::init() {
@@ -49,14 +47,16 @@ void habsat::Obc::init() {
     rtc.init();
 #endif
 #if HW_SENSOR == 1
-    sensor.init(
-          sensor::ConfigFlags::Temperature16Bit,
-          sensor::ConfigFlags::PressureUltraLowPower,
-          sensor::ConfigFlags::HumidityStandard,
-          sensor::ConfigFlags::NormalMode);
-    sensor.configure(
-          sensor::ConfigFlags::Standby10Ms,
-          sensor::ConfigFlags::FilterOff);
+    sensor::Settings sensorSettings {
+          .temperatureResolution = sensor::TemperatureResolution::SixteenBit,
+          .pressureOversampling = sensor::PressureOversampling::UltraLowPower,
+          .humidityOversampling = sensor::HumidityOversampling::Standard,
+          .mode = sensor::Mode::Normal,
+          .standbyTime = sensor::StandbyTime::TenMs,
+          .filter = sensor::Filter::Off
+    };
+
+    sensor.init(sensorSettings);
 #endif
 #if HW_RTC && HW_RTC_SET_TIME
     rtc::Buffer data;

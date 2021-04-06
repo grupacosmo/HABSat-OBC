@@ -8,20 +8,23 @@
 
 namespace habsat::sensor {
 
-using namespace impl;
+using namespace details;
 
 Sensor::Sensor(const buses::SPI& spi, mcuBoard::GPIOPin& cs) : spi_(spi), cs_(cs) {}
 
-void Sensor::init(
-      const ConfigFlags& temperatureResolution,
-      const ConfigFlags& pressureOversampling,
-      const ConfigFlags& humidityOversampling,
-      const ConfigFlags& mode) {
+void Sensor::init(const Settings& settings) {
     getCalibrationData();
-    write8(Address::HumControl & AddressFlag::Write, humidityOversampling);
+    write8(
+          Address::HumControl & AddressFlag::Write,
+          static_cast<uint8_t>(settings.humidityOversampling));
     write8(
           Address::CTRLMeasAddress & AddressFlag::Write,
-          (temperatureResolution << 5) | (pressureOversampling << 2) | mode);
+          (static_cast<uint8_t>(settings.temperatureResolution) << 5) |
+                (static_cast<uint8_t>(settings.pressureOversampling) << 2) |
+                static_cast<uint8_t>(settings.mode));
+    const uint8_t data = ((static_cast<uint8_t>(settings.standbyTime) & 0x07) << 5) |
+                         (((static_cast<uint8_t>(settings.filter) & 0x07) << 2) & 0xFC);
+    write8(Address::Config, data);
 }
 
 void Sensor::getCalibrationData() {
@@ -67,11 +70,6 @@ void Sensor::parseSecondConversionData(const std::array<uint8_t, 1 + 7>& data) {
     humidConvData_.digH6 = data[7];
 }
 
-void Sensor::configure(const ConfigFlags& standbyTime, const ConfigFlags& filter) {
-    const uint8_t data = ((standbyTime & 0x07) << 5) | (((filter & 0x07) << 2) & 0xFC);
-    write8(Address::Config, data);
-}
-
 void Sensor::readAll(Buffer& buffer) {
     // BME280 documentation page 31 table 29, 30, 31
     using utils::bitwise::concat2Bytes;
@@ -96,4 +94,4 @@ void Sensor::write8(const uint8_t address, const uint8_t data) {
     spi_.transmit(cs_, bytes);
 }
 
-}  // namespace sensor
+}  // namespace habsat::sensor
