@@ -6,7 +6,7 @@
 
 #include "obc.hpp"
 
-namespace habsat::display {
+namespace habsat::tasks::display {
 
 namespace impl {
 

@@ -7,7 +7,7 @@
 
 #include "Rtc/rtc.hpp"
 
-namespace habsat::measureTime {
+namespace habsat::tasks::measureTime {
 
 [[noreturn]] void taskFn(void* args);
 

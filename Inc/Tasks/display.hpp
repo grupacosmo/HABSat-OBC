@@ -11,7 +11,7 @@
 #include "Rtc/rtc.hpp"
 #include "Sensor/sensor.hpp"
 
-namespace habsat::display {
+namespace habsat::tasks::display {
 
 namespace impl {
 
