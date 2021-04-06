@@ -2,8 +2,22 @@
 // Created by Wiktor Wieclaw on 10/1/20.
 //
 #include "obc.hpp"
+#include "hardware_config.h"
 
 using habsat::system::Priority;
+
+extern I2C_HandleTypeDef hi2c3;
+extern SPI_HandleTypeDef hspi2;
+extern UART_HandleTypeDef huart1;
+extern SD_HandleTypeDef hsd;
+
+#if HW_LCD_I2C_CONVERTER_TYPE_A
+constexpr uint8_t lcdSlaveAddress = 0x7E;
+#else
+constexpr uint8_t lcdSlaveAddress = 0x4E;
+#endif
+
+constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
 
 habsat::Obc::Obc()
     : i2c{hi2c3},
@@ -14,8 +28,8 @@ habsat::Obc::Obc()
       sensorCS{GPIOC, GPIO_PIN_3},
       button{&pinC13},
       led{pinA5},
-      lcd{4, 20, i2c, constants::lcdSlaveAddress},
-      rtc{i2c, constants::rtcSlaveAddress},
+      lcd{4, 20, i2c, lcdSlaveAddress},
+      rtc{i2c, rtcSlaveAddress},
       sensor{spi, sensorCS},
       inputTask{128, Priority::Interrupt, tasks::blink::inputTaskFn},
       blinkTask{128, Priority::Idle, tasks::blink::blinkTaskFn},

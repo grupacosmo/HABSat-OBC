@@ -23,8 +23,6 @@
 #include "Tasks/measure_weather.hpp"
 #include "Tasks/sd_save.hpp"
 #include "Utils/noncopyable.hpp"
-#include "constants.hpp"
-#include "extern_handles.hpp"
 
 namespace habsat {
 
