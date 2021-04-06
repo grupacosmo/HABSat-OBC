@@ -45,7 +45,18 @@ void habsat::Obc::init() {
           sensor::ConfigFlags::Standby10Ms,
           sensor::ConfigFlags::FilterOff);
 #endif
+#if HW_RTC && HW_RTC_SET_TIME
+    rtc::Buffer data;
+    data.second  = HW_RTC_SECOND;
+    data.minute  = HW_RTC_MINUTE;
+    data.hour    = HW_RTC_HOUR;
+    data.weekday = HW_RTC_WEEKDAY;
+    data.day     = HW_RTC_DAY;
+    data.month   = HW_RTC_MONTH;
+    data.year    = HW_RTC_YEAR;
 
+    rtc.setTimeAndDate(data);
+#endif
     inputTask.addToScheduler();
     blinkTask.addToScheduler();
     displayTask.addToScheduler();
