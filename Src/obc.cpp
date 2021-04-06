@@ -17,16 +17,15 @@ habsat::Obc::Obc()
       lcd{4, 20, i2c, constants::lcdSlaveAddress},
       rtc{i2c, constants::rtcSlaveAddress},
       sensor{spi, sensorCS},
-      inputTask{"input", 128, system::Priority::Interrupt, tasks::blink::inputTaskFn},
-      blinkTask{"blink", 128, system::Priority::Idle, tasks::blink::blinkTaskFn},
-      displayTask{"display", 256, system::Priority::Idle, tasks::display::taskFn},
-      measureTimeTask{"measure_time", 128, system::Priority::Idle, tasks::measureTime::taskFn},
+      inputTask{128, Priority::Interrupt, tasks::blink::inputTaskFn},
+      blinkTask{128, Priority::Idle, tasks::blink::blinkTaskFn},
+      displayTask{256, Priority::Idle, tasks::display::taskFn},
+      measureTimeTask{128, Priority::Idle, tasks::measureTime::taskFn},
       measureWeatherTask{
-            "measure_weather",
             256,
             system::Priority::Idle,
             tasks::measureWeather::taskFn},
-      sdSaveTask{"sd_save", 1024, system::Priority::Idle, tasks::sdSave::taskFn} {}
+      sdSaveTask{1024, Priority::Idle, tasks::sdSave::taskFn} {}
 
 void habsat::Obc::init() {
 #if HW_LCD == 1
