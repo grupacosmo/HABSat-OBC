@@ -15,10 +15,10 @@ namespace habsat::tasks::display {
 
 namespace impl {
 
-void formatHeaderData(std::array<char, 20>& lineBuffer);
-void formatTimeData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf);
-void formatDateData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf);
-void formatSensorData(std::array<char, 20>& lineBuffer, const sensor::Buffer& buf);
+void formatHeaderData(gsl::span<char> lineBuffer);
+void formatTimeData(gsl::span<char> lineBuffer, const rtc::Buffer& buf);
+void formatDateData(gsl::span<char> lineBuffer, const rtc::Buffer& buf);
+void formatSensorData(gsl::span<char> lineBuffer, const sensor::Buffer& buf);
 
 }  // namespace impl
 

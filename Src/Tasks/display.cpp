@@ -3,14 +3,16 @@
 //
 
 #include "Tasks/display.hpp"
-
+#include <gsl/span>
+#include <gsl/assert>
 #include "obc.hpp"
 
 namespace habsat::tasks::display {
 
 namespace impl {
 
-void formatHeaderData(std::array<char, 20>& lineBuffer) {
+void formatHeaderData(gsl::span<char> lineBuffer) {
+    Expects(lineBuffer.size() >= 20);
     constexpr std::array options{"display", "test"};
     static std::size_t index;
 
@@ -18,11 +20,13 @@ void formatHeaderData(std::array<char, 20>& lineBuffer) {
     index = (index + 1) % options.size();
 }
 
-void formatTimeData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf) {
+void formatTimeData(gsl::span<char> lineBuffer, const rtc::Buffer& buf) {
+    Expects(lineBuffer.size() >= 20);
     std::sprintf(lineBuffer.data(), "      %'.02d:%'.02d:%'.02d", buf.hour, buf.minute, buf.second);
 }
 
-void formatDateData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf) {
+void formatDateData(gsl::span<char> lineBuffer, const rtc::Buffer& buf) {
+    Expects(lineBuffer.size() >= 20);
     static const std::array dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     std::sprintf(
@@ -34,7 +38,8 @@ void formatDateData(std::array<char, 20>& lineBuffer, const rtc::Buffer& buf) {
           buf.year);
 }
 
-void formatSensorData(std::array<char, 20>& lineBuffer, const sensor::Buffer& buf) {
+void formatSensorData(gsl::span<char> lineBuffer, const sensor::Buffer& buf) {
+    Expects(lineBuffer.size() >= 20);
     static const std::array bufferArray{&buf.temperature, &buf.pressure, &buf.humidity};
 
     static constexpr std::array options{"Temp: %.2lf C", "Press: %.2lf hPa", "Hum: %.2lf %%RH"};

@@ -10,7 +10,6 @@
 #include <cstring>
 #include <string_view>
 
-#include "Buses/sdio.hpp"
 #include "Utils/noncopyable.hpp"
 
 // TODO docs

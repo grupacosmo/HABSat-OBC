@@ -27,11 +27,11 @@ void Sensor::init(
 void Sensor::getCalibrationData() {
     // BME280 documentation page 24 table 16
     std::array<uint8_t, 1 + 26> calibData1{Address::Calib00 & AddressFlag::Read};
-    spi_.transmitAndReceive(cs_, calibData1);
+    spi_.transmitAndReceive(cs_, calibData1, calibData1);
     parseFirstConversionData(calibData1);
 
     std::array<uint8_t, 1 + 7> calibData2{Address::Calib26 & AddressFlag::Read};
-    spi_.transmitAndReceive(cs_, calibData2);
+    spi_.transmitAndReceive(cs_, calibData2, calibData2);
     parseSecondConversionData(calibData2);
 }
 
@@ -79,7 +79,7 @@ void Sensor::readAll(Buffer& buffer) {
 
     uint8_t address = Address::MainDataBlock & AddressFlag::Read;
     std::array<uint8_t, 9> bytes{address};
-    spi_.transmitAndReceive(cs_, bytes);
+    spi_.transmitAndReceive(cs_, bytes, bytes);
 
     const auto rawPress = concat3Bytes(bytes[1], bytes[2], bytes[3]) >> 4;
     const auto rawTemp  = concat3Bytes(bytes[4], bytes[5], bytes[6]) >> 4;

@@ -6,6 +6,7 @@
 #define HABSAT_OBC_BUSES_UART_HPP
 
 #include <stm32f4xx.h>
+#include <gsl/span>
 
 #include "result.hpp"
 
@@ -15,19 +16,19 @@ class UART {
    public:
     explicit UART(UART_HandleTypeDef& handle) : handle_(handle) {}
 
-    auto transmit(const uint8_t* data, uint16_t size, uint32_t timeout = defaultTimeout) const
+    auto transmit(gsl::span<const uint8_t> data, uint32_t timeout = defaultTimeout) const
           -> Result {
-        return static_cast<Result>(
-              HAL_UART_Transmit(&handle_, const_cast<uint8_t*>(data), size, timeout));
+        return details::toResult(
+              HAL_UART_Transmit(&handle_, const_cast<uint8_t*>(data.data()), data.size(), timeout));
     }
 
-    auto transmitDMA(const uint8_t* data, uint16_t size) const -> Result {
-        return static_cast<Result>(
-              HAL_UART_Transmit_DMA(&handle_, const_cast<uint8_t*>(data), size));
+    auto transmitDMA(gsl::span<const uint8_t> data) const -> Result {
+        return details::toResult(
+              HAL_UART_Transmit_DMA(&handle_, const_cast<uint8_t*>(data.data()), data.size()));
     }
 
-    auto receiveDMA(uint8_t* data, uint16_t size) const -> Result {
-        return static_cast<Result>(HAL_UART_Receive_DMA(&handle_, data, size));
+    auto receiveDMA(gsl::span<uint8_t> data) const -> Result {
+        return details::toResult(HAL_UART_Receive_DMA(&handle_, data.data(), data.size()));
     }
 
    private:

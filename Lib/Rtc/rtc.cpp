@@ -36,11 +36,11 @@ void Rtc::setTimeAndDate(const Buffer& timeAndDate) const {
     for (size_t i = 0; i < converted.array.size(); ++i) {
         converted.array[i] = convertDecToBcd(timeAndDate.array[i]);
     }
-    i2c_.memoryWrite<0x00>(slaveAddress_, converted.array);
+    i2c_.memoryWrite(slaveAddress_, 0x00, converted.array);
 }
 
 void Rtc::readTimeAndDate(Buffer& buffer) {
-    if (i2c_.memoryRead<0x00>(slaveAddress_, buffer.array) == buses::Result::Ok) {
+    if (i2c_.memoryRead(slaveAddress_, 0x00, buffer.array) == buses::Result::Ok) {
         for (auto& elem : buffer.array) {
             elem = convertBcdToDec(elem);
         }
