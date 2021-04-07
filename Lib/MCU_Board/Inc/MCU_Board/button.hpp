@@ -9,7 +9,7 @@
 
 namespace habsat::mcuBoard {
 
-class Button : public utils::Noncopyable {
+class Button {
    public:
     explicit Button(GPIOPin* pin) : pin_(pin) {}
 

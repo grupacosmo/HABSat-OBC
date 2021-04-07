@@ -5,7 +5,6 @@
 #include "Sensor/sensor.hpp"
 
 #include "Utils/bitwise.hpp"
-#include "Utils/to_underlying.hpp"
 
 namespace habsat::sensor {
 
@@ -14,8 +13,6 @@ using namespace details;
 Sensor::Sensor(const buses::SPI& spi, mcuBoard::GPIOPin& cs) : spi_(spi), cs_(cs) {}
 
 void Sensor::init(const Settings& settings) {
-    using utils::toUnderlying;
-
     // TODO make this clear and pretty
     getCalibrationData();
 

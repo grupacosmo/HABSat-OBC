@@ -10,8 +10,6 @@
 #include <cstring>
 #include <string_view>
 
-#include "Utils/noncopyable.hpp"
-
 // TODO docs
 // TODO change some bsp_driver_sd functions
 
@@ -20,7 +18,7 @@ namespace habsat::sdReader {
 /**
  * Auto-closing handle to wrap FATFS file pointer
  */
-class SmartFile : public utils::Noncopyable {
+class SmartFile {
    public:
     SmartFile() = default;
 
@@ -36,7 +34,7 @@ class SmartFile : public utils::Noncopyable {
     FIL* sdFile_ = &SDFile;
 };
 
-class SDReader : public utils::Noncopyable {
+class SDReader {
    public:
     /**
      * Initializes SDReader/SDCard.

@@ -8,4 +8,4 @@ target_include_directories(${NAME} PUBLIC Inc)
 
 target_link_libraries(${NAME}
         Buses
-        Utils)
+        )

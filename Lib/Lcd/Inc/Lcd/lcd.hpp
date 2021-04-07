@@ -9,11 +9,10 @@
 #include <string>
 
 #include "Buses/i2c.hpp"
-#include "Utils/noncopyable.hpp"
 
 namespace habsat::lcd {
 
-class Lcd : public utils::Noncopyable {
+class Lcd {
    public:
     /**
      * @param lines        number of lines

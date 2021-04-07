@@ -61,7 +61,7 @@ struct Buffer {
     float& humidity    = array[2];
 };
 
-class Sensor : public utils::Noncopyable {
+class Sensor {
    public:
     Sensor(const buses::SPI& spi, mcuBoard::GPIOPin& chipSelect);
 

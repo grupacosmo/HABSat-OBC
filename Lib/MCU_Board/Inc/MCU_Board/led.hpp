@@ -9,7 +9,7 @@
 
 namespace habsat::mcuBoard {
 
-class Led : public utils::Noncopyable {
+class Led{
    public:
     explicit Led(GPIOPin& pin) : pin_(pin) {}
 

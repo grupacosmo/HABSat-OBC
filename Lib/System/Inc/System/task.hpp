@@ -8,8 +8,6 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "Utils/noncopyable.hpp"
-
 namespace habsat::system {
 
 /**
@@ -22,7 +20,7 @@ enum class Priority {
 
 enum class TaskState { Running, Ready, Blocked, Suspended, Deleted, Invalid };
 
-class Task : public utils::Noncopyable {
+class Task {
    public:
     using StackDepth = configSTACK_DEPTH_TYPE;
 

@@ -8,7 +8,6 @@
 #include <array>
 
 #include "Buses/i2c.hpp"
-#include "Utils/noncopyable.hpp"
 
 namespace habsat::rtc {
 
@@ -32,7 +31,7 @@ struct Buffer {
     uint8_t& year    = array[6];
 };
 
-class Rtc : public utils::Noncopyable {
+class Rtc {
    public:
     /**
      * RTC's constructor.

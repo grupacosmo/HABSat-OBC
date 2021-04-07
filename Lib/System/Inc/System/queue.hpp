@@ -11,7 +11,7 @@
 namespace habsat::system {
 
 template <typename Type>
-class Queue : public utils::Noncopyable {
+class Queue {
    public:
     /**
      * Constructs the object.
