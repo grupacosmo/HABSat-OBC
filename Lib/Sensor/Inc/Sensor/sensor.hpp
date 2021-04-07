@@ -33,17 +33,17 @@ enum AddressFlag : uint8_t {
 }  // namespace details
 
 // TODO add missing options to enums
-enum class TemperatureResolution : uint8_t { SixteenBit = 0x01 };
+enum TemperatureResolution : uint8_t { SixteenBit = 0x01 };
 
-enum class PressureOversampling : uint8_t { UltraLowPower = 0x01 };
+enum PressureOversampling : uint8_t { UltraLowPower = 0x01 };
 
-enum class HumidityOversampling : uint8_t { Standard = 0x03 };
+enum HumidityOversampling : uint8_t { Standard = 0x03 };
 
-enum class Mode : uint8_t { Normal = 0x03 };
+enum Mode : uint8_t { Normal = 0x03 };
 
-enum class StandbyTime : uint8_t { TenMs = 0x06 };
+enum StandbyTime : uint8_t { TenMs = 0x06 };
 
-enum class Filter : uint8_t { Off = 0x00 };
+enum Filter : uint8_t { Off = 0x00 };
 
 struct Settings {
     TemperatureResolution temperatureResolution;

@@ -5,6 +5,7 @@
 #include "Sensor/sensor.hpp"
 
 #include "Utils/bitwise.hpp"
+#include "Utils/to_underlying.hpp"
 
 namespace habsat::sensor {
 
@@ -13,17 +14,21 @@ using namespace details;
 Sensor::Sensor(const buses::SPI& spi, mcuBoard::GPIOPin& cs) : spi_(spi), cs_(cs) {}
 
 void Sensor::init(const Settings& settings) {
+    using utils::toUnderlying;
+
+    // TODO make this clear and pretty
     getCalibrationData();
+
+    write8((Address::HumControl & AddressFlag::Write), settings.humidityOversampling);
+
     write8(
-          Address::HumControl & AddressFlag::Write,
-          static_cast<uint8_t>(settings.humidityOversampling));
-    write8(
-          Address::CTRLMeasAddress & AddressFlag::Write,
-          (static_cast<uint8_t>(settings.temperatureResolution) << 5) |
-                (static_cast<uint8_t>(settings.pressureOversampling) << 2) |
-                static_cast<uint8_t>(settings.mode));
-    const uint8_t data = ((static_cast<uint8_t>(settings.standbyTime) & 0x07) << 5) |
-                         (((static_cast<uint8_t>(settings.filter) & 0x07) << 2) & 0xFC);
+          (Address::CTRLMeasAddress & AddressFlag::Write),
+          (settings.temperatureResolution << 5) | (settings.pressureOversampling << 2) |
+                settings.mode);
+
+    const uint8_t data =
+          ((settings.standbyTime & 0x07) << 5) | (((settings.filter & 0x07) << 2) & 0xFC);
+
     write8(Address::Config, data);
 }
 
