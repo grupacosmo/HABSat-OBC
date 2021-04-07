@@ -1,0 +1,28 @@
+/*
+    This is a template for your hardware configuration file.
+    Create a "hardware_config.h" file in "Core/Include_Files/" directory.
+    Copy and paste the content of this file and configure according to your hardware.
+*/
+
+#ifndef HABSAT_OBC_HARDWARE_CONFIG
+#define HABSAT_OBC_HARDWARE_CONFIG
+
+#cmakedefine01 HW_LCD
+#cmakedefine01 HW_SENSOR
+#cmakedefine01 HW_RTC
+
+/* 1 if you have PCF8574A (instead of PCF8574) I2C converter in your LCD */
+#cmakedefine01 HW_LCD_I2C_CONVERTER_TYPE_A
+
+/* sets time in rtc */
+/* see comment regarding rtc::Buffer in Lib/Rtc/Inc/Rtc/rtc.hpp */
+#cmakedefine01 HW_RTC_SET_TIME
+#cmakedefine HW_RTC_SECOND  @HW_RTC_SECOND@
+#cmakedefine HW_RTC_MINUTE  @HW_RTC_MINUTE@
+#cmakedefine HW_RTC_HOUR    @HW_RTC_HOUR@
+#cmakedefine HW_RTC_WEEKDAY @HW_RTC_WEEKDAY@
+#cmakedefine HW_RTC_DAY     @HW_RTC_DAY@
+#cmakedefine HW_RTC_MONTH   @HW_RTC_MONTH@
+#cmakedefine HW_RTC_YEAR    @HW_RTC_YEAR@
+
+#endif  // HABSAT_OBC_HARDWARE_CONFIG

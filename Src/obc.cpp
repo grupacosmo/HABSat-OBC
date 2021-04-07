@@ -3,7 +3,7 @@
 //
 #include "obc.hpp"
 
-#include "hardware_config.h"
+#include "hardware_config.hpp"
 
 using habsat::system::Priority;
 
