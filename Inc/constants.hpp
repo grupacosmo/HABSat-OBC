@@ -5,7 +5,7 @@
 #ifndef HABSAT_OBC_CONSTANTS_H
 #define HABSAT_OBC_CONSTANTS_H
 
-#include "hardware_config.h"
+#include "hardware_config.hpp"
 
 /* Numerical constants */
 

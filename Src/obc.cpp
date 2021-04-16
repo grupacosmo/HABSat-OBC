@@ -8,7 +8,7 @@ using habsat::system::Priority;
 habsat::Obc::Obc()
     : i2c{hi2c3},
       spi{hspi2},
-      uart(huart1),
+      uart(huart2),
       pinC13{GPIOC, GPIO_PIN_13},
       pinA5{GPIOA, GPIO_PIN_5},
       sensorCS{GPIOC, GPIO_PIN_3},

@@ -10,8 +10,8 @@ CDefines=USE_HAL_DRIVER;STM32F446xx;USE_HAL_DRIVER;USE_HAL_DRIVER;
 SourceFiles=;;
 
 [PreviousGenFiles]
-HeaderPath=C:/Users/Kuba/CLionProjects/HABSat-OBC/Inc
+HeaderPath=C:/Users/Kuba/CLionProjects/habsat/Inc
 HeaderFiles=ffconf.h;bsp_driver_sd.h;sd_diskio.h;fatfs.h;stm32f4xx_it.h;stm32f4xx_hal_conf.h;main.h;
-SourcePath=C:/Users/Kuba/CLionProjects/HABSat-OBC/Src
+SourcePath=C:/Users/Kuba/CLionProjects/habsat/Src
 SourceFiles=bsp_driver_sd.c;sd_diskio.c;fatfs.c;stm32f4xx_it.c;stm32f4xx_hal_msp.c;stm32f4xx_hal_timebase_tim.c;main.c;
 

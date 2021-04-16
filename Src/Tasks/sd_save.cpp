@@ -26,10 +26,8 @@ void taskFn([[maybe_unused]] void* args) {
     while (true) {
         formatRtcData(buffer[1], obc.rtcBuffer);
         formatSensorData(buffer[2], obc.sensorBuffer);
-
         obc.sdReader.update(path, buffer[1].data());
         obc.sdReader.update(path, buffer[2].data());
-
         system::thisTask::delay(1000);
     }
 }
