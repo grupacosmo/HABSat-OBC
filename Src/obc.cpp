@@ -47,13 +47,14 @@ void habsat::Obc::init() {
     rtc.init();
 #endif
 #if HW_SENSOR == 1
-    sensor::Settings sensorSettings {
-          .temperatureResolution = sensor::TemperatureResolution::SixteenBit,
-          .pressureOversampling = sensor::PressureOversampling::UltraLowPower,
-          .humidityOversampling = sensor::HumidityOversampling::Standard,
-          .mode = sensor::Mode::Normal,
-          .standbyTime = sensor::StandbyTime::TenMs,
-          .filter = sensor::Filter::Off
+    using namespace sensor;
+    Settings sensorSettings {
+          TemperatureResolution::SixteenBit,
+          PressureOversampling::UltraLowPower,
+          HumidityOversampling::Standard,
+          Mode::Normal,
+          StandbyTime::TenMs,
+          Filter::Off
     };
 
     sensor.init(sensorSettings);
