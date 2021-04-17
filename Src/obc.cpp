@@ -8,6 +8,7 @@
 extern I2C_HandleTypeDef hi2c3;
 extern SPI_HandleTypeDef hspi2;
 extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
 extern SD_HandleTypeDef hsd;
 
 constexpr uint8_t lcdSlaveAddress = HW_LCD_SLAVE_ADDRESS;
