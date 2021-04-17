@@ -78,6 +78,7 @@ void habsat::Obc::init() {
 #   endif
 
 #   if HW_SD_READER
+        sdReader.init();
         sdSaveTask.addToScheduler();
 #   endif
     // clang-format on
