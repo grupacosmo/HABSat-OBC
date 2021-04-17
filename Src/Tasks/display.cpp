@@ -6,6 +6,7 @@
 #include <gsl/span>
 #include <gsl/assert>
 #include "obc.hpp"
+#include "hardware_config.hpp"
 
 namespace habsat::tasks::display {
 
@@ -59,9 +60,17 @@ void taskFn([[maybe_unused]] void* args) {
 
     while (true) {
         formatHeaderData(lineBuffers[0]);
-        formatTimeData(lineBuffers[1], obc.rtcBuffer);
-        formatDateData(lineBuffers[2], obc.rtcBuffer);
-        formatSensorData(lineBuffers[3], obc.sensorBuffer);
+
+        // clang-format off
+#       if HW_RTC
+            formatTimeData(lineBuffers[1], obc.rtcBuffer);
+            formatDateData(lineBuffers[2], obc.rtcBuffer);
+#       endif
+
+#       if HW_SENSOR
+            formatSensorData(lineBuffers[3], obc.sensorBuffer);
+#       endif
+        // clang-format on
 
         for (std::size_t i = 0; i < 4; ++i) {
             obc.lcd.printLine(i, lineBuffers[i].data());

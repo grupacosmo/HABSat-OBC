@@ -58,6 +58,7 @@ Building $${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
+include(CMake/generate_config.cmake)
 include(CMake/dependencies.cmake)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
@@ -70,14 +71,22 @@ include_directories(
         Drivers/STM32F4xx_HAL_Driver/Inc
         Middlewares/Third_Party/BME280
         Middlewares/Third_Party/FreeRTOS/Inc
-        )
+)
 
 add_subdirectory(Lib)
+
+target_include_directories(${PROJECT_NAME}.elf PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/Config"
+        )
 
 target_link_libraries(${PROJECT_NAME}.elf
         Buses
         MCU_Board
-        Peripherals
         System
         Utils
+        Lcd
+        Rtc
+        Sensor
+        SDReader
+        GSL
         )

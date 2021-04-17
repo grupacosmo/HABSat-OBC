@@ -15,7 +15,7 @@ set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
 set(CMAKE_OBJDUMP arm-none-eabi-objdump)
 set(SIZE arm-none-eabi-size)
 
-SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld Inc/hardware_config.hpp)
+SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld)
 
 #Uncomment for hardware floating point
 SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
@@ -58,23 +58,7 @@ Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
-SET(HW_LCD On)
-SET(HW_SENSOR On)
-SET(HW_RTC On)
-SET(HW_LCD_I2C_CONVERTER_TYPE_A Off)
-
-SET(HW_RTC_SET_TIME On)
-
-SET(HW_RTC_SECOND 1)
-SET(HW_RTC_MINUTE 13)
-SET(HW_RTC_HOUR 13)
-SET(HW_RTC_WEEKDAY 6)
-SET(HW_RTC_DAY 5)
-SET(HW_RTC_MONTH 12)
-SET(HW_RTC_YEAR 20)
-
-configure_file(CMake/hardware_config_template.in Config/hardware_config.hpp)
-
+include(CMake/generate_config.cmake)
 include(CMake/dependencies.cmake)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")

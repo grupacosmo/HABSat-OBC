@@ -41,11 +41,6 @@ class Rtc {
     Rtc(const buses::I2C& i2c, uint8_t address);
 
     /**
-     * Initializes RTC hardware and task into the scheduler.
-     */
-    void init() const;
-
-    /**
      * Sets the clock.
      *
      * Date is saved in the RTC memory.

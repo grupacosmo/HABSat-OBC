@@ -1,3 +1,5 @@
 /cmake-build-debug/
 /.idea/
 /Inc/hardware_config.h
+/Inc/hardware_config.hpp
+/CMake/hardware_config.cmake

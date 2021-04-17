@@ -5,20 +5,15 @@
 
 #include "hardware_config.hpp"
 
-using habsat::system::Priority;
-
 extern I2C_HandleTypeDef hi2c3;
 extern SPI_HandleTypeDef hspi2;
 extern UART_HandleTypeDef huart1;
 extern SD_HandleTypeDef hsd;
 
-#if HW_LCD_I2C_CONVERTER_TYPE_A
-constexpr uint8_t lcdSlaveAddress = 0x7E;
-#else
-constexpr uint8_t lcdSlaveAddress = 0x4E;
-#endif
-
+constexpr uint8_t lcdSlaveAddress = HW_LCD_SLAVE_ADDRESS;
 constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
+
+using habsat::system::Priority;
 
 habsat::Obc::Obc()
     : i2c{hi2c3},
@@ -40,42 +35,48 @@ habsat::Obc::Obc()
       sdSaveTask{1024, Priority::Idle, tasks::sdSave::taskFn} {}
 
 void habsat::Obc::init() {
-#if HW_LCD == 1
-    lcd.init();
-#endif
-#if HW_RTC == 1
-    rtc.init();
-#endif
-#if HW_SENSOR == 1
-    using namespace sensor;
-    Settings sensorSettings {
-          TemperatureResolution::SixteenBit,
-          PressureOversampling::UltraLowPower,
-          HumidityOversampling::Standard,
-          Mode::Normal,
-          StandbyTime::TenMs,
-          Filter::Off
-    };
-
-    sensor.init(sensorSettings);
-#endif
-#if HW_RTC && HW_RTC_SET_TIME
-    rtc::Buffer data;
-    data.second  = HW_RTC_SECOND;
-    data.minute  = HW_RTC_MINUTE;
-    data.hour    = HW_RTC_HOUR;
-    data.weekday = HW_RTC_WEEKDAY;
-    data.day     = HW_RTC_DAY;
-    data.month   = HW_RTC_MONTH;
-    data.year    = HW_RTC_YEAR;
-
-    rtc.setTimeAndDate(data);
-#endif
     inputTask.addToScheduler();
     blinkTask.addToScheduler();
-    displayTask.addToScheduler();
-    measureTimeTask.addToScheduler();
-    measureWeatherTask.addToScheduler();
+
+    // clang-format off
+#   if HW_LCD
+        lcd.init();
+        displayTask.addToScheduler();
+#   endif
+
+#   if HW_RTC
+        measureTimeTask.addToScheduler();
+
+#       if HW_RTC_SET_TIME
+            rtc::Buffer data;
+            data.second  = HW_RTC_SECOND;
+            data.minute  = HW_RTC_MINUTE;
+            data.hour    = HW_RTC_HOUR;
+            data.weekday = HW_RTC_WEEKDAY;
+            data.day     = HW_RTC_DAY;
+            data.month   = HW_RTC_MONTH;
+            data.year    = HW_RTC_YEAR;
+
+            rtc.setTimeAndDate(data);
+#       endif
+#   endif
+
+#   if HW_SENSOR
+        using namespace sensor;
+        Settings sensorSettings {
+              TemperatureResolution::SixteenBit,
+              PressureOversampling::UltraLowPower,
+              HumidityOversampling::Standard,
+              Mode::Normal,
+              StandbyTime::TenMs,
+              Filter::Off
+        };
+
+        sensor.init(sensorSettings);
+        measureWeatherTask.addToScheduler();
+#   endif
+    // clang-format on
+
     sdSaveTask.addToScheduler();
 }
 

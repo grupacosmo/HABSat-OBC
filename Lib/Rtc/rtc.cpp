@@ -8,10 +8,6 @@ namespace habsat::rtc {
 
 Rtc::Rtc(const buses::I2C& i2c, uint8_t address) : i2c_(i2c), slaveAddress_(address) {}
 
-void Rtc::init() const {
-
-}
-
 auto convertBcdToDec(const uint8_t bcdData) -> uint8_t {
     return ((bcdData >> 4) * 10) + (bcdData & 0x0F);
 }
