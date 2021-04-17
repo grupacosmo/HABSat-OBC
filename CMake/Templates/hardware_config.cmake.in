@@ -1,4 +1,4 @@
-# VERSION 1
+# VERSION 2
 
 # LCD is connected
 SET(HW_LCD Off) # On/Off
@@ -21,5 +21,8 @@ SET(HW_RTC_WEEKDAY 0)   # 0-6 (sun, mon, ..., sat)
 SET(HW_RTC_DAY 0)       # 1-31
 SET(HW_RTC_MONTH 0)     # 1-12
 SET(HW_RTC_YEAR 0)      # two last digits of a year
+
+# SD reader is connected
+SET(HW_SD_READER Off) # On/Off
 
 # Reload CMake after you have finished configuration to generate Inc/hardware_config.hpp

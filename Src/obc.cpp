@@ -76,9 +76,11 @@ void habsat::Obc::init() {
         sensor.init(sensorSettings);
         measureWeatherTask.addToScheduler();
 #   endif
-    // clang-format on
 
-    sdSaveTask.addToScheduler();
+#   if HW_SD_READER
+        sdSaveTask.addToScheduler();
+#   endif
+    // clang-format on
 }
 
 auto habsat::getObc() -> Obc& {
