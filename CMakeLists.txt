@@ -75,10 +75,6 @@ include_directories(
 
 add_subdirectory(Lib)
 
-target_include_directories(${PROJECT_NAME}.elf PRIVATE
-        "${CMAKE_CURRENT_BINARY_DIR}/Config"
-        )
-
 target_link_libraries(${PROJECT_NAME}.elf
         Buses
         MCU_Board
