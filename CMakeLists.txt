@@ -40,7 +40,7 @@ add_definitions(-DUSE_HAL_DRIVER -DSTM32F446xx -DDEBUG)
 
 file(GLOB_RECURSE SOURCES "Startup/*.*" "Src/*.*" "Middlewares/*.*" "Drivers/*.*")
 
-include_directories(Inc Drivers/CMSIS/Include Drivers/STM32F4xx_HAL_Driver/Inc Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Middlewares/Third_Party/FatFs/src)
+include_directories(Middlewares/Third_Party/FreeRTOS/Source/include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F Inc Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 Drivers/CMSIS/Include Drivers/STM32F4xx_HAL_Driver/Inc Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Middlewares/Third_Party/FatFs/src)
 
 add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
 
@@ -58,6 +58,7 @@ Building ${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
+include(CMake/generate_config.cmake)
 include(CMake/dependencies.cmake)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
@@ -70,7 +71,7 @@ include_directories(
         Drivers/STM32F4xx_HAL_Driver/Inc
         Middlewares/Third_Party/BME280
         Middlewares/Third_Party/FreeRTOS/Inc
-        )
+)
 
 add_subdirectory(Lib)
 

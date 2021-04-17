@@ -8,8 +8,6 @@
 #include <FreeRTOS.h>
 #include <task.h>
 
-#include "Utils/noncopyable.hpp"
-
 namespace habsat::system {
 
 /**
@@ -22,42 +20,39 @@ enum class Priority {
 
 enum class TaskState { Running, Ready, Blocked, Suspended, Deleted, Invalid };
 
-class Task : public utils::Noncopyable {
+class Task {
    public:
     using StackDepth = configSTACK_DEPTH_TYPE;
 
     /**
      * Task's constructor.
-     * @param name          Name of the task.
      * @param stackDepth  Approximate size of the stack needed for the task's function.
      * @param priority      Priority of the task.
      * @param taskCode     Pointer to a function that contains the code of the task.
      * @param args          void* used to pass arguments to the task
      */
-    Task(const char* const name,
-         const StackDepth stackDepth,
+    Task(const StackDepth stackDepth,
          const Priority& priority,
          void (*taskCode)(void*))
         : taskHandle_(nullptr),
           taskCode_(taskCode),
-          name_(name),
           stackDepth_(stackDepth),
           priority_(priority) {}
 
     /**
      * Suspends the task.
      */
-    void suspend() const { vTaskSuspend(taskHandle_); }
+    void suspend() { vTaskSuspend(taskHandle_); }
 
     /**
      * Resumes the task.
      */
-    void resume() const { vTaskResume(taskHandle_); }
+    void resume() { vTaskResume(taskHandle_); }
 
     /**
      * Deletes the task form scheduler.
      */
-    void detach() const { vTaskDelete(taskHandle_); }
+    void detach() { vTaskDelete(taskHandle_); }
 
     /**
      *
@@ -70,25 +65,24 @@ class Task : public utils::Noncopyable {
     /**
      * Resumes the task from the interrupt handler.
      */
-    void resumeFromISR() const { portYIELD_FROM_ISR(xTaskResumeFromISR(taskHandle_)); }
+    void resumeFromISR() { portYIELD_FROM_ISR(xTaskResumeFromISR(taskHandle_)); }
 
     /**
      * Allocates memory and adds the task to the scheduler.
      */
-    void addToScheduler(void* params = nullptr) const {
+    void addToScheduler(void* params = nullptr) {
         xTaskCreate(
               taskCode_,
-              name_,
+              nullptr,
               stackDepth_,
-              const_cast<void*>(params),
+              params,
               static_cast<int>(priority_),
-              const_cast<TaskHandle_t*>(&taskHandle_));
+              &taskHandle_);
     }
 
    private:
     TaskHandle_t taskHandle_;
     void (*const taskCode_)(void*);
-    const char* const name_;
     const StackDepth stackDepth_;
     const Priority priority_;
 };

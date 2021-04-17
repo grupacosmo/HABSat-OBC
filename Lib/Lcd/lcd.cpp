@@ -92,7 +92,7 @@ void Lcd::init() const {
     waitAndSendCmd(1, entryModeConfig_);
 }
 
-void Lcd::printLine(const u_int16_t lineIndex, const std::string& str) const {
+void Lcd::printLine(const u_int16_t lineIndex, const std::string_view& str) const {
     setCursorPosition(lineIndex, 0);
 
     size_t i;

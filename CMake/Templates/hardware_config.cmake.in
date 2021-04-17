@@ -1,0 +1,25 @@
+# VERSION 1
+
+# LCD is connected
+SET(HW_LCD Off) # On/Off
+
+# LCD's I2C converter is type PCF8574A instead of PCF8574
+SET(HW_LCD_I2C_CONVERTER_TYPE_A Off) # On/Off
+
+# Weather conditions sensor is connected
+SET(HW_SENSOR Off) # On/Off
+
+# RTC is connected
+SET(HW_RTC Off) # On/Off
+
+# Set new time in RTC
+SET(HW_RTC_SET_TIME Off) # On/Off
+SET(HW_RTC_SECOND 0)    # 0-59
+SET(HW_RTC_MINUTE 0)    # 0-59
+SET(HW_RTC_HOUR 0)      # 0-23
+SET(HW_RTC_WEEKDAY 0)   # 0-6 (sun, mon, ..., sat)
+SET(HW_RTC_DAY 0)       # 1-31
+SET(HW_RTC_MONTH 0)     # 1-12
+SET(HW_RTC_YEAR 0)      # two last digits of a year
+
+# Reload CMake after you have finished configuration to generate Inc/hardware_config.hpp

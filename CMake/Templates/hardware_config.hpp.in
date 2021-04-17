@@ -1,0 +1,32 @@
+/*
+    WARNING: This file is generated.
+    See CMake/hardware_config.cmake for details.
+    Reload CMake if you don't have one
+*/
+
+#ifndef HABSAT_OBC_HARDWARE_CONFIG
+#define HABSAT_OBC_HARDWARE_CONFIG
+
+#cmakedefine01 HW_LCD
+#cmakedefine01 HW_SENSOR
+#cmakedefine01 HW_RTC
+#cmakedefine01 HW_LCD_I2C_CONVERTER_TYPE_A
+#cmakedefine01 HW_RTC_SET_TIME
+
+#if HW_LCD_I2C_CONVERTER_TYPE_A
+#   define HW_LCD_SLAVE_ADDRESS 0x7E
+#else
+#   define HW_LCD_SLAVE_ADDRESS 0x4E
+#endif
+
+#if HW_RTC_SET_TIME
+#   define HW_RTC_SECOND  ${HW_RTC_SECOND}
+#   define HW_RTC_MINUTE  ${HW_RTC_MINUTE}
+#   define HW_RTC_HOUR    ${HW_RTC_HOUR}
+#   define HW_RTC_WEEKDAY ${HW_RTC_WEEKDAY}
+#   define HW_RTC_DAY     ${HW_RTC_DAY}
+#   define HW_RTC_MONTH   ${HW_RTC_MONTH}
+#   define HW_RTC_YEAR    ${HW_RTC_YEAR}
+#endif
+
+#endif  // HABSAT_OBC_HARDWARE_CONFIG

@@ -22,13 +22,10 @@
 #include "Tasks/measure_time.hpp"
 #include "Tasks/measure_weather.hpp"
 #include "Tasks/sd_save.hpp"
-#include "Utils/noncopyable.hpp"
-#include "constants.hpp"
-#include "extern_handles.hpp"
 
 namespace habsat {
 
-struct Obc : public utils::Noncopyable {
+struct Obc {
     buses::I2C i2c;
     buses::SPI spi;
     buses::UART uart;
