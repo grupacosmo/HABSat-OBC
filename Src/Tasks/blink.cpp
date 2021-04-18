@@ -16,7 +16,6 @@ void blinkTaskFn([[maybe_unused]] void* args) {
 
     while (true) {
         obc.led.toggle();
-        obc.terminal.pcTransmit("test");
         system::thisTask::delay(1000);
     }
 }
@@ -26,6 +25,8 @@ void inputTaskFn([[maybe_unused]] void* args) {
 
     while (true) {
         system::thisTask::suspend();
+
+        obc.terminal.pcTransmitDMA("Button was pressed!\n");
 
         if (obc.blinkTask.getState() != system::TaskState::Suspended) {
             obc.blinkTask.suspend();
