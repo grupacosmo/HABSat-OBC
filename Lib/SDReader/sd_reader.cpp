@@ -5,7 +5,6 @@
 #include "SDReader//sd_reader.hpp"
 
 #include <array>
-#include "terminal.hpp"
 #include <cstdio>
 
 namespace habsat::sdReader {
@@ -82,7 +81,7 @@ auto SDReader::update(std::string_view path, std::string_view content) -> FRESUL
             return fresult;
             // TODO send comm to console
         }
-        Terminal::pcTransmitDMA("File successfully updated");
+        //TODO old code Terminal::pcTransmitDMA("File successfully updated");
     } else {
         // TODO send comm to console
     }

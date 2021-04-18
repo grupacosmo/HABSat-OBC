@@ -16,6 +16,7 @@ void blinkTaskFn([[maybe_unused]] void* args) {
 
     while (true) {
         obc.led.toggle();
+        obc.terminal.pcTransmit("test");
         system::thisTask::delay(1000);
     }
 }
