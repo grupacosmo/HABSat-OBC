@@ -4,6 +4,7 @@
 
 #include "Tasks/blink.hpp"
 
+#include "hardware_config.hpp"
 #include "System/task.hpp"
 #include "obc.hpp"
 
@@ -26,7 +27,11 @@ void inputTaskFn([[maybe_unused]] void* args) {
     while (true) {
         system::thisTask::suspend();
 
-        obc.terminal.pcTransmitDMA("Button was pressed!\n");
+        // clang-format off
+#       if HW_TERMINAL
+            obc.terminal.pcTransmitDMA("Button was pressed!\r\n");
+#       endif
+        //clang-format on
 
         if (obc.blinkTask.getState() != system::TaskState::Suspended) {
             obc.blinkTask.suspend();
