@@ -14,6 +14,8 @@ class Mutex {
    public:
     Mutex() : handle_(xSemaphoreCreateMutex()) {}
 
+    ~Mutex() { vSemaphoreDelete(handle_); }
+
     auto take(uint32_t timeout) -> bool { return xSemaphoreTake(handle_, timeout); }
 
     auto give() -> bool { return xSemaphoreGive(handle_); }
