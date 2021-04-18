@@ -68,10 +68,9 @@ extern DMA_HandleTypeDef hdma_usart2_tx;
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim6;
-extern UARTDMA_HandleTypeDef huartdma;
 
 /* USER CODE BEGIN EV */
-
+extern UARTDMA_HandleTypeDef huartdma;
 /* USER CODE END EV */
 
 /******************************************************************************/
