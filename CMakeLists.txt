@@ -15,7 +15,7 @@ set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
 set(CMAKE_OBJDUMP arm-none-eabi-objdump)
 set(SIZE arm-none-eabi-size)
 
-SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld Lib/Terminal/terminal.cpp)
+SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F446RETX_FLASH.ld)
 
 #Uncomment for hardware floating point
 SET(FPU_FLAGS "-mfloat-abi=hard -mfpu=fpv4-sp-d16")
