@@ -11,12 +11,12 @@ namespace habsat::terminal {
 
 void Terminal::pcTransmit(std::string_view message) {
     system::LockMutex lock{mutex_, 5};
-    uart_.transmit({utils::to_bytes(message.data()), message.size()});
+    uart_.transmit({reinterpret_cast<const uint8_t*>(message.data()), message.size()});
 }
 
 void Terminal::pcTransmitDMA(std::string_view message) {
     system::LockMutex lock{mutex_, 5};
-    uart_.transmitDMA({utils::to_bytes(message.data()), message.size()});
+    uart_.transmitDMA({reinterpret_cast<const uint8_t*>(message.data()), message.size()});
 }
 
 }  // namespace habsat::terminal

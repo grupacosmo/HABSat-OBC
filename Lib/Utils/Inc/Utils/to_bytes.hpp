@@ -9,13 +9,11 @@
 
 namespace habsat::utils {
 
-template <typename T>
-constexpr auto to_bytes(const T* data) -> const std::uint8_t* {
+inline auto to_bytes(const char* data) -> const std::uint8_t* {
     return reinterpret_cast<const std::uint8_t*>(data);
 }
 
-template <typename T>
-constexpr auto to_bytes(T* data) -> std::uint8_t* {
+inline auto to_bytes(char* data) -> std::uint8_t* {
     return reinterpret_cast<std::uint8_t*>(data);
 }
 
