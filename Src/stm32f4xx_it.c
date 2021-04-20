@@ -203,12 +203,11 @@ void DMA1_Stream6_IRQHandler(void)
 void USART1_IRQHandler(void)
 {
   /* USER CODE BEGIN USART1_IRQn 0 */
-  UARTDMA_UartIrqHandler(&huartdma);
-  return;
+
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
+  GPS_IRQHandler(&huart1);
   /* USER CODE END USART1_IRQn 1 */
 }
 
@@ -275,8 +274,8 @@ void TIM6_DAC_IRQHandler(void)
 void DMA2_Stream2_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
-  UARTDMA_DmaIrqHandler(&huartdma);
-  return;
+  //UARTDMA_DmaIrqHandler(&huartdma);
+  //return;
   /* USER CODE END DMA2_Stream2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_usart1_rx);
   /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */

@@ -24,3 +24,14 @@ void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin) {
         }
     }
 }
+
+void GPS_IRQHandler(UART_HandleTypeDef *huart){
+    if(RESET != __HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))   //Judging whether it is idle interruption
+    {
+        __HAL_UART_CLEAR_IDLEFLAG(huart);                     //Clear idle interrupt sign (otherwise it will continue to enter interrupt)
+        habsat::getObc().gps.callback();
+    }
+}
+
+
+
