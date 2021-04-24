@@ -13,6 +13,7 @@ void taskFn([[maybe_unused]] void* args) {
     // clang-format off
 #   if HW_TERMINAL
         static constexpr std::array dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        auto iter = 0;
 #   endif
     // clang-format on
 
@@ -23,24 +24,27 @@ void taskFn([[maybe_unused]] void* args) {
 
         // clang-format off
 #       if HW_TERMINAL
-            std::array<char, 50> text{};
+            if (iter == 0) {
+                std::array<char, 50> text{};
 
-            std::sprintf(
-                  text.data(),
-                  "%'.02d:%'.02d:%'.02d\r\n%s %'.02d/%'.02d/%'.02d\r\n",
-                  obc.rtcBuffer.hour,
-                  obc.rtcBuffer.minute,
-                  obc.rtcBuffer.second,
-                  dayNames[obc.rtcBuffer.weekday],
-                  obc.rtcBuffer.day,
-                  obc.rtcBuffer.month,
-                  obc.rtcBuffer.year);
+                std::sprintf(
+                      text.data(),
+                      "%'.02d:%'.02d:%'.02d %s %'.02d/%'.02d/%'.02d\r\n\r\n",
+                      obc.rtcBuffer.hour,
+                      obc.rtcBuffer.minute,
+                      obc.rtcBuffer.second,
+                      dayNames[obc.rtcBuffer.weekday],
+                      obc.rtcBuffer.day,
+                      obc.rtcBuffer.month,
+                      obc.rtcBuffer.year);
 
-            obc.terminal.pcTransmitDMA(text.data());
+                obc.terminal.pcTransmitDMA(text.data());
+            }
+            iter = (iter + 1) % 4;
 #       endif
         // clang-format on
 
-        system::thisTask::delay(500);
+        system::thisTask::delay(600);
     }
 }
 

@@ -21,7 +21,7 @@ void taskFn([[maybe_unused]] void* args) {
 
             std::sprintf(
                   text.data(),
-                  "Temp: %.2lf C Press: %.2lf hPa, Hum: %.2lf %%RH\r\n",
+                  "Temp: %.2lf C Press: %.2lf hPa, Hum: %.2lf %%RH\r\n\r\n",
                   obc.sensorBuffer.temperature,
                   obc.sensorBuffer.pressure,
                   obc.sensorBuffer.humidity);
@@ -30,7 +30,7 @@ void taskFn([[maybe_unused]] void* args) {
 #       endif
         // clang-format on
 
-        system::thisTask::delay(256);
+        system::thisTask::delay(2000);
     }
 }
 
