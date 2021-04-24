@@ -32,9 +32,9 @@ habsat::Obc::Obc()
       inputTask{128, Priority::Interrupt, tasks::blink::inputTaskFn},
       blinkTask{128, Priority::Idle, tasks::blink::blinkTaskFn},
       displayTask{256, Priority::Idle, tasks::display::taskFn},
-      measureTimeTask{128, Priority::Idle, tasks::measureTime::taskFn},
-      measureWeatherTask{256, Priority::Idle, tasks::measureWeather::taskFn},
-      sdSaveTask{1024, Priority::Idle, tasks::sdSave::taskFn} {}
+      measureTimeTask{512, Priority::Idle, tasks::measureTime::taskFn},
+      measureWeatherTask{512, Priority::Idle, tasks::measureWeather::taskFn},
+      sdSaveTask{512, Priority::Idle, tasks::sdSave::taskFn} {}
 
 void habsat::Obc::init() {
     inputTask.addToScheduler();

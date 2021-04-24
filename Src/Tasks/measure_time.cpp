@@ -12,7 +12,7 @@ namespace habsat::tasks::measureTime {
 void taskFn([[maybe_unused]] void* args) {
     // clang-format off
 #   if HW_TERMINAL
-        static const std::array dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+        static constexpr std::array dayNames = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 #   endif
     // clang-format on
 
@@ -27,7 +27,7 @@ void taskFn([[maybe_unused]] void* args) {
 
             std::sprintf(
                   text.data(),
-                  "%'.02d:%'.02d:%'.02d\n%s %'.02d/%'.02d/%'.02d\r\n",
+                  "%'.02d:%'.02d:%'.02d\r\n%s %'.02d/%'.02d/%'.02d\r\n",
                   obc.rtcBuffer.hour,
                   obc.rtcBuffer.minute,
                   obc.rtcBuffer.second,
