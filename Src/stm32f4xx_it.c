@@ -24,7 +24,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "interrupt_handlers.hpp"
-#include "uartdma.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,7 +69,6 @@ extern UART_HandleTypeDef huart2;
 extern TIM_HandleTypeDef htim6;
 
 /* USER CODE BEGIN EV */
-extern UARTDMA_HandleTypeDef huartdma;
 /* USER CODE END EV */
 
 /******************************************************************************/
