@@ -13,6 +13,7 @@
 #cmakedefine01 HW_LCD_I2C_CONVERTER_TYPE_A
 #cmakedefine01 HW_RTC_SET_TIME
 #cmakedefine01 HW_SD_READER
+#cmakedefine01 HW_TERMINAL
 
 #if HW_LCD_I2C_CONVERTER_TYPE_A
 #   define HW_LCD_SLAVE_ADDRESS 0x7E

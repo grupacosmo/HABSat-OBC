@@ -9,32 +9,31 @@
 #include <string_view>
 
 #include "Buses/uart.hpp"
+#include "System/mutex.hpp"
 
-namespace habsat {
+namespace habsat::terminal {
 
 class Terminal {
    public:
-    Terminal() = delete;
+    explicit Terminal(buses::UART& uart) : uart_(uart) {}
 
     /**
      * Sends the message to the terminal in normal mode
      * @param message
      */
-    static void pcTransmit(std::string_view message);
+    void pcTransmit(std::string_view message);
 
     /**
      * Sends the message to the terminal in DMA mode
      * @param message
      */
-    static void pcTransmitDMA(std::string_view message);
+    void pcTransmitDMA(std::string_view message);
 
-    /**
-     * TODO if someone needs it
-     * @param message
-     */
-    static void pcReceiveDma(char* message);
+   private:
+    buses::UART& uart_;
+    system::Mutex mutex_;
 };
 
-}  // namespace habsat
+}  // namespace habsat::terminal
 
 #endif  // HABSAT_OBC_TERMINAL_H

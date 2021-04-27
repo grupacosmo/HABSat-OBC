@@ -22,6 +22,7 @@
 #include "Tasks/measure_time.hpp"
 #include "Tasks/measure_weather.hpp"
 #include "Tasks/sd_save.hpp"
+#include "Terminal/terminal.hpp"
 
 namespace habsat {
 
@@ -33,6 +34,7 @@ struct Obc {
     mcuBoard::GPIOPin pinC13;
     mcuBoard::GPIOPin pinA5;
     mcuBoard::GPIOPin sensorCS;
+
     mcuBoard::Button button;
     mcuBoard::Led led;
 
@@ -40,6 +42,8 @@ struct Obc {
     rtc::Rtc rtc;
     sensor::Sensor sensor;
     sdReader::SDReader sdReader;
+
+    terminal::Terminal terminal;
 
     rtc::Buffer rtcBuffer;
     sensor::Buffer sensorBuffer;
@@ -58,4 +62,5 @@ struct Obc {
 auto getObc() -> Obc&;
 
 }  // namespace habsat
+
 #endif  // HABSAT_OBC_OBC_HPP
