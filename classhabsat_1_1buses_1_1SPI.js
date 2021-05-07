@@ -1,7 +1,7 @@
 var classhabsat_1_1buses_1_1SPI =
 [
-    [ "SPI", "classhabsat_1_1buses_1_1SPI.html#ad10ff76a26e519d71f16899c8c78190b", null ],
-    [ "transmit", "classhabsat_1_1buses_1_1SPI.html#aabe27ce2b756972f1f60af7c334d74e8", null ],
-    [ "transmit", "classhabsat_1_1buses_1_1SPI.html#a8ff9e341eced60bdc82052b9ec192acc", null ],
-    [ "transmitAndReceive", "classhabsat_1_1buses_1_1SPI.html#a4c0e1da4de639eaad8d8e05f91748d95", null ]
+    [ "SPI", "classhabsat_1_1buses_1_1SPI.html#af243dd44c44acbb0a3762725bfad28aa", null ],
+    [ "transmit", "classhabsat_1_1buses_1_1SPI.html#a85917a25825f2b61e97bd2a6645c7654", null ],
+    [ "transmit", "classhabsat_1_1buses_1_1SPI.html#ab761d60529858fe2c02f25184ae519e8", null ],
+    [ "transmitAndReceive", "classhabsat_1_1buses_1_1SPI.html#aa3080a97445a8baced7c5150a3007f16", null ]
 ];

@@ -1,8 +1,8 @@
 var classhabsat_1_1mcuBoard_1_1GPIOPin =
 [
-    [ "GPIOPin", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#a20f69508a9d891462c256577322e5000", null ],
-    [ "read", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#a4e05ef90eee4084945743c141e7e09cb", null ],
-    [ "reset", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#ade9e75be37babd1afa9b77966a452592", null ],
-    [ "set", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#af1c3e1a656a34afe684f36c7f0041253", null ],
-    [ "toggle", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#aaf16414b19d17407e12f57d4c4897ad8", null ]
+    [ "GPIOPin", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#a245aa5ee2ca4aa675cbfb8910af01494", null ],
+    [ "read", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#ab121cd9fc47fd0e38fd5f3df30a652ab", null ],
+    [ "reset", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#ad20897c5c8bd47f5d4005989bead0e55", null ],
+    [ "set", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#a62bbebcdc34a8056c32d0b1a26026717", null ],
+    [ "toggle", "classhabsat_1_1mcuBoard_1_1GPIOPin.html#ad277193b2dca0bab1e0ad24d45407dc3", null ]
 ];

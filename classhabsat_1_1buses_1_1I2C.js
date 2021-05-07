@@ -1,8 +1,8 @@
 var classhabsat_1_1buses_1_1I2C =
 [
-    [ "I2C", "classhabsat_1_1buses_1_1I2C.html#a44488f2f80147a521f9d78d4535e31e1", null ],
-    [ "memoryRead", "classhabsat_1_1buses_1_1I2C.html#af097d2ead09200717f0b363c38675b5d", null ],
-    [ "memoryWrite", "classhabsat_1_1buses_1_1I2C.html#ae49f48b027779482661cbd01f3c5b109", null ],
-    [ "transmit", "classhabsat_1_1buses_1_1I2C.html#a756a997735a710edb87a6c8b601b9e22", null ],
-    [ "transmit", "classhabsat_1_1buses_1_1I2C.html#a54801f1f2e8a8fa0be11656da0a08310", null ]
+    [ "I2C", "classhabsat_1_1buses_1_1I2C.html#a825e5ada231e809f1b0233e1fd077817", null ],
+    [ "memoryRead", "classhabsat_1_1buses_1_1I2C.html#a7b31c2c5e770e139f3a9ef5449a615a2", null ],
+    [ "memoryWrite", "classhabsat_1_1buses_1_1I2C.html#ae37781e89019bd274974fbef190b066b", null ],
+    [ "transmit", "classhabsat_1_1buses_1_1I2C.html#ada8493bc5dd36a1b1bd134f5a97a31ee", null ],
+    [ "transmit", "classhabsat_1_1buses_1_1I2C.html#ac610ebdc497601c54931fc7aba903c43", null ]
 ];

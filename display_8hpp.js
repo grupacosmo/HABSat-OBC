@@ -1,8 +1,8 @@
 var display_8hpp =
 [
-    [ "formatDateData", "display_8hpp.html#a601dcdb538a8e54cf2a1e923c7703cd7", null ],
-    [ "formatHeaderData", "display_8hpp.html#a7dd0f1e126930bd94904835237ff2b2e", null ],
-    [ "formatSensorData", "display_8hpp.html#a4c8c35f7dcaef9a4fd315719a575bbd8", null ],
-    [ "formatTimeData", "display_8hpp.html#a572c8c42c686d36c2efa3d98011d210a", null ],
+    [ "formatDateData", "display_8hpp.html#a331a1ceacc6c660c4d730558d69d82f4", null ],
+    [ "formatHeaderData", "display_8hpp.html#a5a5d02f3c0ac46d8a0a7adda3ad83c35", null ],
+    [ "formatSensorData", "display_8hpp.html#ab7cfab11fd4e740c73f1137636197eba", null ],
+    [ "formatTimeData", "display_8hpp.html#a4c61e5065bba9b5dd4019513cadf8028", null ],
     [ "taskFn", "display_8hpp.html#aff594b1f67fee590e245018ff9b8a4a9", null ]
 ];

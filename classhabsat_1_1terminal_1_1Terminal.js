@@ -1,6 +1,6 @@
 var classhabsat_1_1terminal_1_1Terminal =
 [
-    [ "Terminal", "classhabsat_1_1terminal_1_1Terminal.html#a9e95d9cba4bd461730ac3b85d318c354", null ],
-    [ "pcTransmit", "classhabsat_1_1terminal_1_1Terminal.html#a1f8c82f490782f3022cc6db049e5f050", null ],
-    [ "pcTransmitDMA", "classhabsat_1_1terminal_1_1Terminal.html#a70d42d919b19d1d98519636538020e19", null ]
+    [ "Terminal", "classhabsat_1_1terminal_1_1Terminal.html#a8ed317f0d12f3904eb982f4177366293", null ],
+    [ "pcTransmit", "classhabsat_1_1terminal_1_1Terminal.html#a9f232dcc9286f9561a2b8a96600dd1b7", null ],
+    [ "pcTransmitDMA", "classhabsat_1_1terminal_1_1Terminal.html#af4a05ac18d19ae3f5ca0e70171bf816e", null ]
 ];

@@ -1,8 +1,8 @@
 var classhabsat_1_1mcuBoard_1_1Led =
 [
-    [ "Led", "classhabsat_1_1mcuBoard_1_1Led.html#aba130d90686eba43570a4d549fcd8faa", null ],
-    [ "isOn", "classhabsat_1_1mcuBoard_1_1Led.html#ae1229befd7a4d31bf79629f2e2016a6c", null ],
-    [ "off", "classhabsat_1_1mcuBoard_1_1Led.html#adfa925f666a4b8e5dcac5c251a587f78", null ],
-    [ "on", "classhabsat_1_1mcuBoard_1_1Led.html#a1fa604605fd688a5cba4a574559ac321", null ],
-    [ "toggle", "classhabsat_1_1mcuBoard_1_1Led.html#a5f8af9387ae54b276d37de9de68b9a52", null ]
+    [ "Led", "classhabsat_1_1mcuBoard_1_1Led.html#a68146d05464058945211a1121b7625b6", null ],
+    [ "isOn", "classhabsat_1_1mcuBoard_1_1Led.html#a4ce5071942aa9855d8434b68dd1052a0", null ],
+    [ "off", "classhabsat_1_1mcuBoard_1_1Led.html#a2f241b422ebdbd7a570178ceaebdd2fa", null ],
+    [ "on", "classhabsat_1_1mcuBoard_1_1Led.html#af5a2f93105e0a24634af5793d2c5c5b8", null ],
+    [ "toggle", "classhabsat_1_1mcuBoard_1_1Led.html#ad277193b2dca0bab1e0ad24d45407dc3", null ]
 ];

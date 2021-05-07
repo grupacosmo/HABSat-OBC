@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>HABSat-OBC: habsat::system::Task Class Reference</title>
+<title>HABSat-OBC: Task Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -18,6 +18,7 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -87,7 +88,7 @@ $(document).ready(function(){initNavTree('classhabsat_1_1system_1_1Task.html',''
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhabsat_1_1system_1_1Task-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">habsat::system::Task Class Reference</div>  </div>
+<div class="title">Task Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -95,35 +96,35 @@ $(document).ready(function(){initNavTree('classhabsat_1_1system_1_1Task.html',''
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a0f89872d9b63db5124d994557ed6510e"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a0f89872d9b63db5124d994557ed6510e">StackDepth</a> = configSTACK_DEPTH_TYPE</td></tr>
-<tr class="separator:a0f89872d9b63db5124d994557ed6510e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae89199acf75e4c07b866f6454c100972"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#ae89199acf75e4c07b866f6454c100972">StackDepth</a> = configSTACK_DEPTH_TYPE</td></tr>
+<tr class="separator:ae89199acf75e4c07b866f6454c100972"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0723838474e8ea254c544afac1c94d20"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a0723838474e8ea254c544afac1c94d20">Task</a> (const <a class="el" href="classhabsat_1_1system_1_1Task.html#a0f89872d9b63db5124d994557ed6510e">StackDepth</a> stackDepth, const <a class="el" href="namespacehabsat_1_1system.html#af9f56c35462f8482cb54c39f094eb1c4">Priority</a> &amp;priority, void(*taskCode)(void *))</td></tr>
-<tr class="separator:a0723838474e8ea254c544afac1c94d20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56d27f6eb7eff5fd40e0d0bab03fb5f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a56d27f6eb7eff5fd40e0d0bab03fb5f0">suspend</a> ()</td></tr>
-<tr class="separator:a56d27f6eb7eff5fd40e0d0bab03fb5f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dd2fb94ec87fe1416216fea3bff558d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a4dd2fb94ec87fe1416216fea3bff558d">resume</a> ()</td></tr>
-<tr class="separator:a4dd2fb94ec87fe1416216fea3bff558d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b2a381c2ab034d5ab643c9cc9160590"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a9b2a381c2ab034d5ab643c9cc9160590">detach</a> ()</td></tr>
-<tr class="separator:a9b2a381c2ab034d5ab643c9cc9160590"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10de76d154b35509d29d9eec86a6094e"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a10de76d154b35509d29d9eec86a6094e">getState</a> () const -&gt; <a class="el" href="namespacehabsat_1_1system.html#a7be7d37a53ca95fa9aadfa4b7d6302a6">TaskState</a></td></tr>
-<tr class="separator:a10de76d154b35509d29d9eec86a6094e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fa39564d64233c955f82243be1f02e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a0fa39564d64233c955f82243be1f02e6">resumeFromISR</a> ()</td></tr>
-<tr class="separator:a0fa39564d64233c955f82243be1f02e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:addb142b065f10b95a40431d7963b9f1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#addb142b065f10b95a40431d7963b9f1c">addToScheduler</a> (void *params=nullptr)</td></tr>
-<tr class="separator:addb142b065f10b95a40431d7963b9f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723d33accb907e3c3abce7e6b179b25a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a723d33accb907e3c3abce7e6b179b25a">Task</a> (const <a class="el" href="classhabsat_1_1system_1_1Task.html#ae89199acf75e4c07b866f6454c100972">StackDepth</a> stackDepth, const <a class="el" href="namespacehabsat_1_1system.html#a315655b1bb5848c063491adffde62b15">Priority</a> &amp;priority, void(*taskCode)(void *))</td></tr>
+<tr class="separator:a723d33accb907e3c3abce7e6b179b25a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3605b58fb45d69d498721bc2f2a14b1c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a3605b58fb45d69d498721bc2f2a14b1c">suspend</a> ()</td></tr>
+<tr class="separator:a3605b58fb45d69d498721bc2f2a14b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41de8150eff044a237990c271d57ea27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a41de8150eff044a237990c271d57ea27">resume</a> ()</td></tr>
+<tr class="separator:a41de8150eff044a237990c271d57ea27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac295bade8aee589f6718dfa79edc2a34"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#ac295bade8aee589f6718dfa79edc2a34">detach</a> ()</td></tr>
+<tr class="separator:ac295bade8aee589f6718dfa79edc2a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ea20fe744fc3a80acb2943c295551d4"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a5ea20fe744fc3a80acb2943c295551d4">getState</a> () const -&gt; <a class="el" href="namespacehabsat_1_1system.html#a724f9ce2351c125b3b7f6c7923822bce">TaskState</a></td></tr>
+<tr class="separator:a5ea20fe744fc3a80acb2943c295551d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fc513c7295167f144944d80337f2d6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a0fc513c7295167f144944d80337f2d6f">resumeFromISR</a> ()</td></tr>
+<tr class="separator:a0fc513c7295167f144944d80337f2d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a832073216aea7472d56382fc58dd1ce4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1system_1_1Task.html#a832073216aea7472d56382fc58dd1ce4">addToScheduler</a> (void *params=nullptr)</td></tr>
+<tr class="separator:a832073216aea7472d56382fc58dd1ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a0f89872d9b63db5124d994557ed6510e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f89872d9b63db5124d994557ed6510e">&#9670;&nbsp;</a></span>StackDepth</h2>
+<a id="ae89199acf75e4c07b866f6454c100972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae89199acf75e4c07b866f6454c100972">&#9670;&nbsp;</a></span>StackDepth</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classhabsat_1_1system_1_1Task.html#a0f89872d9b63db5124d994557ed6510e">habsat::system::Task::StackDepth</a> =  configSTACK_DEPTH_TYPE</td>
+          <td class="memname">using <a class="el" href="classhabsat_1_1system_1_1Task.html#ae89199acf75e4c07b866f6454c100972">StackDepth</a> =  configSTACK_DEPTH_TYPE</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -131,8 +132,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0723838474e8ea254c544afac1c94d20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0723838474e8ea254c544afac1c94d20">&#9670;&nbsp;</a></span>Task()</h2>
+<a id="a723d33accb907e3c3abce7e6b179b25a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a723d33accb907e3c3abce7e6b179b25a">&#9670;&nbsp;</a></span>Task()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -141,15 +142,15 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">habsat::system::Task::Task </td>
+          <td class="memname"><a class="el" href="classhabsat_1_1system_1_1Task.html">Task</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classhabsat_1_1system_1_1Task.html#a0f89872d9b63db5124d994557ed6510e">StackDepth</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="classhabsat_1_1system_1_1Task.html#ae89199acf75e4c07b866f6454c100972">StackDepth</a>&#160;</td>
           <td class="paramname"><em>stackDepth</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespacehabsat_1_1system.html#af9f56c35462f8482cb54c39f094eb1c4">Priority</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="namespacehabsat_1_1system.html#a315655b1bb5848c063491adffde62b15">Priority</a> &amp;&#160;</td>
           <td class="paramname"><em>priority</em>, </td>
         </tr>
         <tr>
@@ -183,8 +184,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="addb142b065f10b95a40431d7963b9f1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#addb142b065f10b95a40431d7963b9f1c">&#9670;&nbsp;</a></span>addToScheduler()</h2>
+<a id="a832073216aea7472d56382fc58dd1ce4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a832073216aea7472d56382fc58dd1ce4">&#9670;&nbsp;</a></span>addToScheduler()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -193,7 +194,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void habsat::system::Task::addToScheduler </td>
+          <td class="memname">void addToScheduler </td>
           <td>(</td>
           <td class="paramtype">void *&#160;</td>
           <td class="paramname"><em>params</em> = <code>nullptr</code></td><td>)</td>
@@ -210,8 +211,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9b2a381c2ab034d5ab643c9cc9160590"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b2a381c2ab034d5ab643c9cc9160590">&#9670;&nbsp;</a></span>detach()</h2>
+<a id="ac295bade8aee589f6718dfa79edc2a34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac295bade8aee589f6718dfa79edc2a34">&#9670;&nbsp;</a></span>detach()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -220,7 +221,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void habsat::system::Task::detach </td>
+          <td class="memname">void detach </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -236,8 +237,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a10de76d154b35509d29d9eec86a6094e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10de76d154b35509d29d9eec86a6094e">&#9670;&nbsp;</a></span>getState()</h2>
+<a id="a5ea20fe744fc3a80acb2943c295551d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ea20fe744fc3a80acb2943c295551d4">&#9670;&nbsp;</a></span>getState()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,10 +247,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto habsat::system::Task::getState </td>
+          <td class="memname">auto getState </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td> const -&gt; <a class="el" href="namespacehabsat_1_1system.html#a7be7d37a53ca95fa9aadfa4b7d6302a6">TaskState</a> </td>
+          <td> const -&gt; <a class="el" href="namespacehabsat_1_1system.html#a724f9ce2351c125b3b7f6c7923822bce">TaskState</a> </td>
         </tr>
       </table>
   </td>
@@ -262,8 +263,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4dd2fb94ec87fe1416216fea3bff558d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dd2fb94ec87fe1416216fea3bff558d">&#9670;&nbsp;</a></span>resume()</h2>
+<a id="a41de8150eff044a237990c271d57ea27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41de8150eff044a237990c271d57ea27">&#9670;&nbsp;</a></span>resume()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,7 +273,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void habsat::system::Task::resume </td>
+          <td class="memname">void resume </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -288,8 +289,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0fa39564d64233c955f82243be1f02e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fa39564d64233c955f82243be1f02e6">&#9670;&nbsp;</a></span>resumeFromISR()</h2>
+<a id="a0fc513c7295167f144944d80337f2d6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fc513c7295167f144944d80337f2d6f">&#9670;&nbsp;</a></span>resumeFromISR()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,7 +299,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void habsat::system::Task::resumeFromISR </td>
+          <td class="memname">void resumeFromISR </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -314,8 +315,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a56d27f6eb7eff5fd40e0d0bab03fb5f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a56d27f6eb7eff5fd40e0d0bab03fb5f0">&#9670;&nbsp;</a></span>suspend()</h2>
+<a id="a3605b58fb45d69d498721bc2f2a14b1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3605b58fb45d69d498721bc2f2a14b1c">&#9670;&nbsp;</a></span>suspend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -324,7 +325,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void habsat::system::Task::suspend </td>
+          <td class="memname">void suspend </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

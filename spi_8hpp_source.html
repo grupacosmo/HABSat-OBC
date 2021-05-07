@@ -18,6 +18,7 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -106,23 +107,23 @@ $(document).ready(function(){initNavTree('spi_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="classhabsat_1_1buses_1_1SPI.html">   19</a></span>&#160;<span class="keyword">class </span><a class="code" href="classhabsat_1_1buses_1_1SPI.html">SPI</a> {</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;   <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classhabsat_1_1buses_1_1SPI.html#ad10ff76a26e519d71f16899c8c78190b">   21</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#ad10ff76a26e519d71f16899c8c78190b">SPI</a>(SPI_HandleTypeDef&amp; handle) : handle_(handle){};</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classhabsat_1_1buses_1_1SPI.html#af243dd44c44acbb0a3762725bfad28aa">   21</a></span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#af243dd44c44acbb0a3762725bfad28aa">SPI</a>(SPI_HandleTypeDef&amp; handle) : handle_(handle){};</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#a8ff9e341eced60bdc82052b9ec192acc">transmit</a>(</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#ab761d60529858fe2c02f25184ae519e8">transmit</a>(</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;          <a class="code" href="classhabsat_1_1mcuBoard_1_1GPIOPin.html">mcuBoard::GPIOPin</a>&amp; chipSelect,</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;          uint8_t data,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a60d14eaef0dc47a97b4d029368c09653">Result</a>;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a>;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#a8ff9e341eced60bdc82052b9ec192acc">transmit</a>(</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#ab761d60529858fe2c02f25184ae519e8">transmit</a>(</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;          <a class="code" href="classhabsat_1_1mcuBoard_1_1GPIOPin.html">mcuBoard::GPIOPin</a>&amp; chipSelect,</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;          gsl::span&lt;const uint8_t&gt; data,</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a60d14eaef0dc47a97b4d029368c09653">Result</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#a4c0e1da4de639eaad8d8e05f91748d95">transmitAndReceive</a>(</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1buses_1_1SPI.html#aa3080a97445a8baced7c5150a3007f16">transmitAndReceive</a>(</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;          <a class="code" href="classhabsat_1_1mcuBoard_1_1GPIOPin.html">mcuBoard::GPIOPin</a>&amp; chipSelect,</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;          gsl::span&lt;const uint8_t&gt; txData,</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;          gsl::span&lt;uint8_t&gt; rxData,</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a60d14eaef0dc47a97b4d029368c09653">Result</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a>;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;   <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">static</span> constexpr uint32_t defaultTimeout_ = 100;</div>
@@ -134,15 +135,15 @@ $(document).ready(function(){initNavTree('spi_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">#endif  // HABSAT_OBC_BUSES_SPI_HPP</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="anamespacehabsat_1_1buses_html_a60d14eaef0dc47a97b4d029368c09653"><div class="ttname"><a href="namespacehabsat_1_1buses.html#a60d14eaef0dc47a97b4d029368c09653">habsat::buses::Result</a></div><div class="ttdeci">Result</div><div class="ttdef"><b>Definition:</b> result.hpp:10</div></div>
+<div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html_ab761d60529858fe2c02f25184ae519e8"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html#ab761d60529858fe2c02f25184ae519e8">habsat::buses::SPI::transmit</a></div><div class="ttdeci">auto transmit(mcuBoard::GPIOPin &amp;chipSelect, uint8_t data, uint32_t timeout=defaultTimeout_) const -&gt; Result</div><div class="ttdef"><b>Definition:</b> spi.cpp:11</div></div>
+<div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html_aa3080a97445a8baced7c5150a3007f16"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html#aa3080a97445a8baced7c5150a3007f16">habsat::buses::SPI::transmitAndReceive</a></div><div class="ttdeci">auto transmitAndReceive(mcuBoard::GPIOPin &amp;chipSelect, gsl::span&lt; const uint8_t &gt; txData, gsl::span&lt; uint8_t &gt; rxData, uint32_t timeout=defaultTimeout_) const -&gt; Result</div><div class="ttdef"><b>Definition:</b> spi.cpp:33</div></div>
+<div class="ttc" id="anamespacehabsat_1_1buses_html_a28287671eaf7406afd604bd055ba4066"><div class="ttname"><a href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">habsat::buses::Result</a></div><div class="ttdeci">Result</div><div class="ttdef"><b>Definition:</b> result.hpp:10</div></div>
 <div class="ttc" id="agpio__pin_8hpp_html"><div class="ttname"><a href="gpio__pin_8hpp.html">gpio_pin.hpp</a></div></div>
-<div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html_a8ff9e341eced60bdc82052b9ec192acc"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html#a8ff9e341eced60bdc82052b9ec192acc">habsat::buses::SPI::transmit</a></div><div class="ttdeci">auto transmit(mcuBoard::GPIOPin &amp;chipSelect, uint8_t data, uint32_t timeout=defaultTimeout_) const -&gt; Result</div><div class="ttdef"><b>Definition:</b> spi.cpp:11</div></div>
-<div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html_ad10ff76a26e519d71f16899c8c78190b"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html#ad10ff76a26e519d71f16899c8c78190b">habsat::buses::SPI::SPI</a></div><div class="ttdeci">SPI(SPI_HandleTypeDef &amp;handle)</div><div class="ttdef"><b>Definition:</b> spi.hpp:21</div></div>
+<div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html_af243dd44c44acbb0a3762725bfad28aa"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html#af243dd44c44acbb0a3762725bfad28aa">habsat::buses::SPI::SPI</a></div><div class="ttdeci">SPI(SPI_HandleTypeDef &amp;handle)</div><div class="ttdef"><b>Definition:</b> spi.hpp:21</div></div>
 <div class="ttc" id="aclasshabsat_1_1mcuBoard_1_1GPIOPin_html"><div class="ttname"><a href="classhabsat_1_1mcuBoard_1_1GPIOPin.html">habsat::mcuBoard::GPIOPin</a></div><div class="ttdef"><b>Definition:</b> gpio_pin.hpp:14</div></div>
 <div class="ttc" id="anamespacehabsat_1_1buses_html"><div class="ttname"><a href="namespacehabsat_1_1buses.html">habsat::buses</a></div><div class="ttdef"><b>Definition:</b> i2c.hpp:15</div></div>
 <div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html">habsat::buses::SPI</a></div><div class="ttdef"><b>Definition:</b> spi.hpp:19</div></div>
 <div class="ttc" id="aresult_8hpp_html"><div class="ttname"><a href="result_8hpp.html">result.hpp</a></div></div>
-<div class="ttc" id="aclasshabsat_1_1buses_1_1SPI_html_a4c0e1da4de639eaad8d8e05f91748d95"><div class="ttname"><a href="classhabsat_1_1buses_1_1SPI.html#a4c0e1da4de639eaad8d8e05f91748d95">habsat::buses::SPI::transmitAndReceive</a></div><div class="ttdeci">auto transmitAndReceive(mcuBoard::GPIOPin &amp;chipSelect, gsl::span&lt; const uint8_t &gt; txData, gsl::span&lt; uint8_t &gt; rxData, uint32_t timeout=defaultTimeout_) const -&gt; Result</div><div class="ttdef"><b>Definition:</b> spi.cpp:33</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

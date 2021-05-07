@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['humidityoversampling_913',['HumidityOversampling',['../namespacehabsat_1_1sensor.html#a16439a098bfa5bd07c37dc0aa488e8c7',1,'habsat::sensor']]]
+  ['humidityoversampling_913',['HumidityOversampling',['../namespacehabsat_1_1sensor.html#a44a10fc976a2c913d2c4641b9403661b',1,'habsat::sensor']]]
 ];
