@@ -19,6 +19,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: include stub submodule to base repo
+        run: git submodule update --init      
+
+      - name: install doxygen
+        run: sudo apt-get install doxygen
+      
       - name: Setup cmake
         uses: jwlawson/actions-setup-cmake@v1.8
         with:
@@ -31,11 +37,9 @@ jobs:
           
       - name: cmake
         run: cmake .
-        
-      - name: doxygen
-        uses: mattnotmitt/doxygen-action@v1
-        with:
-          doxyfile-path: ./Doxyfile.docs
+
+      - name: run doxygen
+        run: doxygen Doxyfile.docs
 
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
