@@ -60,6 +60,7 @@ Building ${BIN_FILE}")
 
 include(CMake/generate_config.cmake)
 include(CMake/dependencies.cmake)
+include(CMake/doxygen.cmake)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT}")
@@ -71,7 +72,7 @@ include_directories(
         Drivers/STM32F4xx_HAL_Driver/Inc
         Middlewares/Third_Party/BME280
         Middlewares/Third_Party/FreeRTOS/Inc
-)
+        )
 
 add_subdirectory(Lib)
 
