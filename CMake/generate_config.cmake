@@ -2,7 +2,7 @@ function(generate_config)
     configure_file(CMake/Templates/hardware_config.cmake.in
             ${CMAKE_CURRENT_SOURCE_DIR}/CMake/hardware_config.cmake)
 
-    message(FATAL_ERROR "New CMake/hardware_config.cmake was generated!\nReconfigure it and reload CMake.")
+    message("New CMake/hardware_config.cmake was generated!\nReconfigure it and reload CMake.")
 endfunction()
 
 if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/CMake/hardware_config.cmake)
@@ -21,7 +21,7 @@ else()
     if(${VER_TEMPLATE} GREATER ${VER_GENERATED})
         cmake_language(CALL generate_config)
     endif()
-
-    configure_file(CMake/Templates/hardware_config.hpp.in
-            ${CMAKE_CURRENT_SOURCE_DIR}/Inc/hardware_config.hpp)
 endif()
+
+configure_file(CMake/Templates/hardware_config.hpp.in
+        ${CMAKE_CURRENT_SOURCE_DIR}/Inc/hardware_config.hpp)
