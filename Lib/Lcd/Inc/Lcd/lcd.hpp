@@ -6,14 +6,13 @@
 #define HABSAT_OBC_PERIPHERALS_LCD_HPP
 
 #include <array>
-#include <string>
+#include <string_view>
 
 #include "Buses/i2c.hpp"
-#include "Utils/noncopyable.hpp"
 
 namespace habsat::lcd {
 
-class Lcd : public utils::Noncopyable {
+class Lcd {
    public:
     /**
      * @param lines        number of lines
@@ -40,7 +39,7 @@ class Lcd : public utils::Noncopyable {
      * @param lineIndex
      * @param str
      */
-    void printLine(uint16_t lineIndex, const std::string& str) const;
+    void printLine(uint16_t lineIndex, const std::string_view& str) const;
 
     /**
      * Prints one character at the current cursor position;

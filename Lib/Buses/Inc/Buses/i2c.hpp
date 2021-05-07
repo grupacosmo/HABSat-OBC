@@ -8,6 +8,7 @@
 #include <stm32f4xx.h>
 
 #include <array>
+#include <gsl/span>
 
 #include "result.hpp"
 
@@ -17,63 +18,54 @@ class I2C {
    public:
     explicit I2C(I2C_HandleTypeDef& handle) : handle_(handle) {}
 
-    auto transmit(uint16_t slaveAddress, uint8_t data, uint32_t timeout = defaultTimeout_) const
-          -> Result {
-        const auto result = HAL_I2C_Master_Transmit(&handle_, slaveAddress, &data, 1, timeout);
-        return static_cast<Result>(result);
-    }
-
-    template <size_t size>
     auto transmit(
           uint16_t slaveAddress,
-          const std::array<uint8_t, size>& data,
+          uint8_t data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        const auto result = HAL_I2C_Master_Transmit(
+        return details::toResult(
+              HAL_I2C_Master_Transmit(&handle_, slaveAddress, &data, 1, timeout));
+    }
+
+    auto transmit(
+          uint16_t slaveAddress,
+          gsl::span<const uint8_t> data,
+          uint32_t timeout = defaultTimeout_) const -> Result {
+        return details::toResult(HAL_I2C_Master_Transmit(
               &handle_,
               slaveAddress,
               const_cast<uint8_t*>(data.data()),
-              size,
-              timeout);
-
-        return static_cast<Result>(result);
+              data.size(),
+              timeout));
     }
 
-    template <uint16_t memoryAddress, size_t size>
     auto memoryRead(
           uint16_t slaveAddress,
-          std::array<uint8_t, size>& data,
+          uint16_t memoryAddress,
+          gsl::span<uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        constexpr auto addressSize = addressSizeOption(memoryAddress);
-
-        const auto result = HAL_I2C_Mem_Read(
+        return details::toResult(HAL_I2C_Mem_Read(
               &handle_,
               slaveAddress,
               memoryAddress,
-              addressSize,
+              addressSizeOption(memoryAddress),
               data.data(),
-              size,
-              timeout);
-
-        return static_cast<Result>(result);
+              data.size(),
+              timeout));
     }
 
-    template <uint16_t memoryAddress, size_t size>
     auto memoryWrite(
           uint16_t slaveAddress,
-          const std::array<uint8_t, size>& data,
+          uint16_t memoryAddress,
+          gsl::span<const uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        constexpr auto addressSize = addressSizeOption(memoryAddress);
-
-        const auto result = HAL_I2C_Mem_Write(
+        return details::toResult(HAL_I2C_Mem_Write(
               &handle_,
               slaveAddress,
               memoryAddress,
-              addressSize,
+              addressSizeOption(memoryAddress),
               const_cast<uint8_t*>(data.data()),
-              size,
-              timeout);
-
-        return static_cast<Result>(result);
+              data.size(),
+              timeout));
     }
 
    private:

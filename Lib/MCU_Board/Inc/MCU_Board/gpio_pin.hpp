@@ -7,13 +7,11 @@
 
 #include <stm32f4xx.h>
 
-#include "Utils/noncopyable.hpp"
-
 namespace habsat::mcuBoard {
 
 enum GPIOState { Reset, Set };
 
-class GPIOPin : public utils::Noncopyable {
+class GPIOPin {
    public:
     GPIOPin(GPIO_TypeDef* pinType, uint16_t pinNumber) : pinType_(pinType), pinNumber_(pinNumber) {}
 

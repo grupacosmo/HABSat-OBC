@@ -58,6 +58,8 @@ Building $${BIN_FILE}")
 
 # DEVELOPER DEFINED
 
+include(CMake/generate_config.cmake)
+include(CMake/dependencies.cmake)
 include(CMake/doxygen.cmake)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
@@ -77,7 +79,12 @@ add_subdirectory(Lib)
 target_link_libraries(${PROJECT_NAME}.elf
         Buses
         MCU_Board
-        Peripherals
         System
         Utils
+        Lcd
+        Rtc
+        Sensor
+        SDReader
+        GSL
+        Terminal
         )

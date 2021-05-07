@@ -22,13 +22,11 @@
 #include "Tasks/measure_time.hpp"
 #include "Tasks/measure_weather.hpp"
 #include "Tasks/sd_save.hpp"
-#include "Utils/noncopyable.hpp"
-#include "constants.hpp"
-#include "extern_handles.hpp"
+#include "Terminal/terminal.hpp"
 
 namespace habsat {
 
-struct Obc : public utils::Noncopyable {
+struct Obc {
     buses::I2C i2c;
     buses::SPI spi;
     buses::UART uart;
@@ -36,6 +34,7 @@ struct Obc : public utils::Noncopyable {
     mcuBoard::GPIOPin pinC13;
     mcuBoard::GPIOPin pinA5;
     mcuBoard::GPIOPin sensorCS;
+
     mcuBoard::Button button;
     mcuBoard::Led led;
 
@@ -43,6 +42,8 @@ struct Obc : public utils::Noncopyable {
     rtc::Rtc rtc;
     sensor::Sensor sensor;
     sdReader::SDReader sdReader;
+
+    terminal::Terminal terminal;
 
     rtc::Buffer rtcBuffer;
     sensor::Buffer sensorBuffer;
@@ -58,7 +59,8 @@ struct Obc : public utils::Noncopyable {
     void init();
 };
 
-auto obc() -> Obc&;
+auto getObc() -> Obc&;
 
 }  // namespace habsat
+
 #endif  // HABSAT_OBC_OBC_HPP

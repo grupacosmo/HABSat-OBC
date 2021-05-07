@@ -1,4 +1,4 @@
-set(NAME Rtc)
+set(NAME Terminal)
 
 aux_source_directory(${CMAKE_CURRENT_LIST_DIR} SOURCE)
 
@@ -8,4 +8,6 @@ target_include_directories(${NAME} PUBLIC Inc)
 
 target_link_libraries(${NAME}
         Buses
+        System
+        Utils
         )

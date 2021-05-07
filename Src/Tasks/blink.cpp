@@ -4,32 +4,42 @@
 
 #include "Tasks/blink.hpp"
 
+#include "hardware_config.hpp"
 #include "System/task.hpp"
 #include "obc.hpp"
 
-namespace habsat::blink {
+namespace habsat::tasks::blink {
 
-void inputInterruptHandler() { habsat::obc().inputTask.resumeFromISR(); }
+void inputInterruptHandler() { getObc().inputTask.resumeFromISR(); }
 
-[[noreturn]] void blinkTaskFn(void* args) {
-    auto obc = static_cast<habsat::Obc*>(args);
+void blinkTaskFn([[maybe_unused]] void* args) {
+    auto& obc = getObc();
 
     while (true) {
-        obc->led.toggle();
-        habsat::system::thisTask::delay(1000);
+        obc.led.toggle();
+        system::thisTask::delay(1000);
     }
 }
 
-[[noreturn]] void inputTaskFn([[maybe_unused]] void* args) {
-    auto obc = static_cast<habsat::Obc*>(args);
+void inputTaskFn([[maybe_unused]] void* args) {
+    auto& obc = getObc();
 
     while (true) {
-        habsat::system::thisTask::suspend();
-        if (obc->blinkTask.getState() != habsat::system::TaskState::Suspended)
-            obc->blinkTask.suspend();
-        else
-            obc->blinkTask.resume();
-        habsat::system::thisTask::delay(1000);
+        system::thisTask::suspend();
+
+        // clang-format off
+#       if HW_TERMINAL
+            obc.terminal.pcTransmitDMA("Button was pressed!\r\n");
+#       endif
+        //clang-format on
+
+        if (obc.blinkTask.getState() != system::TaskState::Suspended) {
+            obc.blinkTask.suspend();
+        } else {
+            obc.blinkTask.resume();
+        }
+
+        system::thisTask::delay(1000);
     }
 }
 
