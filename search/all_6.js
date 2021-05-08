@@ -10,12 +10,9 @@ var searchData=
   ['filter_168',['filter',['../structhabsat_1_1sensor_1_1Settings.html#a25ece2091d29d82ac7bdff9763e113b8',1,'habsat::sensor::Settings::filter()'],['../namespacehabsat_1_1sensor.html#a945ef9723880f7f9b6ad74454f383260',1,'habsat::sensor::Filter()']]],
   ['font_169',['Font',['../namespacehabsat_1_1lcd.html#a69079e99b645ff23a3194151bc635221a4e4df1b8010d27e4910c8eedd8b5a14f',1,'habsat::lcd']]],
   ['format_170',['format',['../classhabsat_1_1sdReader_1_1SDReader.html#ac867762c21d615d941e66754fa76b6d6',1,'habsat::sdReader::SDReader']]],
-  ['formatdatedata_171',['formatDateData',['../namespacehabsat_1_1tasks_1_1display_1_1impl.html#a331a1ceacc6c660c4d730558d69d82f4',1,'habsat::tasks::display::impl']]],
-  ['formatfileheader_172',['formatFileHeader',['../namespacehabsat_1_1tasks_1_1sdSave.html#a12c25151500f88975e6bc7d65ac8a75b',1,'habsat::tasks::sdSave']]],
-  ['formatheaderdata_173',['formatHeaderData',['../namespacehabsat_1_1tasks_1_1display_1_1impl.html#a5a5d02f3c0ac46d8a0a7adda3ad83c35',1,'habsat::tasks::display::impl']]],
-  ['formatrtcdata_174',['formatRtcData',['../namespacehabsat_1_1tasks_1_1sdSave.html#a5d61ce528d247acaef0ca58155390097',1,'habsat::tasks::sdSave']]],
-  ['formatsensordata_175',['formatSensorData',['../namespacehabsat_1_1tasks_1_1display_1_1impl.html#ab7cfab11fd4e740c73f1137636197eba',1,'habsat::tasks::display::impl::formatSensorData()'],['../namespacehabsat_1_1tasks_1_1sdSave.html#a5f110ae95fd5cfceba788ca5950f85b3',1,'habsat::tasks::sdSave::formatSensorData()']]],
-  ['formattimedata_176',['formatTimeData',['../namespacehabsat_1_1tasks_1_1display_1_1impl.html#a4c61e5065bba9b5dd4019513cadf8028',1,'habsat::tasks::display::impl']]],
-  ['functionset_177',['FunctionSet',['../namespacehabsat_1_1lcd.html#a221b3ae32467230875305e37037b72a0a73a23f44b9f174b67b05deb2e6eb896e',1,'habsat::lcd']]],
-  ['functionsetflag_178',['FunctionSetFlag',['../namespacehabsat_1_1lcd.html#a69079e99b645ff23a3194151bc635221',1,'habsat::lcd']]]
+  ['formatfileheader_171',['formatFileHeader',['../namespacehabsat_1_1tasks_1_1sdSave.html#a12c25151500f88975e6bc7d65ac8a75b',1,'habsat::tasks::sdSave']]],
+  ['formatrtcdata_172',['formatRtcData',['../namespacehabsat_1_1tasks_1_1sdSave.html#a5d61ce528d247acaef0ca58155390097',1,'habsat::tasks::sdSave']]],
+  ['formatsensordata_173',['formatSensorData',['../namespacehabsat_1_1tasks_1_1sdSave.html#a5f110ae95fd5cfceba788ca5950f85b3',1,'habsat::tasks::sdSave']]],
+  ['functionset_174',['FunctionSet',['../namespacehabsat_1_1lcd.html#a221b3ae32467230875305e37037b72a0a73a23f44b9f174b67b05deb2e6eb896e',1,'habsat::lcd']]],
+  ['functionsetflag_175',['FunctionSetFlag',['../namespacehabsat_1_1lcd.html#a69079e99b645ff23a3194151bc635221',1,'habsat::lcd']]]
 ];

@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('i2c_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;          uint16_t slaveAddress,</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;          uint8_t data,</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a> {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespacehabsat_1_1buses_1_1details.html#a279c7d3416f5ad89587bf0961e9bf620">details::toResult</a>(</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">return</span> detail::toResult(</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;              HAL_I2C_Master_Transmit(&amp;handle_, slaveAddress, &amp;data, 1, timeout));</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    }</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('i2c_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;          uint16_t slaveAddress,</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;          gsl::span&lt;const uint8_t&gt; data,</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a> {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespacehabsat_1_1buses_1_1details.html#a279c7d3416f5ad89587bf0961e9bf620">details::toResult</a>(HAL_I2C_Master_Transmit(</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordflow">return</span> detail::toResult(HAL_I2C_Master_Transmit(</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;              &amp;handle_,</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;              slaveAddress,</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;              <span class="keyword">const_cast&lt;</span>uint8_t*<span class="keyword">&gt;</span>(data.data()),</div>
@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('i2c_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;          uint16_t memoryAddress,</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;          gsl::span&lt;uint8_t&gt; data,</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a> {</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespacehabsat_1_1buses_1_1details.html#a279c7d3416f5ad89587bf0961e9bf620">details::toResult</a>(HAL_I2C_Mem_Read(</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keywordflow">return</span> detail::toResult(HAL_I2C_Mem_Read(</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;              &amp;handle_,</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;              slaveAddress,</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;              memoryAddress,</div>
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('i2c_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;          uint16_t memoryAddress,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;          gsl::span&lt;const uint8_t&gt; data,</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;          uint32_t timeout = defaultTimeout_) <span class="keyword">const</span> -&gt; <a class="code" href="namespacehabsat_1_1buses.html#a28287671eaf7406afd604bd055ba4066">Result</a> {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="namespacehabsat_1_1buses_1_1details.html#a279c7d3416f5ad89587bf0961e9bf620">details::toResult</a>(HAL_I2C_Mem_Write(</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="keywordflow">return</span> detail::toResult(HAL_I2C_Mem_Write(</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;              &amp;handle_,</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;              slaveAddress,</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;              memoryAddress,</div>
@@ -181,7 +181,6 @@ $(document).ready(function(){initNavTree('i2c_8hpp_source.html',''); initResizab
 <div class="ttc" id="aclasshabsat_1_1buses_1_1I2C_html_ac610ebdc497601c54931fc7aba903c43"><div class="ttname"><a href="classhabsat_1_1buses_1_1I2C.html#ac610ebdc497601c54931fc7aba903c43">habsat::buses::I2C::transmit</a></div><div class="ttdeci">auto transmit(uint16_t slaveAddress, uint8_t data, uint32_t timeout=defaultTimeout_) const -&gt; Result</div><div class="ttdef"><b>Definition:</b> i2c.hpp:21</div></div>
 <div class="ttc" id="aclasshabsat_1_1buses_1_1I2C_html_a7b31c2c5e770e139f3a9ef5449a615a2"><div class="ttname"><a href="classhabsat_1_1buses_1_1I2C.html#a7b31c2c5e770e139f3a9ef5449a615a2">habsat::buses::I2C::memoryRead</a></div><div class="ttdeci">auto memoryRead(uint16_t slaveAddress, uint16_t memoryAddress, gsl::span&lt; uint8_t &gt; data, uint32_t timeout=defaultTimeout_) const -&gt; Result</div><div class="ttdef"><b>Definition:</b> i2c.hpp:41</div></div>
 <div class="ttc" id="aresult_8hpp_html"><div class="ttname"><a href="result_8hpp.html">result.hpp</a></div></div>
-<div class="ttc" id="anamespacehabsat_1_1buses_1_1details_html_a279c7d3416f5ad89587bf0961e9bf620"><div class="ttname"><a href="namespacehabsat_1_1buses_1_1details.html#a279c7d3416f5ad89587bf0961e9bf620">habsat::buses::details::toResult</a></div><div class="ttdeci">auto toResult(HAL_StatusTypeDef status) -&gt; Result</div><div class="ttdef"><b>Definition:</b> result.hpp:13</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

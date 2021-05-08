@@ -1,17 +1,5 @@
 var NAVTREEINDEX2 =
 {
-"sd__save_8hpp.html":[3,0,0,0,4],
-"sd__save_8hpp.html#a12c25151500f88975e6bc7d65ac8a75b":[3,0,0,0,4,0],
-"sd__save_8hpp.html#a5d61ce528d247acaef0ca58155390097":[3,0,0,0,4,1],
-"sd__save_8hpp.html#a5f110ae95fd5cfceba788ca5950f85b3":[3,0,0,0,4,2],
-"sd__save_8hpp.html#a8d3985208d57f17ad7ff03f5f458dece":[3,0,0,0,4,3],
-"sd__save_8hpp_source.html":[3,0,0,0,4],
-"sensor_8cpp.html":[3,0,1,5,1],
-"sensor_8hpp.html":[3,0,1,5,0,0,0],
-"sensor_8hpp.html#a08ceab411e849d95e05407edae5fcfab":[3,0,1,5,0,0,0,10],
-"sensor_8hpp.html#a08ceab411e849d95e05407edae5fcfaba18b351d89ecd50b1e199cdf450e53098":[3,0,1,5,0,0,0,10,0],
-"sensor_8hpp.html#a1bcc2fa23559c5305283dda9b5c187d1":[3,0,1,5,0,0,0,8],
-"sensor_8hpp.html#a1bcc2fa23559c5305283dda9b5c187d1a59aca68c7c39adf0a8af82d56035b63a":[3,0,1,5,0,0,0,8,0],
 "sensor_8hpp.html#a3455a6e5732bcbe7776279b0062ad326":[3,0,1,5,0,0,0,7],
 "sensor_8hpp.html#a3455a6e5732bcbe7776279b0062ad326a5ecbcf0afce98b042f35ec71ba03fa4b":[3,0,1,5,0,0,0,7,0],
 "sensor_8hpp.html#a44a10fc976a2c913d2c4641b9403661b":[3,0,1,5,0,0,0,6],
@@ -249,5 +237,17 @@ var NAVTREEINDEX2 =
 "structhabsat_1_1sensor_1_1Settings.html#a94a018655131dfecdfa0cc280c056bda":[2,0,0,5,2,4],
 "structhabsat_1_1sensor_1_1Settings.html#af7e19a5823b0bb52e26007bd63a509d6":[2,0,0,5,2,5],
 "syscalls_8c.html":[3,0,2,11],
-"syscalls_8c.html#a062a5101199c3128edd5170f2575bb10":[3,0,2,11,10]
+"syscalls_8c.html#a062a5101199c3128edd5170f2575bb10":[3,0,2,11,10],
+"syscalls_8c.html#a25c7f100d498300fff65568c2fcfe639":[3,0,2,11,18],
+"syscalls_8c.html#a270c9113047edd8d64186710ad76062b":[3,0,2,11,13],
+"syscalls_8c.html#a31da4cd5328defa76a9e2246992aba12":[3,0,2,11,11],
+"syscalls_8c.html#a41eef54307912a82d20e71c3d47315aa":[3,0,2,11,7],
+"syscalls_8c.html#a4711e961db985ed2c850a8be6597af50":[3,0,2,11,14],
+"syscalls_8c.html#a5aab5e2acfd600e3667dc915a2bbc7cb":[3,0,2,11,3],
+"syscalls_8c.html#a6cb6331c9d166180903d5fb78b9c9dd7":[3,0,2,11,6],
+"syscalls_8c.html#a70b2f211d665cded5637065aa2bb89dc":[3,0,2,11,16],
+"syscalls_8c.html#a7a61311bdf1cb025fc07dc2bdae22ce4":[3,0,2,11,12],
+"syscalls_8c.html#a945e539df8e0f66d3c73c533fe1968ee":[3,0,2,11,8],
+"syscalls_8c.html#aa006daaf11f1e2e45a6ababaf463212b":[3,0,2,11,19],
+"syscalls_8c.html#aa53ed4b191897a1bfc205aa1da005d24":[3,0,2,11,2]
 };
