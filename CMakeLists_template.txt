@@ -60,7 +60,6 @@ Building $${BIN_FILE}")
 
 include(CMake/generate_config.cmake)
 include(CMake/dependencies.cmake)
-include(CMake/doxygen.cmake)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_INIT} -fno-rtti -fno-exceptions")
 SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_INIT}")
@@ -75,6 +74,7 @@ include_directories(
         )
 
 add_subdirectory(Lib)
+add_subdirectory(Docs)
 
 target_link_libraries(${PROJECT_NAME}.elf
         Buses

@@ -13,7 +13,7 @@
 
 namespace habsat::sensor {
 
-namespace details {
+namespace detail {
 
 enum Address : uint8_t {
     Calib00       = 0x88,

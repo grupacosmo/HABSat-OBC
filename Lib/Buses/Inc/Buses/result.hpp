@@ -9,7 +9,7 @@ namespace habsat::buses {
 
 enum class Result { Ok, Error, Busy, Timeout };
 
-namespace details {
+namespace detail {
     [[nodiscard]] inline auto toResult(HAL_StatusTypeDef status) -> Result {
         return static_cast<Result>(status);
     }

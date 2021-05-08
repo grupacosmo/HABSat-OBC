@@ -6,7 +6,7 @@
 
 namespace habsat::buses {
 
-using namespace details;
+using namespace detail;
 
 auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, uint8_t data, uint32_t timeout) const -> Result {
     chipSelect.reset();

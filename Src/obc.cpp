@@ -29,12 +29,12 @@ habsat::Obc::Obc()
       rtc{i2c, rtcSlaveAddress},
       sensor{spi, sensorCS},
       terminal{uart},
-      inputTask{128, Priority::Interrupt, tasks::blink::inputTaskFn},
-      blinkTask{128, Priority::Idle, tasks::blink::blinkTaskFn},
-      displayTask{256, Priority::Idle, tasks::display::taskFn},
-      measureTimeTask{512, Priority::Idle, tasks::measureTime::taskFn},
-      measureWeatherTask{512, Priority::Idle, tasks::measureWeather::taskFn},
-      sdSaveTask{512, Priority::Idle, tasks::sdSave::taskFn} {}
+      inputTask{128, Priority::Interrupt, blink::inputTaskFn},
+      blinkTask{128, Priority::Idle, blink::blinkTaskFn},
+      displayTask{256, Priority::Idle, display::taskFn},
+      measureTimeTask{512, Priority::Idle, measureTime::taskFn},
+      measureWeatherTask{512, Priority::Idle, measureWeather::taskFn},
+      sdSaveTask{512, Priority::Idle, sdSave::taskFn} {}
 
 void habsat::Obc::init() {
     inputTask.addToScheduler();

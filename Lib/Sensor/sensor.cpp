@@ -8,7 +8,7 @@
 
 namespace habsat::sensor {
 
-using namespace details;
+using namespace detail;
 
 Sensor::Sensor(const buses::SPI& spi, mcuBoard::GPIOPin& cs) : spi_(spi), cs_(cs) {}
 

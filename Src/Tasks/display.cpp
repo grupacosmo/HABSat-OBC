@@ -8,9 +8,9 @@
 #include "obc.hpp"
 #include "hardware_config.hpp"
 
-namespace habsat::tasks::display {
+namespace habsat::display {
 
-namespace impl {
+namespace detail {
 
 void formatHeaderData(gsl::span<char> lineBuffer) {
     Expects(lineBuffer.size() >= 20);
@@ -50,9 +50,9 @@ void formatSensorData(gsl::span<char> lineBuffer, const sensor::Buffer& buf) {
     index = (index + 1) % options.size();
 }
 
-}  // namespace impl
+}  // namespace detail
 
-using namespace impl;
+using namespace detail;
 
 void taskFn([[maybe_unused]] void* args) {
     std::array<std::array<char, 20>, 4> lineBuffers{};

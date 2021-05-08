@@ -13,7 +13,7 @@
 #include "Sensor/sensor.hpp"
 #include "System/task.hpp"
 
-namespace habsat::tasks::sdSave {
+namespace habsat::sdSave {
 
 [[noreturn]] void taskFn(void* args);
 

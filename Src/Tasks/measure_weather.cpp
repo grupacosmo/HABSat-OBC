@@ -7,7 +7,7 @@
 #include "hardware_config.hpp"
 #include "obc.hpp"
 
-namespace habsat::tasks::measureWeather {
+namespace habsat::measureWeather {
 
 void taskFn([[maybe_unused]] void* args) {
     auto& obc = getObc();

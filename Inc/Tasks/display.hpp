@@ -11,16 +11,16 @@
 #include "Rtc/rtc.hpp"
 #include "Sensor/sensor.hpp"
 
-namespace habsat::tasks::display {
+namespace habsat::display {
 
-namespace impl {
+namespace detail {
 
 void formatHeaderData(gsl::span<char> lineBuffer);
 void formatTimeData(gsl::span<char> lineBuffer, const rtc::Buffer& buf);
 void formatDateData(gsl::span<char> lineBuffer, const rtc::Buffer& buf);
 void formatSensorData(gsl::span<char> lineBuffer, const sensor::Buffer& buf);
 
-}  // namespace impl
+}  // namespace detail
 
 [[noreturn]] void taskFn(void* args);
 

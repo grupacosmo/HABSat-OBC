@@ -7,7 +7,7 @@
 
 #include "Sensor/sensor.hpp"
 
-namespace habsat::tasks::measureWeather {
+namespace habsat::measureWeather {
 
 [[noreturn]] void taskFn(void* args);
 

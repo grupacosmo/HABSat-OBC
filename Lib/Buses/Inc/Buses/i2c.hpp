@@ -22,7 +22,7 @@ class I2C {
           uint16_t slaveAddress,
           uint8_t data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        return details::toResult(
+        return detail::toResult(
               HAL_I2C_Master_Transmit(&handle_, slaveAddress, &data, 1, timeout));
     }
 
@@ -30,7 +30,7 @@ class I2C {
           uint16_t slaveAddress,
           gsl::span<const uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        return details::toResult(HAL_I2C_Master_Transmit(
+        return detail::toResult(HAL_I2C_Master_Transmit(
               &handle_,
               slaveAddress,
               const_cast<uint8_t*>(data.data()),
@@ -43,7 +43,7 @@ class I2C {
           uint16_t memoryAddress,
           gsl::span<uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        return details::toResult(HAL_I2C_Mem_Read(
+        return detail::toResult(HAL_I2C_Mem_Read(
               &handle_,
               slaveAddress,
               memoryAddress,
@@ -58,7 +58,7 @@ class I2C {
           uint16_t memoryAddress,
           gsl::span<const uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result {
-        return details::toResult(HAL_I2C_Mem_Write(
+        return detail::toResult(HAL_I2C_Mem_Write(
               &handle_,
               slaveAddress,
               memoryAddress,

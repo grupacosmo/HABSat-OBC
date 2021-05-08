@@ -7,7 +7,7 @@
 #include "hardware_config.hpp"
 #include "obc.hpp"
 
-namespace habsat::tasks::measureTime {
+namespace habsat::measureTime {
 
 void taskFn([[maybe_unused]] void* args) {
     // clang-format off

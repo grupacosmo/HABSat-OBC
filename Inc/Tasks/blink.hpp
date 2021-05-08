@@ -8,7 +8,7 @@
 #include "MCU_Board/button.hpp"
 #include "MCU_Board/led.hpp"
 
-namespace habsat::tasks::blink {
+namespace habsat::blink {
 
 void inputInterruptHandler();
 
