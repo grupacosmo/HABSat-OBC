@@ -7,7 +7,6 @@ var namespacehabsat =
     [ "sdReader", "namespacehabsat_1_1sdReader.html", "namespacehabsat_1_1sdReader" ],
     [ "sensor", "namespacehabsat_1_1sensor.html", "namespacehabsat_1_1sensor" ],
     [ "system", "namespacehabsat_1_1system.html", "namespacehabsat_1_1system" ],
-    [ "tasks", "namespacehabsat_1_1tasks.html", null ],
     [ "terminal", "namespacehabsat_1_1terminal.html", "namespacehabsat_1_1terminal" ],
     [ "utils", "namespacehabsat_1_1utils.html", null ],
     [ "Obc", "structhabsat_1_1Obc.html", "structhabsat_1_1Obc" ]

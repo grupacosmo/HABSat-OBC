@@ -1,18 +1,5 @@
 var NAVTREEINDEX3 =
 {
-"syscalls_8c.html#aaf727ebf57cd64d6c58b23e6ee4a4a69":[3,0,2,11,15],
-"syscalls_8c.html#abc96bd69b58b2deaddb484478d911c1b":[3,0,2,11,5],
-"syscalls_8c.html#ad0122671640a3af49792ddaa59e8294e":[3,0,2,11,1],
-"syscalls_8c.html#ad2a07db8fdf26151eb98ba5711fad8c5":[3,0,2,11,4],
-"syscalls_8c.html#ad3134a3dc296622b8d1c5456e481505b":[3,0,2,11,9],
-"syscalls_8c.html#ad65a8842cc674e3ddf69355898c0ecbf":[3,0,2,11,20],
-"syscalls_8c.html#aeef0c3372d04caa1bcc99fed2ab6ec72":[3,0,2,11,17],
-"syscalls_8c.html#af9aace1b44b73111e15aa39f06f43456":[3,0,2,11,0],
-"sysmem_8c.html":[3,0,2,12],
-"sysmem_8c.html#aae54d7b9578ba1fc171ce6f30f4c68a3":[3,0,2,12,0],
-"sysmem_8c.html#ac48c4dec788f2c14941ca36c3404c618":[3,0,2,12,1],
-"sysmem_8c.html#ad65a8842cc674e3ddf69355898c0ecbf":[3,0,2,12,2],
-"system__stm32f4xx_8c.html":[3,0,2,13],
 "task_8hpp.html":[3,0,1,6,0,0,2],
 "task_8hpp.html#a315655b1bb5848c063491adffde62b15":[3,0,1,6,0,0,2,1],
 "task_8hpp.html#a315655b1bb5848c063491adffde62b15a1ce92afa20b1c7f6a4e5d0dc73e5c92a":[3,0,1,6,0,0,2,1,1],

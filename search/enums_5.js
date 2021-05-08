@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gpiostate_902',['GPIOState',['../namespacehabsat_1_1mcuBoard.html#a83e4b3bff3c4fab5cc675b33fb271ed6',1,'habsat::mcuBoard']]]
+  ['humidityoversampling_889',['HumidityOversampling',['../namespacehabsat_1_1sensor.html#a44a10fc976a2c913d2c4641b9403661b',1,'habsat::sensor']]]
 ];

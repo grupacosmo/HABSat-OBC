@@ -59,8 +59,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "ffconf_8h.html#afb8d35370cfe0c23832ac2d82e854ec6",
-"sensor_8hpp.html#a3455a6e5732bcbe7776279b0062ad326",
-"syscalls_8c.html#aaf727ebf57cd64d6c58b23e6ee4a4a69"
+"sensor_8hpp.html#a44a10fc976a2c913d2c4641b9403661ba57f9bf199e30a749a03be1dac2f5f624",
+"task_8hpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

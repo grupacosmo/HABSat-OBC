@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['entrymodeflag_899',['EntryModeFlag',['../namespacehabsat_1_1lcd.html#adb33f3c94bfcf2cb8e034085dacaad72',1,'habsat::lcd']]]
+  ['filter_886',['Filter',['../namespacehabsat_1_1sensor.html#a945ef9723880f7f9b6ad74454f383260',1,'habsat::sensor']]],
+  ['functionsetflag_887',['FunctionSetFlag',['../namespacehabsat_1_1lcd.html#a69079e99b645ff23a3194151bc635221',1,'habsat::lcd']]]
 ];

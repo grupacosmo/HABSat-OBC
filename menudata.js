@@ -27,7 +27,6 @@ var menudata={children:[
 {text:"Namespace List",url:"namespaces.html"},
 {text:"Namespace Members",url:"namespacemembers.html",children:[
 {text:"All",url:"namespacemembers.html",children:[
-{text:"a",url:"namespacemembers.html#index_a"},
 {text:"b",url:"namespacemembers.html#index_b"},
 {text:"c",url:"namespacemembers.html#index_c"},
 {text:"d",url:"namespacemembers.html#index_d"},
@@ -44,8 +43,7 @@ var menudata={children:[
 {text:"r",url:"namespacemembers.html#index_r"},
 {text:"s",url:"namespacemembers.html#index_s"},
 {text:"t",url:"namespacemembers.html#index_t"},
-{text:"u",url:"namespacemembers.html#index_u"},
-{text:"w",url:"namespacemembers.html#index_w"}]},
+{text:"u",url:"namespacemembers.html#index_u"}]},
 {text:"Functions",url:"namespacemembers_func.html",children:[
 {text:"b",url:"namespacemembers_func.html#index_b"},
 {text:"c",url:"namespacemembers_func.html#index_c"},
@@ -64,18 +62,15 @@ var menudata={children:[
 {text:"d",url:"namespacemembers_eval.html#index_d"},
 {text:"e",url:"namespacemembers_eval.html#index_e"},
 {text:"f",url:"namespacemembers_eval.html#index_f"},
-{text:"h",url:"namespacemembers_eval.html#index_h"},
 {text:"i",url:"namespacemembers_eval.html#index_i"},
 {text:"l",url:"namespacemembers_eval.html#index_l"},
-{text:"m",url:"namespacemembers_eval.html#index_m"},
 {text:"n",url:"namespacemembers_eval.html#index_n"},
 {text:"o",url:"namespacemembers_eval.html#index_o"},
 {text:"p",url:"namespacemembers_eval.html#index_p"},
 {text:"r",url:"namespacemembers_eval.html#index_r"},
 {text:"s",url:"namespacemembers_eval.html#index_s"},
 {text:"t",url:"namespacemembers_eval.html#index_t"},
-{text:"u",url:"namespacemembers_eval.html#index_u"},
-{text:"w",url:"namespacemembers_eval.html#index_w"}]}]}]},
+{text:"u",url:"namespacemembers_eval.html#index_u"}]}]}]},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
 {text:"Class Index",url:"classes.html"},

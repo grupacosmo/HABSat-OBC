@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['humidityoversampling_903',['HumidityOversampling',['../namespacehabsat_1_1sensor.html#a44a10fc976a2c913d2c4641b9403661b',1,'habsat::sensor']]]
+  ['lineoffset_890',['LineOffset',['../namespacehabsat_1_1lcd.html#a491550f6a01cb3519e3af1a6eaed4783',1,'habsat::lcd']]]
 ];
