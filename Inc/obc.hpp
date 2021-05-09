@@ -23,6 +23,7 @@
 #include "Tasks/measure_weather.hpp"
 #include "Tasks/sd_save.hpp"
 #include "Terminal/terminal.hpp"
+#include "LoRaSX1278/transmitter.hpp"
 
 namespace habsat {
 

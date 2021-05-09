@@ -71,6 +71,7 @@ include_directories(
         Drivers/STM32F4xx_HAL_Driver/Inc
         Middlewares/Third_Party/BME280
         Middlewares/Third_Party/FreeRTOS/Inc
+        Middlewares/Third_Party/SX1278/driver
         )
 
 add_subdirectory(Lib)
@@ -87,4 +88,5 @@ target_link_libraries(${PROJECT_NAME}.elf
         SDReader
         GSL
         Terminal
+        LoRaSX1278
         )
