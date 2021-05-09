@@ -10,9 +10,6 @@
 #include <cstring>
 #include <string_view>
 
-// TODO docs
-// TODO change some bsp_driver_sd functions
-
 namespace habsat::sdReader {
 
 /**
@@ -62,7 +59,7 @@ class SDReader {
     /**
      * Checks the SDCard memory usage and prints it in the terminal.
      */
-    static void checkFreeSpace();
+    static auto checkFreeSpace() -> std::pair<uint32_t, uint32_t>;
 
     /**
      * Checks if the file exists.

@@ -4,6 +4,7 @@
 
 #include "Tasks/sd_save.hpp"
 
+#include "terminal.hpp"
 #include "hardware_config.hpp"
 #include "obc.hpp"
 
@@ -12,7 +13,9 @@ namespace habsat::tasks::sdSave {
 void taskFn([[maybe_unused]] void* args) {
     auto& obc = getObc();
     std::array<std::array<char, 100>, 3> buffer{};
-    const char* path{"test.txt"};
+    std::array<char, 800> memoryBuffer{};
+    std::pair<uint32_t, uint32_t> sdCardSpace;
+    const char* path{"test1.txt"};
 
     if (obc.sdReader.mount() != FR_OK) {
         system::thisTask::suspend();
@@ -34,9 +37,11 @@ void taskFn([[maybe_unused]] void* args) {
 #       endif
         // clang-format on
 
+        sdCardSpace = obc.sdReader.checkFreeSpace();
+        std::sprintf(memoryBuffer.data(), "memory: %lu kB  /  %lu kB \r\n", sdCardSpace.first, sdCardSpace.first- sdCardSpace.second);
+        Terminal::pcTransmitDMA(memoryBuffer.data());
         obc.sdReader.update(path, buffer[1].data());
         obc.sdReader.update(path, buffer[2].data());
-
         system::thisTask::delay(1000);
     }
 }
