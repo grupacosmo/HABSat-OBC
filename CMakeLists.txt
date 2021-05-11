@@ -71,6 +71,8 @@ include_directories(
         Drivers/STM32F4xx_HAL_Driver/Inc
         Middlewares/Third_Party/BME280
         Middlewares/Third_Party/FreeRTOS/Inc
+        Middlewares/Third_Party/FatFs/src
+        Middlewares/Third_Party/FatFs/src/option
         )
 
 add_subdirectory(Lib)
@@ -87,4 +89,5 @@ target_link_libraries(${PROJECT_NAME}.elf
         SDReader
         GSL
         Terminal
+        Filesystem
         )

@@ -4,6 +4,7 @@ if (DOXYGEN_FOUND)
     set(DOXYGEN_HTML_EXTRA_STYLESHEET
             "${CMAKE_SOURCE_DIR}/Docs/doxygen-awesome-css/doxygen-awesome.css"
             "${CMAKE_SOURCE_DIR}/Docs/doxygen-awesome-css/doxygen-awesome-sidebar-only.css")
+    set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
     set(DOXYGEN_GENERATE_TREEVIEW YES)
     set(DOXYGEN_HIDE_SCOPE_NAMES YES)
     set(DOXYGEN_EXCLUDE_SYMBOLS detail)

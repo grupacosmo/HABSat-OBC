@@ -4,6 +4,7 @@
 #include "obc.hpp"
 
 #include "hardware_config.hpp"
+#include "Filesystem/filesystem.hpp"
 
 extern I2C_HandleTypeDef hi2c3;
 extern SPI_HandleTypeDef hspi2;
@@ -11,12 +12,14 @@ extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern SD_HandleTypeDef hsd;
 
+namespace habsat {
+
 constexpr uint8_t lcdSlaveAddress = HW_LCD_SLAVE_ADDRESS;
 constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
 
-using habsat::system::Priority;
+using system::Priority;
 
-habsat::Obc::Obc()
+Obc::Obc()
     : i2c{hi2c3},
       spi{hspi2},
       uart(huart2),
@@ -34,9 +37,9 @@ habsat::Obc::Obc()
       displayTask{256, Priority::Idle, display::taskFn},
       measureTimeTask{512, Priority::Idle, measureTime::taskFn},
       measureWeatherTask{512, Priority::Idle, measureWeather::taskFn},
-      sdSaveTask{512, Priority::Idle, sdSave::taskFn} {}
+      sdSaveTask{1024 + 512, Priority::Idle, sdSave::taskFn} {}
 
-void habsat::Obc::init() {
+void Obc::init() {
     inputTask.addToScheduler();
     blinkTask.addToScheduler();
 
@@ -69,7 +72,7 @@ void habsat::Obc::init() {
               TemperatureResolution::SixteenBit,
               PressureOversampling::UltraLowPower,
               HumidityOversampling::Standard,
-              Mode::Normal,
+              MountingMode::Normal,
               StandbyTime::TenMs,
               Filter::Off
         };
@@ -79,13 +82,16 @@ void habsat::Obc::init() {
 #   endif
 
 #   if HW_SD_READER
-        sdReader.init();
-        sdSaveTask.addToScheduler();
+    // todo unmount
+    filesystem::mount(SDFatFS, SDPath, filesystem::MountingMode::Immediate);
+    sdSaveTask.addToScheduler();
 #   endif
     // clang-format on
 }
 
-auto habsat::getObc() -> Obc& {
+auto getObc() -> Obc& {
     static Obc obc;
     return obc;
 }
+
+}  // namespace habsat
