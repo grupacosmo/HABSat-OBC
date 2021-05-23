@@ -8,7 +8,7 @@ namespace habsat::buses {
 
 using namespace detail;
 
-auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, uint8_t data, uint32_t timeout) const -> Result {
+[[nodiscard]] auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, uint8_t data, uint32_t timeout) const -> Result {
     chipSelect.reset();
 
     const auto result = toResult(HAL_SPI_Transmit(&handle_, &data, 1, timeout));
@@ -18,7 +18,7 @@ auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, uint8_t data, uint32_t timeout
     return result;
 }
 
-auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, gsl::span<const uint8_t> data, uint32_t timeout)
+[[nodiscard]] auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, gsl::span<const uint8_t> data, uint32_t timeout)
       const -> Result {
     chipSelect.reset();
 
@@ -30,7 +30,7 @@ auto SPI::transmit(mcuBoard::GPIOPin& chipSelect, gsl::span<const uint8_t> data,
     return result;
 }
 
-auto SPI::transmitAndReceive(
+[[nodiscard]] auto SPI::transmitAndReceive(
       mcuBoard::GPIOPin& chipSelect,
       gsl::span<const uint8_t> txData,
       gsl::span<uint8_t> rxData,

@@ -16,18 +16,18 @@ class UART {
    public:
     explicit UART(UART_HandleTypeDef& handle) : handle_(handle) {}
 
-    auto transmit(gsl::span<const uint8_t> data, uint32_t timeout = defaultTimeout) const
+    [[nodiscard]] auto transmit(gsl::span<const uint8_t> data, uint32_t timeout = defaultTimeout) const
           -> Result {
         return detail::toResult(
               HAL_UART_Transmit(&handle_, const_cast<uint8_t*>(data.data()), data.size(), timeout));
     }
 
-    auto transmitDMA(gsl::span<const uint8_t> data) const -> Result {
+    [[nodiscard]] auto transmitDMA(gsl::span<const uint8_t> data) const -> Result {
         return detail::toResult(
               HAL_UART_Transmit_DMA(&handle_, const_cast<uint8_t*>(data.data()), data.size()));
     }
 
-    auto receiveDMA(gsl::span<uint8_t> data) const -> Result {
+    [[nodiscard]] auto receiveDMA(gsl::span<uint8_t> data) const -> Result {
         return detail::toResult(HAL_UART_Receive_DMA(&handle_, data.data(), data.size()));
     }
 

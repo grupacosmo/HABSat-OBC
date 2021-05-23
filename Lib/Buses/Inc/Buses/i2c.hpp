@@ -18,7 +18,7 @@ class I2C {
    public:
     explicit I2C(I2C_HandleTypeDef& handle) : handle_(handle) {}
 
-    auto transmit(
+    [[nodiscard]] auto transmit(
           uint16_t slaveAddress,
           uint8_t data,
           uint32_t timeout = defaultTimeout_) const -> Result {
@@ -26,7 +26,7 @@ class I2C {
               HAL_I2C_Master_Transmit(&handle_, slaveAddress, &data, 1, timeout));
     }
 
-    auto transmit(
+    [[nodiscard]] auto transmit(
           uint16_t slaveAddress,
           gsl::span<const uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result {
@@ -38,7 +38,7 @@ class I2C {
               timeout));
     }
 
-    auto memoryRead(
+    [[nodiscard]] auto memoryRead(
           uint16_t slaveAddress,
           uint16_t memoryAddress,
           gsl::span<uint8_t> data,
@@ -53,7 +53,7 @@ class I2C {
               timeout));
     }
 
-    auto memoryWrite(
+    [[nodiscard]] auto memoryWrite(
           uint16_t slaveAddress,
           uint16_t memoryAddress,
           gsl::span<const uint8_t> data,

@@ -20,17 +20,17 @@ class SPI {
    public:
     explicit SPI(SPI_HandleTypeDef& handle) : handle_(handle){};
 
-    auto transmit(
+    [[nodiscard]] auto transmit(
           mcuBoard::GPIOPin& chipSelect,
           uint8_t data,
           uint32_t timeout = defaultTimeout_) const -> Result;
 
-    auto transmit(
+    [[nodiscard]] auto transmit(
           mcuBoard::GPIOPin& chipSelect,
           gsl::span<const uint8_t> data,
           uint32_t timeout = defaultTimeout_) const -> Result;
 
-    auto transmitAndReceive(
+    [[nodiscard]] auto transmitAndReceive(
           mcuBoard::GPIOPin& chipSelect,
           gsl::span<const uint8_t> txData,
           gsl::span<uint8_t> rxData,
