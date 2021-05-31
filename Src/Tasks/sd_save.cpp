@@ -3,7 +3,6 @@
 //
 
 #include "Tasks/sd_save.hpp"
-
 #include "terminal.hpp"
 #include "hardware_config.hpp"
 #include "obc.hpp"
@@ -13,7 +12,7 @@ namespace habsat::tasks::sdSave {
 void taskFn([[maybe_unused]] void* args) {
     auto& obc = getObc();
     std::array<std::array<char, 100>, 3> buffer{};
-    std::array<char, 800> memoryBuffer{};
+    std::array<char, 1000> cardMemoryInfo{};
     std::pair<uint32_t, uint32_t> sdCardSpace;
     const char* path{"test1.txt"};
 
@@ -37,9 +36,9 @@ void taskFn([[maybe_unused]] void* args) {
 #       endif
         // clang-format on
 
-        sdCardSpace = obc.sdReader.checkFreeSpace();
-        std::sprintf(memoryBuffer.data(), "memory: %lu kB  /  %lu kB \r\n", sdCardSpace.first, sdCardSpace.first- sdCardSpace.second);
-        Terminal::pcTransmitDMA(memoryBuffer.data());
+        //sdCardSpace = obc.sdReader.checkFreeSpace();
+        //std::sprintf(cardMemoryInfo.data(), "memory: %lu kB  /  %lu kB \r\n", sdCardSpace.first);
+        //Terminal::pcTransmitDMA(cardMemoryInfo.data());
         obc.sdReader.update(path, buffer[1].data());
         obc.sdReader.update(path, buffer[2].data());
         system::thisTask::delay(1000);

@@ -57,6 +57,7 @@ class SDReader {
     static auto format() -> FRESULT;
 
     /**
+     * DONT USE THIS METHOD FOR NOW
      * Checks the SDCard memory usage and prints it in the terminal.
      */
     static auto checkFreeSpace() -> std::pair<uint32_t, uint32_t>;

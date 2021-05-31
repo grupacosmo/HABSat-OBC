@@ -13,7 +13,7 @@
 #include "MCU_Board/button.hpp"
 #include "MCU_Board/led.hpp"
 #include "Rtc/rtc.hpp"
-#include <Gps/gps.hpp>
+#include "Gps/gps.hpp"
 #include "SDReader/sd_reader.hpp"
 #include "Sensor/sensor.hpp"
 #include "System/mutex.hpp"
