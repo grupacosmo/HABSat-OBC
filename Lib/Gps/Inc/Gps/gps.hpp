@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "Buses/uart.hpp"
+#include "gpsMessages.hpp"
 
 namespace habsat::gps {
 
@@ -22,7 +23,7 @@ struct GpsBuffer{
     uint8_t utcSec;
     uint16_t utcMicroSec;
 
-    char rmcStatus;                    // dtatus of message (data are valid =A or not = V)
+    char rmcStatus;                    // status of message (data are valid =A or not = V)
     float latitude;                 // ddmm.mmmm
     char nsIndicator;               // north of South indicator  (N or S)
     float longitude;                // In
@@ -41,14 +42,7 @@ struct GpsBuffer{
 
 //struct just for debugging purposes
 //TODO check message size and change to std::array
-struct GpsData{
-    std::string Rmc;
-    std::string Vtg;
-    std::string Gga;
-    std::string Gsa;
-    std::string Gsv;
-    std::string Gll;
-};
+
 
 enum class MessageType { Rmc, Vtg, Gga, Gsa, Gsv, Gll, None };
 
@@ -57,22 +51,22 @@ class Gps {
     Gps(UART_HandleTypeDef& uart, DMA_HandleTypeDef& dma_usart_rx);
     void init();
     void callback();
-    auto getData() -> GpsData;
+    auto getData() -> GpsMessages;
 
    private:
-    static const int rawBufferSize = 250;
+    static const int rawBufferSize = 510;   //82 chars per message + 2 new line chars per message
     UART_HandleTypeDef& uart;
     DMA_HandleTypeDef& dmaRx;
     //TODO check max message size and change to std::array
     std::string rawMessageBuffor;
     uint8_t rawBuffor[rawBufferSize];
 
-    GpsData GpsMessages;
+    GpsMessages gpsMessages;
     GpsBuffer gpsBuffer;
 
     void processGgaMessage(std::string_view rawMessage);
     void processRmcMessage(std::string_view rawMessage);
-    auto retrieveSingleMessage(std::string& rawMessage) -> GpsData;
+
 };
 
 }  // namespace habsat::gps
