@@ -6,6 +6,7 @@
 
 #include <array>
 #include <cstdio>
+#include <utility>
 
 namespace habsat::sdReader {
 
@@ -134,17 +135,16 @@ auto SDReader::makeFile(std::string_view path) -> FRESULT {
     return fresult;
 }
 
-void SDReader::checkFreeSpace() {
-    static DWORD freeClusters;
-    static uint32_t totalSpace, freeSpace;
-    static FATFS* pfs;
-    std::array<char, 100> buffer{};
+auto SDReader::checkFreeSpace() -> std::pair<uint32_t, uint32_t> {
+    DWORD freeClusters;
+    uint32_t totalSpace, freeSpace;
+    FATFS* pfs;
 
     f_getfree("", &freeClusters, &pfs);
     totalSpace = static_cast<uint32_t>((pfs->n_fatent - 2) * pfs->csize * 0.5);
     freeSpace  = static_cast<uint32_t>(freeClusters * pfs->csize * 0.5);
-    std::sprintf(buffer.data(), "SDCard memory usage: %lu/%lu\n", totalSpace, freeSpace);
-    //Terminal::pcTransmitDMA(buffer.data());
+
+    return {totalSpace, freeSpace};
 }
 
 }  // namespace sdReader

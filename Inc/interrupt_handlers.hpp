@@ -6,6 +6,7 @@
 #define HABSAT_OBC_INTERRUPTHANDLERS_H
 
 #include <stdint.h>
+#include <stm32f4xx_hal.h>
 
 #ifdef __cplusplus
 #define EXTERN_C extern "C"
@@ -14,5 +15,7 @@
 #endif
 
 EXTERN_C void USER_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin);
+
+EXTERN_C void GPS_IRQHandler(UART_HandleTypeDef *huart);
 
 #endif  // HABSAT_OBC_INTERRUPTHANDLERS_H

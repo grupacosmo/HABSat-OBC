@@ -86,5 +86,6 @@ target_link_libraries(${PROJECT_NAME}.elf
         Sensor
         SDReader
         GSL
+        Gps
         Terminal
         )

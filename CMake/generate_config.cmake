@@ -6,7 +6,7 @@ function(generate_config)
 endfunction()
 
 if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/CMake/hardware_config.cmake)
-    cmake_language(CALL generate_config)
+    generate_config()
 else()
     include(CMake/hardware_config.cmake)
 
@@ -19,7 +19,7 @@ else()
     set(VER_GENERATED ${CMAKE_MATCH_1})
 
     if(${VER_TEMPLATE} GREATER ${VER_GENERATED})
-        cmake_language(CALL generate_config)
+        generate_config()
     endif()
 endif()
 

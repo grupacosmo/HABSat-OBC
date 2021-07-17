@@ -10,6 +10,7 @@ extern SPI_HandleTypeDef hspi2;
 extern UART_HandleTypeDef huart1;
 extern UART_HandleTypeDef huart2;
 extern SD_HandleTypeDef hsd;
+extern DMA_HandleTypeDef hdma_usart1_rx;
 
 constexpr uint8_t lcdSlaveAddress = HW_LCD_SLAVE_ADDRESS;
 constexpr uint8_t rtcSlaveAddress = 0x68 << 1;
@@ -20,6 +21,7 @@ habsat::Obc::Obc()
     : i2c{hi2c3},
       spi{hspi2},
       uart(huart2),
+      uartGps(huart1),
       pinC13{GPIOC, GPIO_PIN_13},
       pinA5{GPIOA, GPIO_PIN_5},
       sensorCS{GPIOC, GPIO_PIN_3},
@@ -29,6 +31,7 @@ habsat::Obc::Obc()
       rtc{i2c, rtcSlaveAddress},
       sensor{spi, sensorCS},
       terminal{uart},
+      gps(huart1, hdma_usart1_rx),
       inputTask{128, Priority::Interrupt, blink::inputTaskFn},
       blinkTask{128, Priority::Idle, blink::blinkTaskFn},
       displayTask{256, Priority::Idle, display::taskFn},
