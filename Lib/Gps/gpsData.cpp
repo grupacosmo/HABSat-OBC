@@ -4,14 +4,15 @@
 
 #include <Gps/gpsData.h>
 
-#include <hardware_config.hpp>
-
 #include "Inc/Gps/gpsMessages.hpp"
 
 namespace habsat::gps {
 
 GpsData::GpsData() {
     isDataValid = false;
+    day = 0;
+    month = 0;
+    year = 0;
 }
 
 GpsData::GpsData(GpsMessages gpsMessages) {

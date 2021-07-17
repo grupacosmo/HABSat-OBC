@@ -20,6 +20,9 @@ struct GpsData {
     // Documentation
     // https://www.sparkfun.com/datasheets/GPS/NMEA%20Reference%20Manual1.pdf
 
+   private:
+    int TIME_OFFSET = 2;    //UTC+2
+   public:
     // UTC time
     uint8_t utcHour;
     uint8_t utcMin;
@@ -49,6 +52,7 @@ struct GpsData {
     void print();
 
    private:
+
     void processGgaMessage(std::string_view rawMessage);
     void processRmcMessage(std::string_view rawMessage);
     std::string getNameOfPositionFixIndicator(int positionFixIndicator);
