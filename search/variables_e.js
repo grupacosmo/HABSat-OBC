@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['weekday_879',['weekday',['../structhabsat_1_1rtc_1_1Buffer.html#a4267c7d7325e8add2d98fbd26d7bdb02',1,'habsat::rtc::Buffer']]]
+  ['temperature_944',['temperature',['../structhabsat_1_1sensor_1_1Buffer.html#a44b5454fde281b1949585bc339e6d6d7',1,'habsat::sensor::Buffer']]],
+  ['temperatureresolution_945',['temperatureResolution',['../structhabsat_1_1sensor_1_1Settings.html#af7e19a5823b0bb52e26007bd63a509d6',1,'habsat::sensor::Settings']]],
+  ['terminal_946',['terminal',['../structhabsat_1_1Obc.html#ae01fffc3153ae24125443db64a80d9f8',1,'habsat::Obc']]]
 ];

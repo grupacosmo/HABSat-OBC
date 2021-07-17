@@ -1,6 +1,7 @@
 var namespacehabsat =
 [
     [ "buses", "namespacehabsat_1_1buses.html", "namespacehabsat_1_1buses" ],
+    [ "gps", "namespacehabsat_1_1gps.html", "namespacehabsat_1_1gps" ],
     [ "lcd", "namespacehabsat_1_1lcd.html", "namespacehabsat_1_1lcd" ],
     [ "mcuBoard", "namespacehabsat_1_1mcuBoard.html", "namespacehabsat_1_1mcuBoard" ],
     [ "rtc", "namespacehabsat_1_1rtc.html", "namespacehabsat_1_1rtc" ],

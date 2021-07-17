@@ -113,8 +113,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a503ff43e6eab0d5372cf45cbde295011"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac867762c21d615d941e66754fa76b6d6"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1sdReader_1_1SDReader.html#ac867762c21d615d941e66754fa76b6d6">format</a> () -&gt; FRESULT</td></tr>
 <tr class="separator:ac867762c21d615d941e66754fa76b6d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ba88e934c2f3f7e24ac9c0491da3e9a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1sdReader_1_1SDReader.html#a9ba88e934c2f3f7e24ac9c0491da3e9a">checkFreeSpace</a> ()</td></tr>
-<tr class="separator:a9ba88e934c2f3f7e24ac9c0491da3e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a085863fa8e9e6286609b552d4a5dd948"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1sdReader_1_1SDReader.html#a085863fa8e9e6286609b552d4a5dd948">checkFreeSpace</a> () -&gt; std::pair&lt; uint32_t, uint32_t &gt;</td></tr>
+<tr class="separator:a085863fa8e9e6286609b552d4a5dd948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf712a86499ab27b977c0e9d673cbbcf"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1sdReader_1_1SDReader.html#abf712a86499ab27b977c0e9d673cbbcf">fileStatus</a> (std::string_view path) -&gt; FRESULT</td></tr>
 <tr class="separator:abf712a86499ab27b977c0e9d673cbbcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adba4d1fc4136d5b241913b7a5799e738"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhabsat_1_1sdReader_1_1SDReader.html#adba4d1fc4136d5b241913b7a5799e738">remove</a> (std::string_view path) -&gt; FRESULT</td></tr>
@@ -123,8 +123,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a94b3ae6380e57f348c69fe3f7a12b6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9ba88e934c2f3f7e24ac9c0491da3e9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9ba88e934c2f3f7e24ac9c0491da3e9a">&#9670;&nbsp;</a></span>checkFreeSpace()</h2>
+<a id="a085863fa8e9e6286609b552d4a5dd948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a085863fa8e9e6286609b552d4a5dd948">&#9670;&nbsp;</a></span>checkFreeSpace()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,10 +133,10 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void checkFreeSpace </td>
+          <td class="memname">auto checkFreeSpace </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td> -&gt; std::pair&lt;uint32_t, uint32_t&gt;</td>
         </tr>
       </table>
   </td>
@@ -145,7 +145,7 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Checks the SDCard memory usage and prints it in the terminal. </p>
+<p>DONT USE THIS METHOD FOR NOW Checks the SDCard memory usage and prints it in the terminal. </p>
 
 </div>
 </div>

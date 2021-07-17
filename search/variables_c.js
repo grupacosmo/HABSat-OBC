@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['temperature_875',['temperature',['../structhabsat_1_1sensor_1_1Buffer.html#a44b5454fde281b1949585bc339e6d6d7',1,'habsat::sensor::Buffer']]],
-  ['temperatureresolution_876',['temperatureResolution',['../structhabsat_1_1sensor_1_1Settings.html#af7e19a5823b0bb52e26007bd63a509d6',1,'habsat::sensor::Settings']]],
-  ['terminal_877',['terminal',['../structhabsat_1_1Obc.html#ae01fffc3153ae24125443db64a80d9f8',1,'habsat::Obc']]]
+  ['retsd_924',['retSD',['../fatfs_8h.html#ab5eb61c3cf0ce65bdb6f8973d2ddaca5',1,'retSD():&#160;fatfs.c'],['../fatfs_8c.html#ab5eb61c3cf0ce65bdb6f8973d2ddaca5',1,'retSD():&#160;fatfs.c']]],
+  ['rmc_925',['Rmc',['../structhabsat_1_1gps_1_1GpsMessages.html#a48c61d0579889fe38a9afa5df2f3693c',1,'habsat::gps::GpsMessages']]],
+  ['rtc_926',['rtc',['../structhabsat_1_1Obc.html#a486f1ad47f1c98c9b6fcb95555b92be7',1,'habsat::Obc']]],
+  ['rtcbuffer_927',['rtcBuffer',['../structhabsat_1_1Obc.html#a20656e52284dfa7fb29a600a5446751d',1,'habsat::Obc']]],
+  ['rtcslaveaddress_928',['rtcSlaveAddress',['../obc_8cpp.html#af7607d6f9f26c6d7af2cbbbc3258dd8a',1,'obc.cpp']]]
 ];

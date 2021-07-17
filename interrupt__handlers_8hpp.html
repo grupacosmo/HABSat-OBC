@@ -91,6 +91,7 @@ $(document).ready(function(){initNavTree('interrupt__handlers_8hpp.html',''); in
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stm32f4xx_hal.h&gt;</code><br />
 </div>
 <p><a href="interrupt__handlers_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -103,6 +104,8 @@ Macros</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:addcb3610827bbf555b521d26c84f1090"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interrupt__handlers_8hpp.html#abbaccfbed35b945162c27ef6d3748e77">EXTERN_C</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt__handlers_8hpp.html#addcb3610827bbf555b521d26c84f1090">USER_GPIO_EXTI_IRQHandler</a> (uint16_t GPIO_Pin)</td></tr>
 <tr class="separator:addcb3610827bbf555b521d26c84f1090"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab1024eb05e7ebeed475a51d712026da"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interrupt__handlers_8hpp.html#abbaccfbed35b945162c27ef6d3748e77">EXTERN_C</a> void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interrupt__handlers_8hpp.html#aab1024eb05e7ebeed475a51d712026da">GPS_IRQHandler</a> (UART_HandleTypeDef *huart)</td></tr>
+<tr class="separator:aab1024eb05e7ebeed475a51d712026da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="abbaccfbed35b945162c27ef6d3748e77"></a>
@@ -120,6 +123,24 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="aab1024eb05e7ebeed475a51d712026da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab1024eb05e7ebeed475a51d712026da">&#9670;&nbsp;</a></span>GPS_IRQHandler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interrupt__handlers_8hpp.html#abbaccfbed35b945162c27ef6d3748e77">EXTERN_C</a> void GPS_IRQHandler </td>
+          <td>(</td>
+          <td class="paramtype">UART_HandleTypeDef *&#160;</td>
+          <td class="paramname"><em>huart</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="addcb3610827bbf555b521d26c84f1090"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#addcb3610827bbf555b521d26c84f1090">&#9670;&nbsp;</a></span>USER_GPIO_EXTI_IRQHandler()</h2>
 

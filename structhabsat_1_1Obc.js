@@ -5,6 +5,7 @@ var structhabsat_1_1Obc =
     [ "blinkTask", "structhabsat_1_1Obc.html#af6f6caace62d7ea9843359b6d930c273", null ],
     [ "button", "structhabsat_1_1Obc.html#ade0849e5a28a359a3085892c2ee17420", null ],
     [ "displayTask", "structhabsat_1_1Obc.html#ab7e0efcd8dd057a8990b128b29b808f1", null ],
+    [ "gps", "structhabsat_1_1Obc.html#a9667c46a04141f0a2de2c78a0984dc36", null ],
     [ "i2c", "structhabsat_1_1Obc.html#ab2b9058bc2383e8d9b7fb4d75fb4fa1e", null ],
     [ "inputTask", "structhabsat_1_1Obc.html#ad35285124ffd5440cac7b81b52f32aa8", null ],
     [ "lcd", "structhabsat_1_1Obc.html#a8c59b465d750860b348c956773a78c98", null ],
@@ -22,5 +23,6 @@ var structhabsat_1_1Obc =
     [ "sensorCS", "structhabsat_1_1Obc.html#a47fb18a1414b55cc391bf1296e5d2ef1", null ],
     [ "spi", "structhabsat_1_1Obc.html#a65eeb45e1891ee32a0c44dd5306ba10a", null ],
     [ "terminal", "structhabsat_1_1Obc.html#ae01fffc3153ae24125443db64a80d9f8", null ],
-    [ "uart", "structhabsat_1_1Obc.html#a56a7d384173a83a5276f4afa44f7051e", null ]
+    [ "uart", "structhabsat_1_1Obc.html#a56a7d384173a83a5276f4afa44f7051e", null ],
+    [ "uartGps", "structhabsat_1_1Obc.html#a7e3ea23f57eca44c43710aae8d31d965", null ]
 ];
