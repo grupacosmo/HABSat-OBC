@@ -19,19 +19,13 @@ void GpsMessages::print() {
 GpsMessages::GpsMessages(std::string & rawFrames) {
     while(!rawFrames.empty()){
         auto beginOfMessage = rawFrames.find("$");
-
         if(beginOfMessage == std::string::npos)
             break;
-
         rawFrames = rawFrames.substr(beginOfMessage, rawFrames.length());
-
         auto endOfMessage = rawFrames.find("\r\n");
-
         if(endOfMessage == std::string::npos)
             break;
-
         std::string singleMessage = rawFrames.substr(0, endOfMessage);
-
         auto type = singleMessage.substr(3,3);
 
         if(type == "RMC")
