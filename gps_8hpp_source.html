@@ -107,35 +107,41 @@ $(document).ready(function(){initNavTree('gps_8hpp_source.html',''); initResizab
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classhabsat_1_1gps_1_1Gps.html#ad9957b2f3ae814e744b95a6a31a15541">Gps</a>(UART_HandleTypeDef&amp; uart, DMA_HandleTypeDef&amp; dma_usart_rx);</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhabsat_1_1gps_1_1Gps.html#a02fd73d861ef2e4aabb38c0c9ff82947">init</a>();</div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classhabsat_1_1gps_1_1Gps.html#a6a8cb702d8916519818b4b860d2218f6">callback</a>();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1gps_1_1Gps.html#a63686cb10712af53b1d8d97471069730">getData</a>() -&gt; <a class="code" href="structhabsat_1_1gps_1_1GpsData.html">GpsData</a>;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;   <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> rawBufferSize = 510;   <span class="comment">//82 chars per message + 2 new line chars per message</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    UART_HandleTypeDef&amp; uart;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    DMA_HandleTypeDef&amp; dmaRx;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    std::string rawMessageBuffor;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    uint8_t rawBuffor[rawBufferSize];</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="structhabsat_1_1gps_1_1GpsMessages.html">GpsMessages</a> gpsMessages;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="structhabsat_1_1gps_1_1GpsData.html">GpsData</a> gpsData;</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;};</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1gps_1_1Gps.html#ad2a1fbddadaa2a00b219d1f39ae17a82">getPrintedData</a>() -&gt; std::string_view;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">auto</span> <a class="code" href="classhabsat_1_1gps_1_1Gps.html#a63686cb10712af53b1d8d97471069730">getData</a>() -&gt; <a class="code" href="structhabsat_1_1gps_1_1GpsData.html">GpsData</a>;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;   <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">void</span> preparePrint();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;   <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> rawBufferSize = 510;   <span class="comment">//82 chars per message + 2 new line chars per message</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    UART_HandleTypeDef&amp; uart;</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    DMA_HandleTypeDef&amp; dmaRx;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    std::string rawMessageBuffor;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    uint8_t rawBuffor[rawBufferSize];</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;}  <span class="comment">// namespace habsat::gps</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#endif  // HABSAT_OBC_GPS_H</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    std::string GpsDataPrint;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="structhabsat_1_1gps_1_1GpsMessages.html">GpsMessages</a> gpsMessages;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="structhabsat_1_1gps_1_1GpsData.html">GpsData</a> gpsData;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;};</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}  <span class="comment">// namespace habsat::gps</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif  // HABSAT_OBC_GPS_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="astructhabsat_1_1gps_1_1GpsMessages_html"><div class="ttname"><a href="structhabsat_1_1gps_1_1GpsMessages.html">habsat::gps::GpsMessages</a></div><div class="ttdef"><b>Definition:</b> gpsMessages.hpp:11</div></div>
+<div class="ttc" id="astructhabsat_1_1gps_1_1GpsMessages_html"><div class="ttname"><a href="structhabsat_1_1gps_1_1GpsMessages.html">habsat::gps::GpsMessages</a></div><div class="ttdef"><b>Definition:</b> gpsMessages.hpp:12</div></div>
 <div class="ttc" id="agpsMessages_8hpp_html"><div class="ttname"><a href="gpsMessages_8hpp.html">gpsMessages.hpp</a></div></div>
-<div class="ttc" id="anamespacehabsat_1_1gps_html"><div class="ttname"><a href="namespacehabsat_1_1gps.html">habsat::gps</a></div><div class="ttdef"><b>Definition:</b> gps.cpp:10</div></div>
+<div class="ttc" id="anamespacehabsat_1_1gps_html"><div class="ttname"><a href="namespacehabsat_1_1gps.html">habsat::gps</a></div><div class="ttdef"><b>Definition:</b> gps.cpp:7</div></div>
 <div class="ttc" id="agpsData_8h_html"><div class="ttname"><a href="gpsData_8h.html">gpsData.h</a></div></div>
 <div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html">habsat::gps::Gps</a></div><div class="ttdef"><b>Definition:</b> gps.hpp:16</div></div>
-<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_a63686cb10712af53b1d8d97471069730"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#a63686cb10712af53b1d8d97471069730">habsat::gps::Gps::getData</a></div><div class="ttdeci">auto getData() -&gt; GpsData</div><div class="ttdef"><b>Definition:</b> gps.cpp:38</div></div>
-<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_ad9957b2f3ae814e744b95a6a31a15541"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#ad9957b2f3ae814e744b95a6a31a15541">habsat::gps::Gps::Gps</a></div><div class="ttdeci">Gps(UART_HandleTypeDef &amp;uart, DMA_HandleTypeDef &amp;dma_usart_rx)</div><div class="ttdef"><b>Definition:</b> gps.cpp:12</div></div>
+<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_ad2a1fbddadaa2a00b219d1f39ae17a82"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#ad2a1fbddadaa2a00b219d1f39ae17a82">habsat::gps::Gps::getPrintedData</a></div><div class="ttdeci">auto getPrintedData() -&gt; std::string_view</div><div class="ttdef"><b>Definition:</b> gps.cpp:36</div></div>
+<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_a63686cb10712af53b1d8d97471069730"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#a63686cb10712af53b1d8d97471069730">habsat::gps::Gps::getData</a></div><div class="ttdeci">auto getData() -&gt; GpsData</div><div class="ttdef"><b>Definition:</b> gps.cpp:34</div></div>
+<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_ad9957b2f3ae814e744b95a6a31a15541"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#ad9957b2f3ae814e744b95a6a31a15541">habsat::gps::Gps::Gps</a></div><div class="ttdeci">Gps(UART_HandleTypeDef &amp;uart, DMA_HandleTypeDef &amp;dma_usart_rx)</div><div class="ttdef"><b>Definition:</b> gps.cpp:9</div></div>
 <div class="ttc" id="auart_8hpp_html"><div class="ttname"><a href="uart_8hpp.html">uart.hpp</a></div></div>
 <div class="ttc" id="astructhabsat_1_1gps_1_1GpsData_html"><div class="ttname"><a href="structhabsat_1_1gps_1_1GpsData.html">habsat::gps::GpsData</a></div><div class="ttdef"><b>Definition:</b> gpsData.h:19</div></div>
-<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_a02fd73d861ef2e4aabb38c0c9ff82947"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#a02fd73d861ef2e4aabb38c0c9ff82947">habsat::gps::Gps::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> gps.cpp:17</div></div>
-<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_a6a8cb702d8916519818b4b860d2218f6"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#a6a8cb702d8916519818b4b860d2218f6">habsat::gps::Gps::callback</a></div><div class="ttdeci">void callback()</div><div class="ttdef"><b>Definition:</b> gps.cpp:22</div></div>
+<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_a02fd73d861ef2e4aabb38c0c9ff82947"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#a02fd73d861ef2e4aabb38c0c9ff82947">habsat::gps::Gps::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition:</b> gps.cpp:14</div></div>
+<div class="ttc" id="aclasshabsat_1_1gps_1_1Gps_html_a6a8cb702d8916519818b4b860d2218f6"><div class="ttname"><a href="classhabsat_1_1gps_1_1Gps.html#a6a8cb702d8916519818b4b860d2218f6">habsat::gps::Gps::callback</a></div><div class="ttdeci">void callback()</div><div class="ttdef"><b>Definition:</b> gps.cpp:19</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

@@ -1,8 +1,7 @@
 var structhabsat_1_1gps_1_1GpsData =
 [
     [ "GpsData", "structhabsat_1_1gps_1_1GpsData.html#afef0f20020170530575f2f633af38577", null ],
-    [ "GpsData", "structhabsat_1_1gps_1_1GpsData.html#a6a7b601c8588746f24fb2200b6f7df68", null ],
-    [ "print", "structhabsat_1_1gps_1_1GpsData.html#a388f572c62279f839ee138a9afbdeeb5", null ],
+    [ "GpsData", "structhabsat_1_1gps_1_1GpsData.html#a7537a7377235f2c0c1b5a9dd8103d2f1", null ],
     [ "day", "structhabsat_1_1gps_1_1GpsData.html#a72369a1087b2aeffe374bb054cb97c12", null ],
     [ "ewIndicator", "structhabsat_1_1gps_1_1GpsData.html#a522d37fc44a2a8cf5d63572000b1a497", null ],
     [ "hdop", "structhabsat_1_1gps_1_1GpsData.html#a7ede759392ed439219bdbac4c8ede827", null ],
@@ -13,7 +12,7 @@ var structhabsat_1_1gps_1_1GpsData =
     [ "mslAltitude", "structhabsat_1_1gps_1_1GpsData.html#aecac0438e00d599fd2cdf9e60efe2e4b", null ],
     [ "mslUnits", "structhabsat_1_1gps_1_1GpsData.html#a39a8c3948f72f531820c1d0e1a769e59", null ],
     [ "nsIndicator", "structhabsat_1_1gps_1_1GpsData.html#a60e6b25e949b0ad5612b55f723a52e6f", null ],
-    [ "positionFixIndicator", "structhabsat_1_1gps_1_1GpsData.html#a472f74f49fcc1f82f0d84c03bd8a021d", null ],
+    [ "positionFixIndicator", "structhabsat_1_1gps_1_1GpsData.html#a083a7de4ada0e2fd2c40dbca5af635de", null ],
     [ "satellitesUsed", "structhabsat_1_1gps_1_1GpsData.html#ae7cc84b604ff9849522873fc859262e6", null ],
     [ "speedOverGroundKmPerH", "structhabsat_1_1gps_1_1GpsData.html#aa6d995f9afa2d9bc08b2f77863e321ef", null ],
     [ "utcHour", "structhabsat_1_1gps_1_1GpsData.html#a7b44e9ff3486d18012ccbb77f897ab49", null ],

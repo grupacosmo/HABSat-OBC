@@ -87,9 +87,10 @@ var NAVTREEINDEX0 =
 "classhabsat_1_1buses_1_1UART.html#a8a1bf7f2cee7e2b4fc74f1ae8725aaa8":[2,0,0,0,2,2],
 "classhabsat_1_1buses_1_1UART.html#acbeaa822847fedbceacd650301229e39":[2,0,0,0,2,3],
 "classhabsat_1_1gps_1_1Gps.html":[2,0,0,1,0],
-"classhabsat_1_1gps_1_1Gps.html#a02fd73d861ef2e4aabb38c0c9ff82947":[2,0,0,1,0,3],
+"classhabsat_1_1gps_1_1Gps.html#a02fd73d861ef2e4aabb38c0c9ff82947":[2,0,0,1,0,4],
 "classhabsat_1_1gps_1_1Gps.html#a63686cb10712af53b1d8d97471069730":[2,0,0,1,0,2],
 "classhabsat_1_1gps_1_1Gps.html#a6a8cb702d8916519818b4b860d2218f6":[2,0,0,1,0,1],
+"classhabsat_1_1gps_1_1Gps.html#ad2a1fbddadaa2a00b219d1f39ae17a82":[2,0,0,1,0,3],
 "classhabsat_1_1gps_1_1Gps.html#ad9957b2f3ae814e744b95a6a31a15541":[2,0,0,1,0,0],
 "classhabsat_1_1lcd_1_1Lcd.html":[2,0,0,2,0],
 "classhabsat_1_1lcd_1_1Lcd.html#a27cfbc96491595092c9b2e386755c627":[2,0,0,2,0,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "ffconf_8h.html#aaab0313f867bb008b64236239f5c2660":[3,0,0,3,31],
 "ffconf_8h.html#aaf9b5cee569d93f1ebe43ea70916569f":[3,0,0,3,0],
 "ffconf_8h.html#abefed32e4f049538ff7d7101cd8e3643":[3,0,0,3,4],
-"ffconf_8h.html#abf97f960987a4a2be3b876cc45612b06":[3,0,0,3,26],
-"ffconf_8h.html#ac271b697378912f17132cb9c7d0de024":[3,0,0,3,14]
+"ffconf_8h.html#abf97f960987a4a2be3b876cc45612b06":[3,0,0,3,26]
 };
