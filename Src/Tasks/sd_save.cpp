@@ -3,7 +3,6 @@
 //
 
 #include "Tasks/sd_save.hpp"
-#include "terminal.hpp"
 #include "hardware_config.hpp"
 #include "obc.hpp"
 

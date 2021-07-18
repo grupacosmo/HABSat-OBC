@@ -6,15 +6,17 @@
 
 namespace habsat::gps {
 
-void GpsMessages::print() {
-    Terminal::pcTransmit("---  Gps Messages  ---\r\n");
-    Terminal::pcTransmit(this->Rmc+"\r\n");
-    Terminal::pcTransmit(this->Vtg+"\r\n");
-    Terminal::pcTransmit(this->Gga+"\r\n");
-    Terminal::pcTransmit(this->Gsa+"\r\n");
-    Terminal::pcTransmit(this->Gsv+"\r\n");
-    Terminal::pcTransmit(this->Gll+"\r\n");
-}
+//void GpsMessages::print() {
+//
+//    auto& obc = habsat::getObc();
+//    obc.terminal.pcTransmitDMA("---  Gps Messages  ---\r\n");
+//    obc.terminal.pcTransmitDMA(this->Rmc+"\r\n");
+//    obc.terminal.pcTransmitDMA(this->Vtg+"\r\n");
+//    obc.terminal.pcTransmitDMA(this->Gga+"\r\n");
+//    obc.terminal.pcTransmitDMA(this->Gsa+"\r\n");
+//    obc.terminal.pcTransmitDMA(this->Gsv+"\r\n");
+//    obc.terminal.pcTransmitDMA(this->Gll+"\r\n");
+//}
 
 GpsMessages::GpsMessages(std::string & rawFrames) {
     while(!rawFrames.empty()){

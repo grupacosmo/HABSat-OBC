@@ -2,25 +2,31 @@
 // Created by Filip on 15.07.2021.
 //
 
-#include <Gps/gpsData.h>
 
-#include "Inc/Gps/gpsMessages.hpp"
+
+#include "Inc/Gps/gpsData.h"
+
+#include <string>
 
 namespace habsat::gps {
 
-GpsData::GpsData() {
-    isDataValid = false;
-    day = 0;
-    month = 0;
-    year = 0;
-}
+GpsData::GpsData() : utcHour{0}, utcMin{0}, utcSec{0},isDataValid{false}, day{0},month{0},year{0}{}
 
-GpsData::GpsData(GpsMessages gpsMessages) {
+GpsData::GpsData(const GpsMessages& gpsMessages) {
+    this->rmcStatus = 'x';
     processRmcMessage(gpsMessages.Rmc);
     processGgaMessage(gpsMessages.Gga);
+
+    if(rmcStatus == 'A' || positionFixIndicator == 1 || positionFixIndicator == 2 || positionFixIndicator == 6)
+        isDataValid = true;
+    else
+        isDataValid = false;
+
+    this->utcHour += TIME_OFFSET;
+
 }
 
-std::string GpsData::getNameOfPositionFixIndicator(int positionFixIndicator) {
+auto GpsData::getLabelPositionFiXIndicator(uint8_t positionFixIndicator) -> std::string {
     switch (positionFixIndicator) {
         case 0:
             return "Fix not available or invalid";
@@ -38,23 +44,21 @@ std::string GpsData::getNameOfPositionFixIndicator(int positionFixIndicator) {
     }
 }
 
-double GpsData::convertDegMinToDecDeg(double degMin) {
+auto GpsData::convertDegMinToDecDeg(double degMin) -> double {
     double min    = 0.0;
     double decDeg = 0.0;
 
     // get the minutes, fmod() requires double
-    min = fmod((double)degMin, 100.0);
+    min = fmod(static_cast<double>(degMin), 100.0);
 
     // rebuild coordinates in decimal degrees
-    degMin = (int)(degMin / 100);
+    degMin = static_cast<int>((degMin / 100));
     decDeg = degMin + (min / 60);
 
     return decDeg;
 }
 
 void GpsData::processGgaMessage(std::string_view rawMessage) {
-    uint8_t idPositionFixIndicator = 0;
-
     sscanf(
           rawMessage.data(),
           "$GPGGA,%2hhd%2hhd%2hhd.%*d,%lf,%c,%lf,%c,%hhd,%hhd,%lf,%lf,%c\r\n",
@@ -65,54 +69,27 @@ void GpsData::processGgaMessage(std::string_view rawMessage) {
           &this->nsIndicator,
           &this->longitude,
           &this->ewIndicator,
-          &idPositionFixIndicator,
+          &this->positionFixIndicator,
           &this->satellitesUsed,
           &this->hdop,
           &this->mslAltitude,
           &this->mslUnits);
 
-    this->utcHour +=2;
-    this->positionFixIndicator = getNameOfPositionFixIndicator(idPositionFixIndicator);
     this->latitude             = convertDegMinToDecDeg(this->latitude);
     this->longitude            = convertDegMinToDecDeg(this->longitude);
 }
 
 void GpsData::processRmcMessage(std::string_view rawMessage) {
-    char rmcstatus = 'X';
-
     std::sscanf(
           rawMessage.data(),
           "$GPRMC,%2hhd%2hhd%2hhd.%*d,%c,%*f,%*c,%*f,%*c,%lf,,%2hhd%2hhd%2hhd",
           &this->utcHour,
           &this->utcMin,
           &this->utcSec,
-          &rmcstatus,
+          &this->rmcStatus,
           &this->speedOverGroundKmPerH,
           &this->day,
           &this->month,
           &this->year);
-
-    this->utcHour += TIME_OFFSET;
-    if (rmcstatus == 'A')
-        isDataValid = true;
-    else
-        isDataValid = false;
-}
-void GpsData::print() {
-    std::string latIndicator(1, nsIndicator);
-    std::string longIndicator(1, ewIndicator);
-    std::string mslUnit(1, mslUnits);
-    std::string datavaild = (isDataValid) ? "true" : "false";
-
-    Terminal::pcTransmit("---  Gps Data  ---\r\n");
-    Terminal::pcTransmit("Time:\t\t" + std::to_string(utcHour) + ":" + std::to_string(utcMin) + ":" +std::to_string(utcSec) + "\r\n");
-    Terminal::pcTransmit("Date:\t\t" + std::to_string(day) + "/" + std::to_string(month) + "/20" +std::to_string(year) + "\r\n");
-    Terminal::pcTransmit("Is Data Valid:\t" + datavaild + "\r\n");
-    Terminal::pcTransmit("Coordinates:\t" + latIndicator + " " + std::to_string(latitude) + ", " + longIndicator +" " + std::to_string(longitude) + "\r\n");
-    Terminal::pcTransmit("Speed:\t\t" + std::to_string(speedOverGroundKmPerH) + " Km/H" + "\r\n");
-    Terminal::pcTransmit("Fix Indicator:\t" + positionFixIndicator + "\r\n");
-    Terminal::pcTransmit("Number of SAT:\t" + std::to_string(satellitesUsed) + "\r\n");
-    Terminal::pcTransmit("HDOP:\t\t" + std::to_string(hdop) + "\r\n");
-    Terminal::pcTransmit("MSL Altitude:\t" + std::to_string(mslAltitude) + " " + mslUnit + "\r\n");
 }
 }  // namespace habsat::gps

@@ -5,7 +5,8 @@
 #ifndef HABSAT_OBC_GPSMESSAGES_HPP
 #define HABSAT_OBC_GPSMESSAGES_HPP
 
-#include <terminal.hpp>
+#include <string>
+
 namespace habsat::gps {
 
 struct GpsMessages {

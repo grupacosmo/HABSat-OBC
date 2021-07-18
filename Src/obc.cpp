@@ -33,7 +33,7 @@ habsat::Obc::Obc()
       terminal{uart},
       gps(huart1, hdma_usart1_rx),
       inputTask{128, Priority::Interrupt, blink::inputTaskFn},
-      blinkTask{128, Priority::Idle, blink::blinkTaskFn},
+      blinkTask{512, Priority::Idle, blink::blinkTaskFn},
       displayTask{256, Priority::Idle, display::taskFn},
       measureTimeTask{512, Priority::Idle, measureTime::taskFn},
       measureWeatherTask{512, Priority::Idle, measureWeather::taskFn},
@@ -42,6 +42,7 @@ habsat::Obc::Obc()
 void habsat::Obc::init() {
     inputTask.addToScheduler();
     blinkTask.addToScheduler();
+    gps.init();
 
     // clang-format off
 #   if HW_LCD

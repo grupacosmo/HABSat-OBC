@@ -18,7 +18,11 @@ class Gps {
     Gps(UART_HandleTypeDef& uart, DMA_HandleTypeDef& dma_usart_rx);
     void init();
     void callback();
+    auto getPrintedData() -> std::string_view;
     auto getData() -> GpsData;
+
+   private:
+    void preparePrint();
 
    private:
     static const int rawBufferSize = 510;   //82 chars per message + 2 new line chars per message
@@ -27,6 +31,7 @@ class Gps {
     std::string rawMessageBuffor;
     uint8_t rawBuffor[rawBufferSize];
 
+    std::string GpsDataPrint;
     GpsMessages gpsMessages;
     GpsData gpsData;
 };
