@@ -1,5 +1,12 @@
 var NAVTREEINDEX3 =
 {
+"structhabsat_1_1gps_1_1GpsData.html#ac155e35fdeebafc89723a51520fb9fe6":[2,0,0,1,1,7],
+"structhabsat_1_1gps_1_1GpsData.html#ae7cc84b604ff9849522873fc859262e6":[2,0,0,1,1,13],
+"structhabsat_1_1gps_1_1GpsData.html#aecac0438e00d599fd2cdf9e60efe2e4b":[2,0,0,1,1,9],
+"structhabsat_1_1gps_1_1GpsData.html#afef0f20020170530575f2f633af38577":[2,0,0,1,1,0],
+"structhabsat_1_1gps_1_1GpsMessages.html":[2,0,0,1,2],
+"structhabsat_1_1gps_1_1GpsMessages.html#a1c608be96facbd5a0b540787c80943eb":[2,0,0,1,2,1],
+"structhabsat_1_1gps_1_1GpsMessages.html#a1d700c60142f009e5201127f71815ff0":[2,0,0,1,2,3],
 "structhabsat_1_1gps_1_1GpsMessages.html#a388f572c62279f839ee138a9afbdeeb5":[2,0,0,1,2,2],
 "structhabsat_1_1gps_1_1GpsMessages.html#a389b1242a540005b235cd46b4f7c09bf":[2,0,0,1,2,0],
 "structhabsat_1_1gps_1_1GpsMessages.html#a48c61d0579889fe38a9afa5df2f3693c":[2,0,0,1,2,7],

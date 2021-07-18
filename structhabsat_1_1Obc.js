@@ -5,6 +5,7 @@ var structhabsat_1_1Obc =
     [ "blinkTask", "structhabsat_1_1Obc.html#af6f6caace62d7ea9843359b6d930c273", null ],
     [ "button", "structhabsat_1_1Obc.html#ade0849e5a28a359a3085892c2ee17420", null ],
     [ "displayTask", "structhabsat_1_1Obc.html#ab7e0efcd8dd057a8990b128b29b808f1", null ],
+    [ "getGpsDataTask", "structhabsat_1_1Obc.html#a886e575cf47a111a25745a3a6a111b63", null ],
     [ "gps", "structhabsat_1_1Obc.html#a9667c46a04141f0a2de2c78a0984dc36", null ],
     [ "i2c", "structhabsat_1_1Obc.html#ab2b9058bc2383e8d9b7fb4d75fb4fa1e", null ],
     [ "inputTask", "structhabsat_1_1Obc.html#ad35285124ffd5440cac7b81b52f32aa8", null ],

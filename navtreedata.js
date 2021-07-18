@@ -59,8 +59,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "ffconf_8h.html#ac271b697378912f17132cb9c7d0de024",
-"sd__diskio_8h.html",
-"structhabsat_1_1gps_1_1GpsMessages.html#a388f572c62279f839ee138a9afbdeeb5"
+"sd__diskio_8c.html#a21ca54e56dca1f40b54f458ac35470e3",
+"structhabsat_1_1gps_1_1GpsData.html#ac155e35fdeebafc89723a51520fb9fe6"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
