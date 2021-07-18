@@ -24,6 +24,7 @@
 #include "Tasks/measure_time.hpp"
 #include "Tasks/measure_weather.hpp"
 #include "Tasks/sd_save.hpp"
+#include "Tasks/getGpsData.hpp"
 #include "Terminal/terminal.hpp"
 
 namespace habsat {
@@ -59,6 +60,7 @@ struct Obc {
     system::Task measureTimeTask;
     system::Task measureWeatherTask;
     system::Task sdSaveTask;
+    system::Task getGpsDataTask;
 
     Obc();
     void init();
