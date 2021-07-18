@@ -33,16 +33,16 @@ habsat::Obc::Obc()
       terminal{uart},
       gps(huart1, hdma_usart1_rx),
       inputTask{128, Priority::Interrupt, blink::inputTaskFn},
-      blinkTask{512, Priority::Idle, blink::blinkTaskFn},
+      blinkTask{128, Priority::Idle, blink::blinkTaskFn},
       displayTask{256, Priority::Idle, display::taskFn},
       measureTimeTask{512, Priority::Idle, measureTime::taskFn},
       measureWeatherTask{512, Priority::Idle, measureWeather::taskFn},
-      sdSaveTask{512, Priority::Idle, sdSave::taskFn} {}
+      sdSaveTask{512, Priority::Idle, sdSave::taskFn},
+      getGpsDataTask{512, Priority::Idle, getGpsData::taskFn} {}
 
 void habsat::Obc::init() {
     inputTask.addToScheduler();
     blinkTask.addToScheduler();
-    gps.init();
 
     // clang-format off
 #   if HW_LCD
@@ -85,6 +85,11 @@ void habsat::Obc::init() {
 #   if HW_SD_READER
         sdReader.init();
         sdSaveTask.addToScheduler();
+#   endif
+
+#   if HW_GPS
+        gps.init();
+        getGpsDataTask.addToScheduler();
 #   endif
     // clang-format on
 }
